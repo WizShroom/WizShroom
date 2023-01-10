@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class MobController : MonoBehaviour
 {
@@ -26,6 +27,13 @@ public class MobController : MonoBehaviour
     };
 
     public List<Buff> buffs = new List<Buff>();
+
+    [HideInInspector] public NavMeshAgent navMeshAgent;
+
+    private void Awake()
+    {
+        navMeshAgent = GetComponent<NavMeshAgent>();
+    }
 
     private void Start()
     {

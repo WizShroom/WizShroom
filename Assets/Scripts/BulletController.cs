@@ -102,6 +102,8 @@ public class BulletController : MonoBehaviour
         {
             MobController monsterController = other.GetComponent<MobController>();
 
+            Vector3 hitDirection = (monsterController.transform.position - transform.position).normalized;
+
             foreach (SpellEffect spellEffect in spellEffects)
             {
                 if ((spellEffect.spellEffectType & SpellEffectType.ON_HIT) == 0)
@@ -109,7 +111,7 @@ public class BulletController : MonoBehaviour
                     continue;
                 }
 
-                spellEffect.OnCollisionEffect(monsterController, this);
+                spellEffect.OnCollisionEffect(monsterController, this, hitDirection);
             }
             Destroy(gameObject);
         }

@@ -7,7 +7,6 @@ public class PlayerInputAction : MonoBehaviour
 {
     public LayerMask enemyLayer;
     public LayerMask interactableLayer;
-    public LayerMask groundLayer;
 
     PlayerMovement playerMovement;
 
@@ -20,20 +19,13 @@ public class PlayerInputAction : MonoBehaviour
 
     void Update()
     {
-        Vector3 mousePos = Input.mousePosition;
-        Ray ray = Camera.main.ScreenPointToRay(mousePos);
-        RaycastHit hit;
-        Vector3 hitPoint = default(Vector3);
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity, groundLayer))
-        {
-            hitPoint = hit.point;
-        }
+        Vector3 groundPosition = MouseGroundPositionSingleton.Instance.returnGroundPosition;
 
         bool isOverUI = UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject();
 
-        Vector3 highlightPosition = hitPoint;
+        Vector3 highlightPosition = groundPosition;
         highlightPosition.y += 0.25f;
-        if (Input.GetMouseButtonDown(0) && !isOverUI && hitPoint != default(Vector3))
+        if (Input.GetMouseButtonDown(0) && !isOverUI && groundPosition != default(Vector3))
         {
             if (Input.GetKey(KeyCode.LeftShift))
             {
@@ -51,6 +43,9 @@ public class PlayerInputAction : MonoBehaviour
 
         if (Input.GetMouseButtonDown(1) && !isOverUI)
         {
+            Vector3 mousePos = Input.mousePosition;
+            Ray ray = Camera.main.ScreenPointToRay(mousePos);
+            RaycastHit hit;
             Physics.Raycast(ray, out hit, Mathf.Infinity);
 
             if (hit.collider && 1 << hit.collider.gameObject.layer == enemyLayer.value)

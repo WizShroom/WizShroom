@@ -31,6 +31,7 @@ public class MobAIController : MonoBehaviour
     {
         target = GameObject.FindGameObjectWithTag("Player");
         animator = GetComponent<Animator>();
+        navMeshAgent = mobController.navMeshAgent;
         navMeshAgent.updateRotation = false;
         navMeshAgent.updateUpAxis = false;
         if (homeBase == default(Vector3))

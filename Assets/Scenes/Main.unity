@@ -656,9 +656,6 @@ MonoBehaviour:
   equippedSpell: {fileID: 11400000, guid: eff0b94b610a1dc4f96202d0fc35a644, type: 2}
   slotSprite: {fileID: 162357270}
   cooldownIndicator: {fileID: 319216882}
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 64
 --- !u!114 &183296495
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1708,9 +1705,6 @@ MonoBehaviour:
   equippedSpell: {fileID: 11400000, guid: 293ec70119df6ff4eb5fcc2bfcba32fa, type: 2}
   slotSprite: {fileID: 1099745908}
   cooldownIndicator: {fileID: 933083951}
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 64
 --- !u!114 &661248744
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3080,9 +3074,6 @@ MonoBehaviour:
   - {fileID: 661248743}
   playerMovement: {fileID: 2036230976}
   playerController: {fileID: 2036230974}
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 64
 --- !u!114 &1010365456
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3505,6 +3496,54 @@ Transform:
   - {fileID: 1969825264}
   m_Father: {fileID: 2036230967}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1172316967
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1172316969}
+  - component: {fileID: 1172316968}
+  m_Layer: 0
+  m_Name: _GroundPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1172316968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1172316967}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd2d0d9170f3bf3419b633eff13d3688, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  returnGroundPosition: {x: 0, y: 0, z: 0}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
+--- !u!4 &1172316969
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1172316967}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1194610673
 GameObject:
@@ -5048,7 +5087,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1879343500}
   - component: {fileID: 1879343506}
-  - component: {fileID: 1879343504}
+  - component: {fileID: 1879343507}
   - component: {fileID: 1879343503}
   - component: {fileID: 1879343505}
   m_Layer: 7
@@ -5066,7 +5105,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1879343498}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.65, y: 0, z: 3.64}
+  m_LocalPosition: {x: -4.65, y: 0.159, z: 3.64}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5114,20 +5153,8 @@ MonoBehaviour:
     statValue: 1
     statType: 5
   buffs: []
+  navMeshAgent: {fileID: 0}
   mobAIController: {fileID: 1879343505}
---- !u!65 &1879343504
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1879343498}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.8, y: 1, z: 0.8}
-  m_Center: {x: 0.3, y: 0.5, z: 0.3}
 --- !u!114 &1879343505
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5141,7 +5168,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animationPrefix: 
-  navMeshAgent: {fileID: 1879343506}
+  navMeshAgent: {fileID: 0}
   currentState: {fileID: 11400000, guid: edffe47316db59745ae7afbb3561ae81, type: 2}
   remainState: {fileID: 11400000, guid: 964388481582f934d9363b500f502d5d, type: 2}
   patrolPoints: []
@@ -5152,7 +5179,7 @@ MonoBehaviour:
   animator: {fileID: 0}
   homeBase: {x: 0, y: 0, z: 0}
   lastAttackPosition: {x: 0, y: 0, z: 0}
-  aiActive: 0
+  aiActive: 1
 --- !u!195 &1879343506
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -5175,6 +5202,20 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!136 &1879343507
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1879343498}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.35
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0.3, y: 0.5, z: 0.3}
 --- !u!1 &1900541474
 GameObject:
   m_ObjectHideFlags: 0
@@ -5844,6 +5885,7 @@ MonoBehaviour:
     statValue: 1
     statType: 5
   buffs: []
+  navMeshAgent: {fileID: 0}
   playerName: Mush
   availableStatPoints: 0
   statPointPerLevel: 5
@@ -5867,9 +5909,6 @@ MonoBehaviour:
   interactableLayer:
     serializedVersion: 2
     m_Bits: 256
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 64
   mouseGroundHighlight: {fileID: 884931596}
 --- !u!114 &2036230976
 MonoBehaviour:

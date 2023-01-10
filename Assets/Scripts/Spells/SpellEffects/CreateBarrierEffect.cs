@@ -15,7 +15,7 @@ public class CreateBarrierEffect : SpellEffect
         CreateBarrier(affectedMob, castDirection);
     }
 
-    public override void OnCollisionEffect(MobController mobHit, BulletController bulletController)
+    public override void OnCollisionEffect(MobController mobHit, BulletController bulletController, Vector3 hitDirection)
     {
         CreateBarrier(mobHit, Vector3.zero);
     }
