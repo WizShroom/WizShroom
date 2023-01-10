@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb498e5513c2728428961876e3ad2f29, type: 3}
+  m_Name: CreateBarrierEffect
+  m_EditorClassIdentifier: 
+  spellEffectType: 8
+  barrierPrefab: {fileID: 4743789292678881994, guid: 1510d0d26917ef242aea4907e93a6401, type: 3}
+  distance: 1
+  numObjects: 5
+  deleteTime: 5
+  maxAngle: 180
