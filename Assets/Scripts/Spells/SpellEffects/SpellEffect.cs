@@ -12,7 +12,7 @@ public class SpellEffect : ScriptableObject
 
     public virtual void OnFlightEffect(BulletController bulletController) { }
 
-    public virtual void OnCollisionEffect(MobController mobHit, BulletController bulletController) { }
+    public virtual void OnCollisionEffect(MobController mobHit, BulletController bulletController, Vector3 hitDirection) { }
 
     public virtual void OnCollisionEffect(GameObject objectHit, BulletController bulletController) { }
 

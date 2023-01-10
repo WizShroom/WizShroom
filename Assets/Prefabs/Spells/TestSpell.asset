@@ -16,9 +16,9 @@ MonoBehaviour:
   bulletPrefab: {fileID: 6404468398774599545, guid: b8149d5358170014f936e0c8478c083f, type: 3}
   castAmount: 1
   spellEffects:
-  - {fileID: 11400000, guid: e82ccb17fac0d4b4c9808d81c9f839f0, type: 2}
+  - {fileID: 11400000, guid: 207b21b838f170546bb9b135813155ba, type: 2}
   key: 1
   cooldown: 0.1
   cooldownRemaining: 0
   UIImage: {fileID: 21300000, guid: 9326bc8b277285748a97823d4b5c72fc, type: 3}
-  requireEnemy: 0
+  requireEnemy: 1

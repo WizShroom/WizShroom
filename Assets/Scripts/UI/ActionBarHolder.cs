@@ -7,7 +7,6 @@ public class ActionBarHolder : MonoBehaviour
     public List<ActionBarSlot> actionBarSlots;
     public PlayerMovement playerMovement;
     public PlayerController playerController;
-    public LayerMask groundLayer;
 
     private void Update()
     {
@@ -23,15 +22,8 @@ public class ActionBarHolder : MonoBehaviour
                     }
                     else
                     {
-                        Vector3 mousePos = Input.mousePosition;
-                        Ray ray = Camera.main.ScreenPointToRay(mousePos);
-                        RaycastHit hit;
-                        Vector3 hitPoint = default(Vector3);
-                        if (Physics.Raycast(ray, out hit, Mathf.Infinity, groundLayer))
-                        {
-                            hitPoint = hit.point;
-                        }
-                        Vector3 castDirection = (hitPoint - playerController.transform.position).normalized;
+                        Vector3 groundPosition = MouseGroundPositionSingleton.Instance.returnGroundPosition;
+                        Vector3 castDirection = (groundPosition - playerController.transform.position).normalized;
                         actionBarSlots[i].CastSpell(playerController, castDirection);
                     }
                 }

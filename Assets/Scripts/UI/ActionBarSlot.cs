@@ -10,7 +10,6 @@ public class ActionBarSlot : MonoBehaviour, IPointerUpHandler, IPointerDownHandl
     public AdvancedSpell equippedSpell;
     public Image slotSprite;
     public Image cooldownIndicator;
-    public LayerMask groundLayer;
 
     private void Start()
     {
@@ -38,15 +37,8 @@ public class ActionBarSlot : MonoBehaviour, IPointerUpHandler, IPointerDownHandl
         {
             if (!equippedSpell.requireEnemy)
             {
-                Vector3 mousePos = Input.mousePosition;
-                Ray ray = Camera.main.ScreenPointToRay(mousePos);
-                RaycastHit hit;
-                Vector3 hitPoint = default(Vector3);
-                if (Physics.Raycast(ray, out hit, Mathf.Infinity, groundLayer))
-                {
-                    hitPoint = hit.point;
-                }
-                Vector3 castDirection = (hitPoint - caster.transform.position).normalized;
+                Vector3 groundPosition = MouseGroundPositionSingleton.Instance.returnGroundPosition;
+                Vector3 castDirection = (groundPosition - caster.transform.position).normalized;
                 CastSpell(caster, castDirection);
                 return;
             }

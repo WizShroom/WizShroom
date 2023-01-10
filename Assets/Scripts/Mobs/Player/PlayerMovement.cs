@@ -68,18 +68,19 @@ public class PlayerMovement : MonoBehaviour
                     animator.CrossFade("MushIdleFront", 0, 0);
                 }
             }
-            if (!engagedEnemy)
-            {
-                Vector3 aimDirection = (destination - transform.position).normalized;
-
-                float angle = Mathf.Atan2(aimDirection.z, aimDirection.x) * Mathf.Rad2Deg;
-
-                pivotPoint.eulerAngles = new Vector3(0, -angle, 0);
-            }
         }
         if (engagedEnemy)
         {
             Vector3 aimDirection = (engagedEnemy.transform.position - transform.position).normalized;
+
+            float angle = Mathf.Atan2(aimDirection.z, aimDirection.x) * Mathf.Rad2Deg;
+
+            pivotPoint.eulerAngles = new Vector3(0, -angle, 0);
+        }
+        else
+        {
+            Vector3 groundPosition = MouseGroundPositionSingleton.Instance.returnGroundPosition;
+            Vector3 aimDirection = (groundPosition - transform.position).normalized;
 
             float angle = Mathf.Atan2(aimDirection.z, aimDirection.x) * Mathf.Rad2Deg;
 
