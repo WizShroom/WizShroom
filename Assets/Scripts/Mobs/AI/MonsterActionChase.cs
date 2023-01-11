@@ -7,7 +7,7 @@ public class MonsterActionChase : MonsterAction
 {
     public override void Act(MobAIController controller)
     {
-        controller.navMeshAgent.stoppingDistance = 1;
+        controller.navMeshAgent.stoppingDistance = 0;
         controller.navMeshAgent.destination = controller.target.transform.position;
         controller.navMeshAgent.isStopped = false;
         //AdjustAnimation(controller);
