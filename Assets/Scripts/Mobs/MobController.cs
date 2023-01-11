@@ -2,11 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class MobController : MonoBehaviour
 {
     public float health;
     public int maxHealth;
+
+    public float mana;
+    public int maxMana;
+
+    public Image healthBar;
+    public Image manaBar;
 
     public float experience;
     public float experienceOnKill;
@@ -86,6 +93,8 @@ public class MobController : MonoBehaviour
     private void UpdateMobValues()
     {
         health = maxHealth = GetStatValueByType(StatType.Health) * 10;
+        mana = maxMana = GetStatValueByType(StatType.Intelligence) * 10;
+        UpdateIndicators();
     }
 
     public virtual void TakeDamage(MobController damager, float incomingDamage = 1, DamageType damageType = DamageType.BRUTE)
@@ -138,11 +147,32 @@ public class MobController : MonoBehaviour
         }
 
         finalDamage = Mathf.Round(finalDamage * 100f) / 100f;
-
         health -= finalDamage;
+
+        UpdateIndicators();
+
         if (health <= 0 && canDie)
         {
             Death(damager);
+        }
+    }
+
+    public virtual void Heal(int amount)
+    {
+        health = Mathf.Min(health + amount, maxHealth);
+        UpdateIndicators();
+    }
+
+    public virtual void UpdateIndicators()
+    {
+        if (healthBar)
+        {
+            healthBar.fillAmount = health / maxHealth;
+        }
+
+        if (manaBar)
+        {
+            manaBar.fillAmount = mana / maxMana;
         }
     }
 

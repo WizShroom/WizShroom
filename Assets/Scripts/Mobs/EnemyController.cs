@@ -23,5 +23,11 @@ public class EnemyController : MobController
             mobAIController.lastAttackPosition = bullet.shooter.transform.position;
             TakeDamage(bullet.shooter, bullet.bulletDamage);
         }
+        if (other.CompareTag("Player"))
+        {
+            Debug.Log("triggered");
+            PlayerController playerController = other.GetComponent<PlayerController>();
+            playerController.TakeDamage(this, 5);
+        }
     }
 }
