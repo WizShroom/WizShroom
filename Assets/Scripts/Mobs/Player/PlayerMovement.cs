@@ -16,9 +16,12 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] Animator animator;
     PlayerAttack playerAttack;
+    PlayerController playerController;
 
     [HideInInspector] public EnemyController engagedEnemy;
     public GameObject enemyHighlight;
+
+    public Interactable toInteract;
 
     private void Start()
     {
@@ -27,6 +30,7 @@ public class PlayerMovement : MonoBehaviour
         agent.updateRotation = false;
         agent.updateUpAxis = false;
         playerAttack = GetComponent<PlayerAttack>();
+        playerController = GetComponent<PlayerController>();
     }
 
     private void Update()
@@ -41,6 +45,11 @@ public class PlayerMovement : MonoBehaviour
         {
             enemyHighlight.SetActive(false);
             DisengageEnemy();
+        }
+
+        if (toInteract && Vector3.Distance(toInteract.transform.position, transform.position) <= toInteract.distanceForInteraction * 1.2f)
+        {
+            Interact();
         }
 
         if (Vector3.Distance(destination, transform.position) > 0.3f)
@@ -125,11 +134,25 @@ public class PlayerMovement : MonoBehaviour
     public void DisengageEnemy()
     {
         engagedEnemy = null;
-        agent.stoppingDistance = 0;
     }
 
     public void AttackEnemy()
     {
         playerAttack.Attack(pivotPoint, shootPoint, engagedEnemy);
+    }
+
+    public void PrepareInteract(Interactable toInteract)
+    {
+        agent.stoppingDistance = toInteract.distanceForInteraction;
+        this.toInteract = toInteract;
+        SetDestination(toInteract.transform.position);
+    }
+
+    public void Interact()
+    {
+        toInteract.Interact(playerController);
+        agent.SetDestination(transform.position);
+        agent.stoppingDistance = 0;
+        toInteract = null;
     }
 }

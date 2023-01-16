@@ -26,4 +26,16 @@ public class PlayerController : MobController
         base.LevelUp();
         availableStatPoints += statPointPerLevel;
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Interactable"))
+        {
+            Interactable interactable = other.GetComponent<Interactable>();
+            if (!interactable.clickable && !interactable.disabled)
+            {
+                interactable.Interact(this);
+            }
+        }
+    }
 }

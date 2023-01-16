@@ -4,17 +4,6 @@ using UnityEngine;
 
 public class EnemyController : MobController
 {
-
-    public MobAIController mobAIController;
-
-    private void Update()
-    {
-        if (mobAIController)
-        {
-            mobAIController.CallUpdateState();
-        }
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("PlayerBullet"))
