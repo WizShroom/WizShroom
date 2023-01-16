@@ -31,16 +31,23 @@ public class MobSpawner : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
     }
 
-    public bool Spawn()
+    public bool Spawn(bool forced = false)
     {
 
-        if (Vector3.Distance(player.transform.position, transform.position) < 10)
+        if (mobsToSpawn.Count <= 0)
         {
             return false;
         }
 
+        if (!forced && player && Vector3.Distance(player.transform.position, transform.position) < 10)
+        {
+            return false;
+        }
+
+        int iteration = 0;
+        int maxIteration = 1000;
         Vector3 resultPosition = default(Vector3);
-        for (int i = 0; i < 10; i++)
+        while (resultPosition == default(Vector3) && iteration < maxIteration)
         {
             Vector3 randomPosition = Random.insideUnitSphere * spawnRadious + transform.position;
             randomPosition.y = 0;
@@ -48,8 +55,8 @@ public class MobSpawner : MonoBehaviour
             if (NavMesh.SamplePosition(randomPosition, out hit, 0.3f, NavMesh.AllAreas))
             {
                 resultPosition = randomPosition;
-                break;
             }
+            iteration++;
         }
 
         if (resultPosition == default(Vector3))
@@ -81,7 +88,7 @@ public class MobSpawner : MonoBehaviour
     {
         if (signal == signalToSpawn)
         {
-            Spawn();
+            Spawn(true);
         }
     }
 }

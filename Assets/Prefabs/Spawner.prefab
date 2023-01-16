@@ -47,6 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   color: {r: 0.04937911, g: 1, b: 0, a: 1}
   radius: 0.5
+  ourShape: 0
 --- !u!114 &1502157564027909241
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -59,8 +60,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86d7e53a592fe42428f0092d07c32ffd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mobsToSpawn:
-  - {fileID: 1105141657678752554, guid: 81828ddc4c15499469f2797794c249a6, type: 3}
+  mobsToSpawn: []
   spawnedMobs: []
   spawnRadious: 3
-  signalToSpawn: SpawnTest
+  signalToSpawn: 
+  ourManager: {fileID: 0}
+  player: {fileID: 0}
