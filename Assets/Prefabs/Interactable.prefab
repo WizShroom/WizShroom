@@ -49,6 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   color: {r: 1, g: 0, b: 0, a: 1}
   radius: 0.5
+  ourShape: 0
 --- !u!65 &8711025110659809934
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -88,12 +89,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clickable: 0
+  triggeredOnPass: 0
   distanceForInteraction: 1
   triggered: 0
   reversable: 0
   disabled: 0
   disableOnTrigger: 0
+  canSendSignal: 1
+  alwaysSendSignals: 1
+  hintImage: {fileID: 0}
   triggerOnSignals: []
   disableOnSignals: []
-  enableOnSIgnals: []
+  enableOnSignals: []
   signalsToSend: []

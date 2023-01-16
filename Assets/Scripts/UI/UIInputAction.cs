@@ -7,12 +7,14 @@ using TMPro;
 public class UIInputAction : MonoBehaviour
 {
 
-    public GameObject characterInfo;
     public StatUIHolder statUIHolder;
 
     private void Start()
     {
-        characterInfo.SetActive(false);
+        UIHandler.Instance.DisableUIByTypeList(new List<UIType>(){
+            UIType.CharacterInfo,
+            UIType.Dialogue,
+        });
     }
 
     private void Update()
@@ -20,7 +22,7 @@ public class UIInputAction : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.C))
         {
             statUIHolder.UpdateStatUIs();
-            characterInfo.SetActive(!characterInfo.activeSelf);
+            UIHandler.Instance.ToggleUIType(UIType.CharacterInfo);
         }
     }
 

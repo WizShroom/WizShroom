@@ -1,20 +1,7 @@
 using UnityEngine;
 
-public class MouseGroundPositionSingleton : MonoBehaviour
+public class MouseGroundPositionSingleton : SingletonMono<MouseGroundPositionSingleton>
 {
-    private static MouseGroundPositionSingleton instance;
-    public static MouseGroundPositionSingleton Instance
-    {
-        get
-        {
-            if (instance == null)
-            {
-                instance = FindObjectOfType<MouseGroundPositionSingleton>();
-            }
-            return instance;
-        }
-    }
-
     public Vector3 returnGroundPosition;
     public LayerMask groundLayer;
 

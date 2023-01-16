@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 [CreateAssetMenu(menuName = "PluggableAI/Actions/Patrol")]
 public class MonsterActionPatrol : MonsterAction
@@ -16,7 +17,11 @@ public class MonsterActionPatrol : MonsterAction
             {
                 Vector3 newDestination = Random.insideUnitSphere * 5 + controller.homeBase;
                 newDestination.y = 0;
-                controller.navMeshAgent.destination = newDestination;
+                controller.navMeshAgent.SetDestination(newDestination);
+                if (controller.navMeshAgent.pathStatus == NavMeshPathStatus.PathPartial)
+                {
+                    controller.navMeshAgent.SetDestination(controller.transform.position);
+                }
             }
 
             //AdjustAnimation(controller);
