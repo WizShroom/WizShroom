@@ -9,12 +9,14 @@ public class PlayerInputAction : MonoBehaviour
     public LayerMask interactableLayer;
 
     PlayerMovement playerMovement;
+    PlayerController playerController;
 
     public GameObject mouseGroundHighlight;
 
     private void Start()
     {
         playerMovement = GetComponent<PlayerMovement>();
+        playerController = GetComponent<PlayerController>();
     }
 
     void Update()
@@ -63,7 +65,11 @@ public class PlayerInputAction : MonoBehaviour
             }
             else if (hit.collider && 1 << hit.collider.gameObject.layer == interactableLayer.value)
             {
-                Debug.Log("Hit interactable");
+                Interactable interactable = hit.collider.GetComponent<Interactable>();
+                if (interactable.clickable && !interactable.disabled)
+                {
+                    playerMovement.PrepareInteract(interactable);
+                }
             }
         }
     }

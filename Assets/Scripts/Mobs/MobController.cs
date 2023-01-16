@@ -36,6 +36,8 @@ public class MobController : MonoBehaviour
     public List<Buff> buffs = new List<Buff>();
 
     [HideInInspector] public NavMeshAgent navMeshAgent;
+    [HideInInspector] public MobSpawner spawner;
+    [HideInInspector] public MobAIController mobAIController;
 
     private void Awake()
     {
@@ -49,7 +51,21 @@ public class MobController : MonoBehaviour
 
     public virtual void Initialize()
     {
+        MobAIController mobAIController;
+        TryGetComponent<MobAIController>(out mobAIController);
+        if (mobAIController)
+        {
+            this.mobAIController = mobAIController;
+        }
         UpdateMobValues();
+    }
+
+    private void Update()
+    {
+        if (mobAIController)
+        {
+            mobAIController.CallUpdateState();
+        }
     }
 
     public int GetStatValueByType(StatType statType)
@@ -181,6 +197,10 @@ public class MobController : MonoBehaviour
         if (damager)
         {
             damager.IncreaseExperience(experienceOnKill);
+        }
+        if (spawner)
+        {
+            spawner.RemoveMob(this);
         }
         Destroy(gameObject);
     }
