@@ -127,4 +127,15 @@ public class UIHandler : SingletonMono<UIHandler>
             yield return null;
         }
     }
+
+    public void UpdateLoadingScreen(float progress)
+    {
+        LoadingScreenType loadingScreen = (LoadingScreenType)GetUITypeControllerByType(UIType.LoadingScreen);
+        if (!loadingScreen)
+        {
+            return;
+        }
+        Image loadingBar = loadingScreen.loadingBar;
+        loadingBar.fillAmount = progress;
+    }
 }
