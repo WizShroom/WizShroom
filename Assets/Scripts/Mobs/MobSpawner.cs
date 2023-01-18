@@ -80,6 +80,10 @@ public class MobSpawner : MonoBehaviour
         if (spawnedMobs.Contains(mobController))
         {
             spawnedMobs.Remove(mobController);
+            if (!ourManager)
+            {
+                return;
+            }
             ourManager.DecreaseMobAmount();
         }
     }

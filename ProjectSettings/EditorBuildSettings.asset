@@ -9,6 +9,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Village.unity
     guid: 1ef16c68d11cbd948ac45c8855f42628
   - enabled: 1
-    path: Assets/Scenes/testscene.unity
-    guid: d987668fe64f1b344aa4bde5d01e7800
+    path: Assets/Scenes/TowerLevel1.unity
+    guid: e8381f3a6bb418e43bb0a7f709b79482
   m_configObjects: {}

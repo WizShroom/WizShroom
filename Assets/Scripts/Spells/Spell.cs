@@ -10,17 +10,18 @@ public class Spell : ScriptableObject
     public int castAmount = 1;
     public List<SpellEffect> spellEffects;
 
+    public AudioClip spellAudioShoot;
+
     public virtual void Cast(MobController caster, MobController target)
     {
         Vector3 castDirection = (target.transform.position - caster.transform.position).normalized;
-        Cast(caster, castDirection, target);
+        target.StartCoroutine(Cast(caster, castDirection, target));
     }
 
-    public virtual void Cast(MobController caster, Vector3 castDirection, MobController target = null)
+    public virtual IEnumerator Cast(MobController caster, Vector3 castDirection, MobController target = null)
     {
         for (int i = 0; i < Mathf.Max(castAmount, 1); i++)
         {
-
             switch (spellType)
             {
                 case SpellType.SELF:
@@ -70,6 +71,8 @@ public class Spell : ScriptableObject
                     }
                     break;
             }
+            SoundManager.Instance.PlaySoundOneShot(spellAudioShoot, caster.audioSource);
+            yield return new WaitForSeconds(0.1f);
         }
     }
 }
