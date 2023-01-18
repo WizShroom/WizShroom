@@ -35,6 +35,8 @@ public class MobController : MonoBehaviour
 
     public List<Buff> buffs = new List<Buff>();
 
+    public AudioSource audioSource;
+
     [HideInInspector] public NavMeshAgent navMeshAgent;
     [HideInInspector] public MobSpawner spawner;
     [HideInInspector] public MobAIController mobAIController;
@@ -51,6 +53,7 @@ public class MobController : MonoBehaviour
 
     public virtual void Initialize()
     {
+        audioSource = GetComponent<AudioSource>();
         MobAIController mobAIController;
         TryGetComponent<MobAIController>(out mobAIController);
         if (mobAIController)
@@ -169,8 +172,12 @@ public class MobController : MonoBehaviour
 
         if (health <= 0 && canDie)
         {
+            SoundManager.Instance.PlaySoundOneShot("death", audioSource);
             Death(damager);
+            return;
         }
+
+        SoundManager.Instance.PlaySoundOneShot("hitHurt", audioSource);
     }
 
     public virtual void Heal(int amount)
