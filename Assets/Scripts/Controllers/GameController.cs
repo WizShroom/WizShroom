@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.AI;
 
 public class GameController : SingletonMono<GameController>
 {
@@ -37,12 +38,37 @@ public class GameController : SingletonMono<GameController>
     {
         AsyncOperation operation = SceneManager.LoadSceneAsync(sceneName);
         UIHandler.Instance.EnableUIByType(UIType.LoadingScreen);
+
+        float totalProgress = 0;
         while (!operation.isDone)
         {
-            float progress = Mathf.Clamp01(operation.progress / .09f);
-            UIHandler.Instance.UpdateLoadingScreen(progress);
+            float sceneLoadProgress = Mathf.Clamp01(operation.progress / .09f);
+            totalProgress = sceneLoadProgress / 2;
+            UIHandler.Instance.UpdateLoadingScreen(totalProgress);
             yield return null;
         }
+
+        totalProgress = 0.5f;
+
+        Task dungeonGen = new Task(DungeonGenerator.Instance.GenerateDungeon());
+        while (dungeonGen.Running)
+        {
+            yield return null;
+        }
+
+        totalProgress += 0.25f;
+        UIHandler.Instance.UpdateLoadingScreen(totalProgress);
+
+        Task navMeshBuild = new Task(BuildNavmesh());
+        while (navMeshBuild.Running)
+        {
+            yield return null;
+        }
+        totalProgress += 0.25f;
+        UIHandler.Instance.UpdateLoadingScreen(totalProgress);
+        DungeonGenerator.Instance.PopulateDungeon();
+        yield return new WaitForSeconds(0.5f);
+        UIHandler.Instance.DisableUIByType(UIType.LoadingScreen);
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -50,10 +76,13 @@ public class GameController : SingletonMono<GameController>
         mush.navMeshAgent.Warp(new Vector3(0, 0, 0));
         mush.navMeshAgent.SetDestination(mush.transform.position);
         mush.navMeshAgent.isStopped = false;
+        Camera.main.transform.position = mush.transform.position + new Vector3(-5, 10, -5);
+    }
 
+    public IEnumerator BuildNavmesh()
+    {
         NavMeshSurfaceSingleton.Instance.navMeshSurface.BuildNavMesh();
-
-        UIHandler.Instance.DisableUIByType(UIType.LoadingScreen);
+        yield return null;
     }
 
 }
