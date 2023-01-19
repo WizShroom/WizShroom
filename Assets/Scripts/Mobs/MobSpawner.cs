@@ -66,6 +66,7 @@ public class MobSpawner : MonoBehaviour
 
         int randomIndex = Random.Range(0, mobsToSpawn.Count);
         GameObject spawnedMob = Instantiate(mobsToSpawn[randomIndex], resultPosition, Quaternion.identity);
+        spawnedMob.transform.SetParent(transform);
 
         MobController mobController = spawnedMob.GetComponent<MobController>();
 
