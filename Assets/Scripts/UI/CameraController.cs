@@ -21,14 +21,6 @@ public class CameraController : MonoBehaviour
     {
         targetPosition = player.position + hiddenOffset;
         Vector3 directionNormalized = (targetPosition - transform.position).normalized;
-        /* if (Vector3.Dot(directionNormalized, Vector3.right) + Vector3.Dot(directionNormalized, Vector3.forward) >= 0)
-        {
-            hiddenOffset = new Vector3(offset.x, offset.y, offset.z);
-        }
-        else
-        {
-            hiddenOffset = new Vector3(offset.x - 2, offset.y, offset.z - 2);
-        } */
 
         transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTime);
     }

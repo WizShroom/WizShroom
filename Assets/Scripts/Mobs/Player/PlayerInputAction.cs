@@ -13,6 +13,18 @@ public class PlayerInputAction : MonoBehaviour
 
     public GameObject mouseGroundHighlight;
 
+    bool paused;
+
+    private void Awake()
+    {
+        GameEventHandler.Instance.OnEventReceived += OnEventReceived;
+    }
+
+    private void OnDestroy()
+    {
+        GameEventHandler.Instance.OnEventReceived -= OnEventReceived;
+    }
+
     private void Start()
     {
         playerMovement = GetComponent<PlayerMovement>();
@@ -21,6 +33,10 @@ public class PlayerInputAction : MonoBehaviour
 
     void Update()
     {
+        if (paused)
+        {
+            return;
+        }
         Vector3 groundPosition = MouseGroundPositionSingleton.Instance.returnGroundPosition;
 
         bool isOverUI = UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject();
@@ -77,5 +93,27 @@ public class PlayerInputAction : MonoBehaviour
     void Attack(EnemyController enemyToAttack, bool followEnemy = false)
     {
         playerMovement.EngageEnemy(enemyToAttack, followEnemy);
+    }
+
+    public void OnEventReceived(GameObject source, EVENT receivedEvent)
+    {
+        if (receivedEvent == EVENT.PAUSED)
+        {
+            OnPaused();
+        }
+        if (receivedEvent == EVENT.RESUMED)
+        {
+            OnResumed();
+        }
+    }
+
+    public void OnPaused()
+    {
+        paused = true;
+    }
+
+    public void OnResumed()
+    {
+        paused = false;
     }
 }

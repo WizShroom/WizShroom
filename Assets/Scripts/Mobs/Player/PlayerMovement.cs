@@ -23,6 +23,18 @@ public class PlayerMovement : MonoBehaviour
 
     public Interactable toInteract;
 
+    bool paused;
+
+    private void Awake()
+    {
+        GameEventHandler.Instance.OnEventReceived += OnEventReceived;
+    }
+
+    private void OnDestroy()
+    {
+        GameEventHandler.Instance.OnEventReceived -= OnEventReceived;
+    }
+
     private void Start()
     {
         destination = transform.position;
@@ -35,6 +47,11 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        if (paused)
+        {
+            return;
+        }
+
         if (engagedEnemy)
         {
             AttackEnemy();
@@ -154,5 +171,27 @@ public class PlayerMovement : MonoBehaviour
         agent.SetDestination(transform.position);
         agent.stoppingDistance = 0;
         toInteract = null;
+    }
+
+    public void OnEventReceived(GameObject source, EVENT receivedEvent)
+    {
+        if (receivedEvent == EVENT.PAUSED)
+        {
+            OnPaused();
+        }
+        if (receivedEvent == EVENT.RESUMED)
+        {
+            OnResumed();
+        }
+    }
+
+    public void OnPaused()
+    {
+        paused = true;
+    }
+
+    public void OnResumed()
+    {
+        paused = false;
     }
 }

@@ -116,10 +116,10 @@ GameObject:
   - component: {fileID: 1105141657678752556}
   - component: {fileID: 1105141657678752562}
   - component: {fileID: 1105141657678752563}
-  - component: {fileID: 1105141657678752559}
-  - component: {fileID: 1105141657678752561}
   - component: {fileID: 1105141657678752564}
   - component: {fileID: -3759175200299433812}
+  - component: {fileID: 1105141657678752559}
+  - component: {fileID: 1105141657678752561}
   m_Layer: 7
   m_Name: BaseEnemy
   m_TagString: Enemy
@@ -179,79 +179,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.3, y: 0.5, z: 0.3}
---- !u!114 &1105141657678752559
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1105141657678752554}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72b688553b4c11e45815b02ea6a61b7d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 0
-  maxHealth: 0
-  mana: 0
-  maxMana: 0
-  healthBar: {fileID: 0}
-  manaBar: {fileID: 0}
-  experience: 0
-  experienceOnKill: 15
-  experienceForLevelUp: 0
-  currentLevel: 0
-  canDie: 1
-  castPosition: {fileID: 0}
-  stats:
-  - statName: Health
-    statValue: 1
-    statType: 0
-  - statName: Strength
-    statValue: 1
-    statType: 1
-  - statName: Agility
-    statValue: 1
-    statType: 2
-  - statName: Intelligence
-    statValue: 1
-    statType: 3
-  - statName: Wisdom
-    statValue: 1
-    statType: 4
-  - statName: Luck
-    statValue: 1
-    statType: 5
-  buffs: []
-  audioSource: {fileID: 0}
-  navMeshAgent: {fileID: 0}
-  spawner: {fileID: 0}
-  mobAIController: {fileID: 1105141657678752561}
---- !u!114 &1105141657678752561
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1105141657678752554}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 633ce83f1a47b5b46b6f77d79308c63b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animationPrefix: 
-  navMeshAgent: {fileID: 0}
-  currentState: {fileID: 11400000, guid: edffe47316db59745ae7afbb3561ae81, type: 2}
-  remainState: {fileID: 11400000, guid: 964388481582f934d9363b500f502d5d, type: 2}
-  patrolPoints: []
-  wayPointListIndex: 0
-  stateTimeElapsed: 0
-  target: {fileID: 0}
-  mobController: {fileID: 0}
-  animator: {fileID: 0}
-  homeBase: {x: 0, y: 0, z: 0}
-  lastAttackPosition: {x: 0, y: 0, z: 0}
-  aiActive: 1
 --- !u!54 &1105141657678752564
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -364,3 +291,76 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1105141657678752559
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1105141657678752554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72b688553b4c11e45815b02ea6a61b7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 0
+  maxHealth: 0
+  mana: 0
+  maxMana: 0
+  healthBar: {fileID: 0}
+  manaBar: {fileID: 0}
+  experience: 0
+  experienceOnKill: 15
+  experienceForLevelUp: 0
+  currentLevel: 0
+  canDie: 1
+  castPosition: {fileID: 0}
+  stats:
+  - statName: Health
+    statValue: 1
+    statType: 0
+  - statName: Strength
+    statValue: 1
+    statType: 1
+  - statName: Agility
+    statValue: 1
+    statType: 2
+  - statName: Intelligence
+    statValue: 1
+    statType: 3
+  - statName: Wisdom
+    statValue: 1
+    statType: 4
+  - statName: Luck
+    statValue: 1
+    statType: 5
+  buffs: []
+  audioSource: {fileID: 0}
+  navMeshAgent: {fileID: 0}
+  spawner: {fileID: 0}
+  mobAIController: {fileID: 1105141657678752561}
+--- !u!114 &1105141657678752561
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1105141657678752554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 633ce83f1a47b5b46b6f77d79308c63b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animationPrefix: 
+  navMeshAgent: {fileID: 0}
+  currentState: {fileID: 11400000, guid: edffe47316db59745ae7afbb3561ae81, type: 2}
+  remainState: {fileID: 11400000, guid: 964388481582f934d9363b500f502d5d, type: 2}
+  patrolPoints: []
+  wayPointListIndex: 0
+  stateTimeElapsed: 0
+  target: {fileID: 0}
+  mobController: {fileID: 0}
+  animator: {fileID: 0}
+  homeBase: {x: 0, y: 0, z: 0}
+  lastAttackPosition: {x: 0, y: 0, z: 0}
+  aiActive: 1

@@ -40,10 +40,27 @@ public class MobController : MonoBehaviour
     [HideInInspector] public NavMeshAgent navMeshAgent;
     [HideInInspector] public MobSpawner spawner;
     [HideInInspector] public MobAIController mobAIController;
+    [HideInInspector] public bool paused = false;
 
     private void Awake()
     {
+        OnAwake();
+    }
+
+    public virtual void OnAwake()
+    {
         navMeshAgent = GetComponent<NavMeshAgent>();
+        GameEventHandler.Instance.OnEventReceived += OnEventReceived;
+    }
+
+    private void OnDestroy()
+    {
+        OnObjDestroy();
+    }
+
+    public virtual void OnObjDestroy()
+    {
+        GameEventHandler.Instance.OnEventReceived -= OnEventReceived;
     }
 
     private void Start()
@@ -65,7 +82,7 @@ public class MobController : MonoBehaviour
 
     private void Update()
     {
-        if (mobAIController)
+        if (mobAIController && !paused)
         {
             mobAIController.CallUpdateState();
         }
@@ -263,5 +280,35 @@ public class MobController : MonoBehaviour
             return true;
         }
         return false;
+    }
+
+    public void OnEventReceived(GameObject source, EVENT eventReceived)
+    {
+        if (eventReceived == EVENT.PAUSED)
+        {
+            OnPauseGame();
+        }
+        if (eventReceived == EVENT.RESUMED)
+        {
+            OnResumeGame();
+        }
+    }
+
+    public void OnPauseGame()
+    {
+        paused = true;
+        if (navMeshAgent)
+        {
+            navMeshAgent.isStopped = true;
+        }
+    }
+
+    public void OnResumeGame()
+    {
+        paused = false;
+        if (navMeshAgent)
+        {
+            navMeshAgent.isStopped = false;
+        }
     }
 }

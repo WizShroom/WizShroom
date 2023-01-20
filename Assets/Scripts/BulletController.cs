@@ -17,12 +17,25 @@ public class BulletController : MonoBehaviour
 
     public bool bulletShot = false;
 
-    public Rigidbody rb;
+    [HideInInspector] public Rigidbody rb;
+    [HideInInspector] public Vector3 currentVelocity;
     public MobController target;
+
+    Vector3 pauseVelocity;
+    float trailTime = 0.1f;
+    float pauseTime;
+    float resumeTime;
+    bool paused = false;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        GameEventHandler.Instance.OnEventReceived += OnEventReceived;
+    }
+
+    private void OnDestroy()
+    {
+        GameEventHandler.Instance.OnEventReceived -= OnEventReceived;
     }
 
     public void InitializeEffects()
@@ -60,9 +73,17 @@ public class BulletController : MonoBehaviour
             return;
         }
 
+        currentVelocity = rb.velocity;
+
         if (Vector3.Distance(transform.position, shooter.transform.position) > destroyDistance)
         {
             Destroy(gameObject);
+            return;
+        }
+
+        if (paused)
+        {
+            return;
         }
 
         foreach (SpellEffect spellEffect in spellEffects)
@@ -133,6 +154,44 @@ public class BulletController : MonoBehaviour
             spellEffect.OnCollisionEffect(other.gameObject, this);
         }
         Destroy(gameObject);
+    }
+
+    public void OnEventReceived(GameObject source, EVENT eventReceived)
+    {
+        if (eventReceived == EVENT.PAUSED)
+        {
+            OnPauseGame();
+        }
+        if (eventReceived == EVENT.RESUMED)
+        {
+            OnResumeGame();
+        }
+    }
+
+    public void OnPauseGame()
+    {
+        paused = true;
+        pauseVelocity = rb.velocity;
+        rb.velocity = Vector3.zero;
+
+        if (TryGetComponent<TrailRenderer>(out TrailRenderer trail))
+        {
+            pauseTime = Time.time;
+            trail.time = Mathf.Infinity;
+        }
+    }
+
+    public void OnResumeGame()
+    {
+        paused = false;
+        rb.velocity = pauseVelocity;
+
+        if (TryGetComponent<TrailRenderer>(out TrailRenderer trail))
+        {
+            resumeTime = Time.time;
+            trail.time = (resumeTime - pauseTime) + trailTime;
+            Invoke("SetTrailTime", trailTime);
+        }
     }
 
 }

@@ -12,9 +12,12 @@ public class DialogueController : MonoBehaviour
     bool canActivate = false;
 
     [SerializeField] TextMeshProUGUI dialogueText;
-    [SerializeField] Dialogue startDialogue;
+    [SerializeField] Dialogue nextDialogue;
     [SerializeField] Image mushSprite;
     [SerializeField] Image talkerSprite;
+
+    bool talking = false;
+    bool canSkipDialogue = false;
 
     private void Start()
     {
@@ -23,6 +26,11 @@ public class DialogueController : MonoBehaviour
 
     private void Update()
     {
+        if (talking && !canSkipDialogue && Input.GetMouseButtonUp(0))
+        {
+            canSkipDialogue = true;
+        }
+
         if (disabled || !canActivate)
         {
             return;
@@ -43,7 +51,7 @@ public class DialogueController : MonoBehaviour
 
     public void StartDialogue()
     {
-        StartCoroutine(DisplayDialogue(startDialogue));
+        StartCoroutine(DisplayDialogue(nextDialogue));
     }
 
     public void StartDialogue(Dialogue _dialogue)
@@ -53,14 +61,17 @@ public class DialogueController : MonoBehaviour
 
     IEnumerator DisplayDialogue(Dialogue _dialogue)
     {
+        GameEventHandler.Instance.SendEvent(gameObject, EVENT.PAUSED);
         yield return null;
-        Debug.Log("Starting Dialogue Chain");
+
+        talking = true;
 
         UIHandler.Instance.EnableUIByType(UIType.Dialogue);
         UIHandler.Instance.DisableUIByType(UIType.InGame);
         foreach (DialogueSegment dialogue in _dialogue.dialogueSegments)
         {
-            dialogueText.text = dialogue.dialogueText;
+            string dialogueTextToDisplay = dialogue.dialogueText;
+            dialogueText.text = "";
             if (dialogue.isMushTalking)
             {
                 mushSprite.enabled = true;
@@ -73,16 +84,45 @@ public class DialogueController : MonoBehaviour
                 talkerSprite.enabled = true;
                 talkerSprite.sprite = dialogue.talkerSprite;
             }
-            yield return new WaitForSeconds(dialogue.dialogueDisplayTime);
+            for (int i = 0; i < dialogueTextToDisplay.Length; i++)
+            {
+                if (dialogue.clickable)
+                {
+                    if (canSkipDialogue)
+                    {
+                        canSkipDialogue = false;
+                        dialogueText.text = dialogueTextToDisplay;
+                        break;
+                    }
+                }
+                canSkipDialogue = false;
+                dialogueText.text += dialogueTextToDisplay[i];
+                yield return new WaitForSeconds(0.1f);
+            }
+            float startTime = Time.time;
+            while (Time.time - startTime < dialogue.dialogueDisplayTime)
+            {
+                if (dialogue.clickable)
+                {
+                    if (canSkipDialogue)
+                    {
+                        canSkipDialogue = false;
+                        break;
+                    }
+                }
+                canSkipDialogue = false;
+                yield return null;
+            }
 
             if (dialogue.sendSignalAfterPart)
             {
                 GameSignalHandler.Instance.SendSignal(gameObject, dialogue.signalToSend);
             }
+            yield return null;
         }
+        GameEventHandler.Instance.SendEvent(gameObject, EVENT.RESUMED);
         UIHandler.Instance.DisableUIByType(UIType.Dialogue);
         UIHandler.Instance.EnableUIByType(UIType.InGame);
-        Debug.Log("Ending Dialogue Chain");
     }
 
     private void OnTriggerEnter(Collider other)

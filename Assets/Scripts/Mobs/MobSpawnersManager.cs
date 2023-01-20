@@ -13,17 +13,25 @@ public class MobSpawnersManager : MonoBehaviour
     public float minSpawnDelay = 1;
     float elapsedTime;
 
+    bool paused;
+
     private void Awake()
     {
+        GameEventHandler.Instance.OnEventReceived += OnEventReceived;
         foreach (MobSpawner mobSpawner in mobSpawners)
         {
             mobSpawner.ConnectManager(this);
         }
     }
 
+    private void OnDestroy()
+    {
+        GameEventHandler.Instance.OnEventReceived -= OnEventReceived;
+    }
+
     private void Update()
     {
-        if (currentMobAmount >= maxMobAmount)
+        if (currentMobAmount >= maxMobAmount || paused)
         {
             return;
         }
@@ -46,5 +54,27 @@ public class MobSpawnersManager : MonoBehaviour
         currentMobAmount -= 1;
     }
 
+
+    public void OnEventReceived(GameObject source, EVENT receivedEvent)
+    {
+        if (receivedEvent == EVENT.PAUSED)
+        {
+            OnPaused();
+        }
+        if (receivedEvent == EVENT.RESUMED)
+        {
+            OnResumed();
+        }
+    }
+
+    public void OnPaused()
+    {
+        paused = true;
+    }
+
+    public void OnResumed()
+    {
+        paused = false;
+    }
 
 }

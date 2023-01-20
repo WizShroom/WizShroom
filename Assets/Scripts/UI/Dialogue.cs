@@ -22,6 +22,8 @@ public struct DialogueSegment
 
     public bool sendSignalAfterPart;
     public string signalToSend;
+
+    public bool clickable;
 }
 
 [System.Serializable]
