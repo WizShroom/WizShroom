@@ -77,7 +77,7 @@ public class DungeonGenerator : SingletonMono<DungeonGenerator>
 
             gridPositions.Add(nextGridPosition);
 
-            Vector3 nextPosition = startingRoomHolder.transform.position + DirectionToVector3(direction) * 16;
+            Vector3 nextPosition = startingRoomHolder.transform.position + DirectionToVector3(direction) * startingRoomHolder.roomSize;
             GameObject nextRoomEntry = Instantiate(roomsPrefab[Random.Range(0, roomsPrefab.Count)], gameObject.transform);
             nextRoomEntry.transform.position = nextPosition;
             RoomHolder nextRoomHolder = nextRoomEntry.GetComponent<RoomHolder>();

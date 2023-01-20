@@ -15,10 +15,15 @@ public class Spell : ScriptableObject
     public virtual void Cast(MobController caster, MobController target)
     {
         Vector3 castDirection = (target.transform.position - caster.transform.position).normalized;
-        target.StartCoroutine(Cast(caster, castDirection, target));
+        caster.StartCoroutine(CastCoroutine(caster, castDirection, target));
     }
 
-    public virtual IEnumerator Cast(MobController caster, Vector3 castDirection, MobController target = null)
+    public virtual void Cast(MobController caster, Vector3 castDirection)
+    {
+        caster.StartCoroutine(CastCoroutine(caster, castDirection));
+    }
+
+    public virtual IEnumerator CastCoroutine(MobController caster, Vector3 castDirection, MobController target = null)
     {
         for (int i = 0; i < Mathf.Max(castAmount, 1); i++)
         {

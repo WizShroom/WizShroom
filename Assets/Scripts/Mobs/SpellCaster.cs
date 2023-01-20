@@ -10,6 +10,18 @@ public class SpellCaster : MonoBehaviour
     MobController mobController;
     MobController player;
 
+    bool paused;
+
+    private void Awake()
+    {
+        GameEventHandler.Instance.OnEventReceived += OnEventReceived;
+    }
+
+    private void OnDestroy()
+    {
+        GameEventHandler.Instance.OnEventReceived -= OnEventReceived;
+    }
+
     private void Start()
     {
         mobController = GetComponent<MobController>();
@@ -37,6 +49,10 @@ public class SpellCaster : MonoBehaviour
 
     private void Update()
     {
+        if (paused)
+        {
+            return;
+        }
         for (int i = 0; i < spells.Count; i++)
         {
             if (Input.GetKeyDown(spells[i].key))
@@ -56,5 +72,27 @@ public class SpellCaster : MonoBehaviour
                 spells[i].cooldownRemaining = Mathf.Max(spells[i].cooldownRemaining - Time.deltaTime, 0f);
             }
         }
+    }
+
+    public void OnEventReceived(GameObject source, EVENT receivedEvent)
+    {
+        if (receivedEvent == EVENT.PAUSED)
+        {
+            OnPaused();
+        }
+        if (receivedEvent == EVENT.RESUMED)
+        {
+            OnResumed();
+        }
+    }
+
+    public void OnPaused()
+    {
+        paused = true;
+    }
+
+    public void OnResumed()
+    {
+        paused = false;
     }
 }

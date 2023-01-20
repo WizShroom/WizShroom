@@ -29782,7 +29782,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initialDirection: 1
   roomsPrefab:
-  - {fileID: 1245087348877364122, guid: 94278836f2e1ec245b1a0766eb6b0f16, type: 3}
+  - {fileID: 4724597291838832645, guid: 61b5d4bdbb2d5f74b9c7ff51e045a5fd, type: 3}
   startingRoom: {fileID: 4724597291838832645, guid: 61b5d4bdbb2d5f74b9c7ff51e045a5fd, type: 3}
   placedRooms: []
   gridPositions: []

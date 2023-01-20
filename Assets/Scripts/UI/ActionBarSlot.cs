@@ -11,6 +11,18 @@ public class ActionBarSlot : MonoBehaviour, IPointerUpHandler, IPointerDownHandl
     public Image slotSprite;
     public Image cooldownIndicator;
 
+    bool paused;
+
+    private void Awake()
+    {
+        GameEventHandler.Instance.OnEventReceived += OnEventReceived;
+    }
+
+    private void OnDestroy()
+    {
+        GameEventHandler.Instance.OnEventReceived -= OnEventReceived;
+    }
+
     private void Start()
     {
         UpdateSlot(true);
@@ -18,6 +30,11 @@ public class ActionBarSlot : MonoBehaviour, IPointerUpHandler, IPointerDownHandl
 
     private void Update()
     {
+        if (paused)
+        {
+            return;
+        }
+
         if (equippedSpell && equippedSpell.cooldownRemaining > 0)
         {
             equippedSpell.cooldownRemaining = Mathf.Max(equippedSpell.cooldownRemaining - Time.deltaTime, 0f);
@@ -136,5 +153,27 @@ public class ActionBarSlot : MonoBehaviour, IPointerUpHandler, IPointerDownHandl
         otherSlot.RemoveSpell();
         AddSpell(otherSpell);
         otherSlot.AddSpell(ourSpell);
+    }
+
+    public void OnEventReceived(GameObject source, EVENT receivedEvent)
+    {
+        if (receivedEvent == EVENT.PAUSED)
+        {
+            OnPaused();
+        }
+        if (receivedEvent == EVENT.RESUMED)
+        {
+            OnResumed();
+        }
+    }
+
+    public void OnPaused()
+    {
+        paused = true;
+    }
+
+    public void OnResumed()
+    {
+        paused = false;
     }
 }
