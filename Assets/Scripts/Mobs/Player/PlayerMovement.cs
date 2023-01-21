@@ -25,9 +25,11 @@ public class PlayerMovement : MonoBehaviour
 
     bool paused;
 
-    public AudioClip defaultWalkSound;
+    public AudioClip walkFirstSound;
+    public AudioClip walkSecondSound;
     public float timeBetweenSteps = 0.5f;
     float stepTimePassed = 0;
+    bool firstSound = true;
 
     private void Awake()
     {
@@ -73,7 +75,7 @@ public class PlayerMovement : MonoBehaviour
             Interact();
         }
 
-        if (Vector3.Distance(destination, transform.position) > 0.3f)
+        if (Vector3.Distance(destination, transform.position) > 0.5f)
         {
             Vector3 direction = (destination - transform.position).normalized;
             if (Mathf.Abs(direction.x) > Mathf.Abs(direction.z))
@@ -101,7 +103,16 @@ public class PlayerMovement : MonoBehaviour
 
             if (stepTimePassed > timeBetweenSteps * (1 / playerController.navMeshAgent.speed) * 3)
             {
-                SoundManager.Instance.PlaySoundOneShot(defaultWalkSound, playerController.audioSource);
+                if (firstSound)
+                {
+                    SoundManager.Instance.PlaySoundOneShot(walkFirstSound, playerController.audioSource);
+                    firstSound = false;
+                }
+                else
+                {
+                    SoundManager.Instance.PlaySoundOneShot(walkSecondSound, playerController.audioSource);
+                    firstSound = true;
+                }
                 stepTimePassed = 0;
             }
 
@@ -125,6 +136,8 @@ public class PlayerMovement : MonoBehaviour
 
             pivotPoint.eulerAngles = new Vector3(0, -angle, 0);
         }
+
+        firstSound = true;
     }
 
     public void MoveToPosition(Vector3 movePosition, bool disengageEnemy = true)

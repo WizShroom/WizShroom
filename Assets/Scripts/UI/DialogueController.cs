@@ -114,6 +114,13 @@ public class DialogueController : MonoBehaviour
                 yield return null;
             }
 
+            if (dialogue.waitForAnimation)
+            {
+                UIHandler.Instance.DisableUIByType(UIType.Dialogue);
+                yield return GameController.Instance.StartCoroutine(dialogue.animationToPlay.AnimateAll());
+                UIHandler.Instance.EnableUIByType(UIType.Dialogue);
+            }
+
             if (dialogue.sendSignalAfterPart)
             {
                 GameSignalHandler.Instance.SendSignal(gameObject, dialogue.signalToSend);

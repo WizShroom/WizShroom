@@ -16,7 +16,7 @@ public class SoundManager : SingletonMono<SoundManager>
             return;
         }
 
-        source.PlayOneShot(clipToPlay);
+        source.PlayOneShot(clipToPlay, 0.5f);
     }
 
     public void PlaySoundOneShot(AudioClip clipToPlay, AudioSource source)
@@ -25,7 +25,7 @@ public class SoundManager : SingletonMono<SoundManager>
         {
             return;
         }
-        source.PlayOneShot(clipToPlay);
+        source.PlayOneShot(clipToPlay, 0.5f);
     }
 
     public AudioClip GetAudioClip(string soundToGet)

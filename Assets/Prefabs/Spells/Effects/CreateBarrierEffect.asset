@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: CreateBarrierEffect
   m_EditorClassIdentifier: 
   spellEffectType: 8
-  barrierPrefab: {fileID: 4743789292678881994, guid: 1510d0d26917ef242aea4907e93a6401, type: 3}
+  barrierPrefab: {fileID: 919132149155446097, guid: 773cc9070110c9e48ada42745923616c, type: 3}
   distance: 1
   numObjects: 5
   deleteTime: 5

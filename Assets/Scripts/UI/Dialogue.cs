@@ -20,6 +20,9 @@ public struct DialogueSegment
     public Sprite mushSprite;
     public List<DialogueChoice> dialogueChoices;
 
+    public bool waitForAnimation;
+    public ScriptedAnimation animationToPlay;
+
     public bool sendSignalAfterPart;
     public string signalToSend;
 

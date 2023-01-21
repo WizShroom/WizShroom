@@ -1,0 +1,127 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 799140e4880c2f146b17f4037ae61f46, type: 3}
+  m_Name: HunterDialogueInitial
+  m_EditorClassIdentifier: 
+  dialogueSegments:
+  - dialogueText: Hey you!
+    dialogueDisplayTime: 2
+    isMushTalking: 0
+    talkerSprite: {fileID: 21300000, guid: f95f697d66d238446b1ab717def09945, type: 3}
+    mushSprite: {fileID: 0}
+    dialogueChoices: []
+    waitForAnimation: 0
+    animationToPlay: {fileID: 0}
+    sendSignalAfterPart: 0
+    signalToSend: 
+    clickable: 1
+  - dialogueText: Come here!
+    dialogueDisplayTime: 2
+    isMushTalking: 0
+    talkerSprite: {fileID: 21300000, guid: f95f697d66d238446b1ab717def09945, type: 3}
+    mushSprite: {fileID: 0}
+    dialogueChoices: []
+    waitForAnimation: 1
+    animationToPlay: {fileID: 11400000, guid: 1bb4becdb9869e144a587c85798b0164, type: 2}
+    sendSignalAfterPart: 1
+    signalToSend: 
+    clickable: 1
+  - dialogueText: Who are you?
+    dialogueDisplayTime: 2
+    isMushTalking: 1
+    talkerSprite: {fileID: -352181154, guid: bec2eadc449eb2b4d81174c272d96e4b, type: 3}
+    mushSprite: {fileID: -978265130, guid: 1b198aba7297e4444b95eaf7364078bc, type: 3}
+    dialogueChoices: []
+    waitForAnimation: 0
+    animationToPlay: {fileID: 0}
+    sendSignalAfterPart: 0
+    signalToSend: 
+    clickable: 1
+  - dialogueText: I'm Hunter, a Scavenger like you
+    dialogueDisplayTime: 2
+    isMushTalking: 0
+    talkerSprite: {fileID: -352181154, guid: bec2eadc449eb2b4d81174c272d96e4b, type: 3}
+    mushSprite: {fileID: 0}
+    dialogueChoices: []
+    waitForAnimation: 0
+    animationToPlay: {fileID: 0}
+    sendSignalAfterPart: 0
+    signalToSend: 
+    clickable: 1
+  - dialogueText: Where am i?
+    dialogueDisplayTime: 2
+    isMushTalking: 1
+    talkerSprite: {fileID: -352181154, guid: bec2eadc449eb2b4d81174c272d96e4b, type: 3}
+    mushSprite: {fileID: -978265130, guid: 1b198aba7297e4444b95eaf7364078bc, type: 3}
+    dialogueChoices: []
+    waitForAnimation: 0
+    animationToPlay: {fileID: 0}
+    sendSignalAfterPart: 0
+    signalToSend: 
+    clickable: 1
+  - dialogueText: We are at the base of the Tower, i suppose you know what that is
+    dialogueDisplayTime: 2
+    isMushTalking: 0
+    talkerSprite: {fileID: -352181154, guid: bec2eadc449eb2b4d81174c272d96e4b, type: 3}
+    mushSprite: {fileID: -978265130, guid: 1b198aba7297e4444b95eaf7364078bc, type: 3}
+    dialogueChoices: []
+    waitForAnimation: 0
+    animationToPlay: {fileID: 0}
+    sendSignalAfterPart: 0
+    signalToSend: 
+    clickable: 1
+  - dialogueText: Uh.. no, not really, I was with my fami... Wait! Where are them?
+    dialogueDisplayTime: 2
+    isMushTalking: 1
+    talkerSprite: {fileID: -352181154, guid: bec2eadc449eb2b4d81174c272d96e4b, type: 3}
+    mushSprite: {fileID: -978265130, guid: 1b198aba7297e4444b95eaf7364078bc, type: 3}
+    dialogueChoices: []
+    waitForAnimation: 0
+    animationToPlay: {fileID: 0}
+    sendSignalAfterPart: 0
+    signalToSend: 
+    clickable: 1
+  - dialogueText: Your family? I haven't seen anyone else in 3 years... They might
+      be dead in the Tower for what i know
+    dialogueDisplayTime: 2
+    isMushTalking: 0
+    talkerSprite: {fileID: -352181154, guid: bec2eadc449eb2b4d81174c272d96e4b, type: 3}
+    mushSprite: {fileID: -978265130, guid: 1b198aba7297e4444b95eaf7364078bc, type: 3}
+    dialogueChoices: []
+    waitForAnimation: 0
+    animationToPlay: {fileID: 0}
+    sendSignalAfterPart: 0
+    signalToSend: 
+    clickable: 1
+  - dialogueText: My family's not dead! And if they are in the Tower i'll find them!
+    dialogueDisplayTime: 2
+    isMushTalking: 1
+    talkerSprite: {fileID: -352181154, guid: bec2eadc449eb2b4d81174c272d96e4b, type: 3}
+    mushSprite: {fileID: -978265130, guid: 1b198aba7297e4444b95eaf7364078bc, type: 3}
+    dialogueChoices: []
+    waitForAnimation: 0
+    animationToPlay: {fileID: 0}
+    sendSignalAfterPart: 0
+    signalToSend: 
+    clickable: 1
+  - dialogueText: Suit yourself. I'll open the portal to the lower level of the tower.
+      I'll be here for when you'll be back crawling... if you'll be back...
+    dialogueDisplayTime: 2
+    isMushTalking: 0
+    talkerSprite: {fileID: -352181154, guid: bec2eadc449eb2b4d81174c272d96e4b, type: 3}
+    mushSprite: {fileID: -978265130, guid: 1b198aba7297e4444b95eaf7364078bc, type: 3}
+    dialogueChoices: []
+    waitForAnimation: 0
+    animationToPlay: {fileID: 0}
+    sendSignalAfterPart: 1
+    signalToSend: EnableMainPortal
+    clickable: 1
