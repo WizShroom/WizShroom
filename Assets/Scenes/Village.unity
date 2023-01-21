@@ -72379,6 +72379,10 @@ PrefabInstance:
       propertyPath: enemyHighlight
       value: 
       objectReference: {fileID: 1074035021}
+    - target: {fileID: 5619086180087942847, guid: e9db529bfa95c0942bf386120901e6c5, type: 3}
+      propertyPath: defaultWalkSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 47cc343953f88d04daf3fccbd710331a, type: 3}
     - target: {fileID: 5619086180087942848, guid: e9db529bfa95c0942bf386120901e6c5, type: 3}
       propertyPath: mouseGroundHighlight
       value: 

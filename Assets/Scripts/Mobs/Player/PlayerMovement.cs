@@ -25,6 +25,10 @@ public class PlayerMovement : MonoBehaviour
 
     bool paused;
 
+    public AudioClip defaultWalkSound;
+    public float timeBetweenSteps = 0.5f;
+    float stepTimePassed = 0;
+
     private void Awake()
     {
         GameEventHandler.Instance.OnEventReceived += OnEventReceived;
@@ -94,6 +98,15 @@ public class PlayerMovement : MonoBehaviour
                     animator.CrossFade("MushIdleFront", 0, 0);
                 }
             }
+
+            if (stepTimePassed > timeBetweenSteps * (1 / playerController.navMeshAgent.speed) * 3)
+            {
+                SoundManager.Instance.PlaySoundOneShot(defaultWalkSound, playerController.audioSource);
+                stepTimePassed = 0;
+            }
+
+            stepTimePassed += Time.deltaTime;
+
         }
         if (engagedEnemy)
         {
