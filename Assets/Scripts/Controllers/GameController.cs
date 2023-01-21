@@ -10,6 +10,8 @@ public class GameController : SingletonMono<GameController>
 
     public PlayerController mush;
 
+    public List<AssignID> entitiesID;
+
     private void Awake()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -26,6 +28,22 @@ public class GameController : SingletonMono<GameController>
             UIType.InGame,
         });
         //NavMeshSurfaceSingleton.Instance.navMeshSurface.BuildNavMesh();
+    }
+
+    public GameObject GetGameObjectFromID(string ID)
+    {
+        GameObject returnGameobject = null;
+
+        foreach (AssignID idToCheck in entitiesID)
+        {
+            if (idToCheck.ID == ID)
+            {
+                returnGameobject = idToCheck.gameObject;
+                break;
+            }
+        }
+
+        return returnGameobject;
     }
 
     public void LoadScene(string sceneName)

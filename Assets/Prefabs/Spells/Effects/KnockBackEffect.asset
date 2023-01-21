@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: KnockBackEffect
   m_EditorClassIdentifier: 
   spellEffectType: 8
-  knockBackStrength: 10
-  id: 
+  knockBackStrength: 30
+  id: KnockBack
