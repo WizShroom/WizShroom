@@ -42,6 +42,8 @@ public class MobController : MonoBehaviour
     [HideInInspector] public MobAIController mobAIController;
     [HideInInspector] public bool paused = false;
 
+    bool disabled = false;
+
     private void Awake()
     {
         OnAwake();
@@ -82,6 +84,10 @@ public class MobController : MonoBehaviour
 
     private void Update()
     {
+        if (disabled)
+        {
+            return;
+        }
         if (mobAIController && !paused)
         {
             mobAIController.CallUpdateState();

@@ -19,6 +19,16 @@ public class DungeonGenerator : SingletonMono<DungeonGenerator>
 
     public int maxSize = 5;
 
+    public bool testing = false;
+
+    private void Start()
+    {
+        if (testing)
+        {
+            StartCoroutine(GenerateDungeon());
+        }
+    }
+
     public IEnumerator GenerateDungeon()
     {
         GameObject startingRoomEntity = Instantiate(startingRoom, gameObject.transform);
@@ -82,6 +92,8 @@ public class DungeonGenerator : SingletonMono<DungeonGenerator>
             nextRoomEntry.transform.position = nextPosition;
             RoomHolder nextRoomHolder = nextRoomEntry.GetComponent<RoomHolder>();
             placedRooms.Add(nextRoomHolder);
+
+            RandomRoomRotation(nextRoomHolder);
 
             startingRoomHolder.connectedRooms.Add(nextRoomHolder);
             nextRoomHolder.connectedRooms.Add(startingRoomHolder);
@@ -155,6 +167,24 @@ public class DungeonGenerator : SingletonMono<DungeonGenerator>
                 room.spawners[Random.Range(0, room.spawners.Count)].Spawn(true);
             }
         }
+    }
+
+    public void RandomRoomRotation(RoomHolder roomToRotate)
+    {
+        int randomRotation = Random.Range(0, 4);
+
+        randomRotation *= 90;
+
+        foreach (RoomConnection connector in roomToRotate.roomConnectors)
+        {
+            connector.ourDir = RotateDirectionClockWise(randomRotation, connector.ourDir);
+        }
+        foreach (RoomSeal seal in roomToRotate.roomSeals)
+        {
+            seal.ourDir = RotateDirectionClockWise(randomRotation, seal.ourDir);
+        }
+
+        roomToRotate.transform.rotation = Quaternion.Euler(0, randomRotation, 0);
     }
 
     public DIRECTION GetOppositeDirection(DIRECTION direction)
@@ -237,6 +267,70 @@ public class DungeonGenerator : SingletonMono<DungeonGenerator>
             default:
                 return false;
         }
+    }
+
+    public DIRECTION RotateDirectionClockWise(int rotationAmount, DIRECTION directionToSet)
+    {
+        switch (rotationAmount)
+        {
+            case 90:
+                if (directionToSet == DIRECTION.NORTH)
+                {
+                    return DIRECTION.EAST;
+                }
+                else if (directionToSet == DIRECTION.EAST)
+                {
+                    return DIRECTION.SOUTH;
+                }
+                else if (directionToSet == DIRECTION.SOUTH)
+                {
+                    return DIRECTION.WEST;
+                }
+                else if (directionToSet == DIRECTION.WEST)
+                {
+                    return DIRECTION.NORTH;
+                }
+                break;
+
+            case 180:
+                if (directionToSet == DIRECTION.NORTH)
+                {
+                    return DIRECTION.SOUTH;
+                }
+                else if (directionToSet == DIRECTION.EAST)
+                {
+                    return DIRECTION.WEST;
+                }
+                else if (directionToSet == DIRECTION.SOUTH)
+                {
+                    return DIRECTION.NORTH;
+                }
+                else if (directionToSet == DIRECTION.WEST)
+                {
+                    return DIRECTION.EAST;
+                }
+                break;
+
+            case 270:
+                if (directionToSet == DIRECTION.NORTH)
+                {
+                    return DIRECTION.WEST;
+                }
+                else if (directionToSet == DIRECTION.EAST)
+                {
+                    return DIRECTION.NORTH;
+                }
+                else if (directionToSet == DIRECTION.SOUTH)
+                {
+                    return DIRECTION.EAST;
+                }
+                else if (directionToSet == DIRECTION.WEST)
+                {
+                    return DIRECTION.SOUTH;
+                }
+                break;
+        }
+        return directionToSet;
     }
 
 }

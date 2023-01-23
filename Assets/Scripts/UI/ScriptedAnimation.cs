@@ -19,6 +19,12 @@ public class ScriptedAnimation : ScriptableObject
             {
                 yield return GameController.Instance.StartCoroutine(AnimateActor(animationActor));
             }
+
+            List<AnimationEffect> animationEffects = animation.animationEffects;
+            foreach (AnimationEffect animationEffect in animationEffects)
+            {
+                yield return GameController.Instance.StartCoroutine(AnimateEffect(animationEffect));
+            }
         }
     }
 
@@ -47,9 +53,12 @@ public class ScriptedAnimation : ScriptableObject
                 actor.navMeshAgent.SetDestination(actor.navMeshAgent.transform.position);
             }
         }
+        yield return null;
+    }
 
-
-
+    public IEnumerator AnimateEffect(AnimationEffect animationEffect)
+    {
+        Instantiate(animationEffect.effectToPlay, animationEffect.positionToPlayAt, Quaternion.identity);
         yield return null;
     }
 
@@ -60,6 +69,7 @@ public class ScriptedAnimation : ScriptableObject
 public struct Animation
 {
     public List<AnimationActor> animationActors;
+    public List<AnimationEffect> animationEffects;
 }
 
 [System.Serializable]
@@ -74,4 +84,11 @@ public struct AnimationActor
     public List<Vector3> pathToFollow;
     public float speedToDestination;
     public bool resetToInitialPosition;
+}
+
+[System.Serializable]
+public struct AnimationEffect
+{
+    public GameObject effectToPlay;
+    public Vector3 positionToPlayAt;
 }

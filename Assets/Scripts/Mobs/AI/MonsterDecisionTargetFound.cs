@@ -9,14 +9,27 @@ public class MonsterDecisionTargetFound : MonsterDecision
     {
         Vector3 direction = (controller.target.transform.position - controller.transform.position).normalized;
         RaycastHit hit;
-        bool targetFound = true;
-        Physics.Raycast(controller.transform.position, direction, out hit, 5);
-        if (hit.collider == null || hit.collider.gameObject.tag != "Player")
+        bool targetFound = false;
+
+        for (int i = -1; i <= 1; i++)
         {
-            targetFound = false;
+            Vector3 rayDirection = Quaternion.AngleAxis(i * 15, Vector3.up) * direction;
+            if (Physics.Raycast(controller.transform.position, rayDirection, out hit, 5))
+            {
+                if (hit.collider != null && hit.collider.gameObject.tag == "Player")
+                {
+                    targetFound = true;
+                    break;
+                }
+            }
         }
         if (targetFound && Vector3.Distance(controller.target.transform.position, controller.transform.position) <= 5)
         {
+            if (!controller.targetFound)
+            {
+                controller.targetFound = true;
+                SoundManager.Instance.PlaySoundOneShot("enemyNotice", controller.mobController.audioSource);
+            }
             return true;
         }
         else

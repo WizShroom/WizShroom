@@ -12,16 +12,37 @@ public class DialogueController : MonoBehaviour
     bool canActivate = false;
 
     [SerializeField] TextMeshProUGUI dialogueText;
-    [SerializeField] Dialogue nextDialogue;
     [SerializeField] Image mushSprite;
     [SerializeField] Image talkerSprite;
+
+    [SerializeField] Dialogue nextDialogue;
 
     bool talking = false;
     bool canSkipDialogue = false;
 
+    public bool triggeredBySignal = false;
+    public string signalToTrigger;
+
+    private void Awake()
+    {
+        GameSignalHandler.Instance.OnSignalReceived += OnSignalReceived;
+    }
+
+    private void OnDestroy()
+    {
+        GameSignalHandler.Instance.OnSignalReceived -= OnSignalReceived;
+    }
+
     private void Start()
     {
-        hintImage.SetActive(false);
+        DialogueScreenType dialogueScreenType = (DialogueScreenType)UIHandler.Instance.GetUITypeControllerByType(UIType.Dialogue);
+        dialogueText = dialogueScreenType.dialogueText;
+        mushSprite = dialogueScreenType.mushTalking;
+        talkerSprite = dialogueScreenType.otherTalking;
+        if (hintImage)
+        {
+            hintImage.SetActive(false);
+        }
     }
 
     private void Update()
@@ -114,11 +135,18 @@ public class DialogueController : MonoBehaviour
                 yield return null;
             }
 
-            if (dialogue.waitForAnimation)
+            if (dialogue.animationToPlay)
             {
-                UIHandler.Instance.DisableUIByType(UIType.Dialogue);
-                yield return GameController.Instance.StartCoroutine(dialogue.animationToPlay.AnimateAll());
-                UIHandler.Instance.EnableUIByType(UIType.Dialogue);
+                if (dialogue.waitForAnimation)
+                {
+                    UIHandler.Instance.DisableUIByType(UIType.Dialogue);
+                    yield return GameController.Instance.StartCoroutine(dialogue.animationToPlay.AnimateAll());
+                    UIHandler.Instance.EnableUIByType(UIType.Dialogue);
+                }
+                else
+                {
+                    GameController.Instance.StartCoroutine(dialogue.animationToPlay.AnimateAll());
+                }
             }
 
             if (dialogue.sendSignalAfterPart)
@@ -170,6 +198,14 @@ public class DialogueController : MonoBehaviour
             {
                 hintImage.SetActive(false);
             }
+        }
+    }
+
+    public void OnSignalReceived(GameObject source, string signalReceived)
+    {
+        if (signalReceived == signalToTrigger)
+        {
+            StartDialogue();
         }
     }
 }
