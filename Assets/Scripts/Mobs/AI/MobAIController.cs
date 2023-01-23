@@ -22,6 +22,8 @@ public class MobAIController : MonoBehaviour
 
     public bool aiActive = true;
 
+    public bool targetFound = false;
+
     private void Awake()
     {
         mobController = GetComponent<MobController>();
