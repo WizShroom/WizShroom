@@ -13,6 +13,17 @@ MonoBehaviour:
   m_Name: HunterDialogueInitial
   m_EditorClassIdentifier: 
   dialogueSegments:
+  - dialogueText: 
+    dialogueDisplayTime: 0
+    isMushTalking: 0
+    talkerSprite: {fileID: -352181154, guid: bec2eadc449eb2b4d81174c272d96e4b, type: 3}
+    mushSprite: {fileID: -978265130, guid: 1b198aba7297e4444b95eaf7364078bc, type: 3}
+    dialogueChoices: []
+    waitForAnimation: 1
+    animationToPlay: {fileID: 11400000, guid: b8d5957f53761e3408590be83938abf0, type: 2}
+    sendSignalAfterPart: 0
+    signalToSend: EnableMainPortal
+    clickable: 0
   - dialogueText: Hey you!
     dialogueDisplayTime: 2
     isMushTalking: 0

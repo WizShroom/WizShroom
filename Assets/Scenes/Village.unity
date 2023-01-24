@@ -72703,7 +72703,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5619086180087942856, guid: e9db529bfa95c0942bf386120901e6c5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -6.5
+      value: -5
       objectReference: {fileID: 0}
     - target: {fileID: 5619086180087942856, guid: e9db529bfa95c0942bf386120901e6c5, type: 3}
       propertyPath: m_LocalPosition.y
@@ -72711,7 +72711,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5619086180087942856, guid: e9db529bfa95c0942bf386120901e6c5, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.5
+      value: -5
       objectReference: {fileID: 0}
     - target: {fileID: 5619086180087942856, guid: e9db529bfa95c0942bf386120901e6c5, type: 3}
       propertyPath: m_LocalRotation.w
@@ -73202,6 +73202,8 @@ MonoBehaviour:
   spawner: {fileID: 0}
   mobAIController: {fileID: 0}
   paused: 0
+  timeBetweenAttacks: 1
+  elapsedAttackTime: 0
   enableOnTrigger: 1
   enableDialogueOnTrigger: 1
   signalToTrigger: ActivateHunter

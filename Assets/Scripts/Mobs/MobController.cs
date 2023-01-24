@@ -44,6 +44,9 @@ public class MobController : MonoBehaviour
 
     bool disabled = false;
 
+    [HideInInspector] public float timeBetweenAttacks = 1f;
+    [HideInInspector] public float elapsedAttackTime;
+
     private void Awake()
     {
         OnAwake();
@@ -93,6 +96,8 @@ public class MobController : MonoBehaviour
             mobAIController.CallUpdateState();
         }
     }
+
+    public virtual void Attack(Vector3 attackDirection) { }
 
     public int GetStatValueByType(StatType statType)
     {
