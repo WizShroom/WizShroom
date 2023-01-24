@@ -36,8 +36,6 @@ public class ScriptedAnimation : ScriptableObject
 
         actor.navMeshAgent.speed = actor.speedToDestination;
 
-        actor.navMeshAgent.isStopped = false;
-
         if (actor.onlyDestination)
         {
             actor.navMeshAgent.SetDestination(actor.destination);

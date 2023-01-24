@@ -11,7 +11,6 @@ public class MonsterActionPatrol : MonsterAction
         if (controller.patrolPoints.Count == 0)
         {
             controller.navMeshAgent.stoppingDistance = 0;
-            controller.navMeshAgent.isStopped = false;
 
             if (controller.navMeshAgent.remainingDistance <= controller.navMeshAgent.stoppingDistance && !controller.navMeshAgent.pathPending)
             {
@@ -35,7 +34,6 @@ public class MonsterActionPatrol : MonsterAction
         }
 
         controller.navMeshAgent.destination = controller.patrolPoints[controller.wayPointListIndex].transform.position;
-        controller.navMeshAgent.isStopped = false;
 
         if (controller.navMeshAgent.remainingDistance <= controller.navMeshAgent.stoppingDistance && !controller.navMeshAgent.pathPending)
         {

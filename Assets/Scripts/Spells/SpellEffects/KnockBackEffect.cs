@@ -17,6 +17,8 @@ public class KnockBackEffect : SpellEffect
         mobHit.ApplyBuff(knockBackDebuff);
 
         mobHit.navMeshAgent.isStopped = true;
-        mobHit.navMeshAgent.velocity = hitDirection * knockBackStrength;
+        Vector3 knockBackDirection = (mobHit.transform.position - bulletController.shooter.transform.position).normalized;
+        mobHit.navMeshAgent.velocity = knockBackDirection * knockBackStrength;
+        GameController.Instance.StartCoroutine(ResetStoppedAgent(mobHit, 0.3f));
     }
 }

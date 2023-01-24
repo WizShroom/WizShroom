@@ -17,7 +17,6 @@ public class MonsterActionFindOut : MonsterAction
         }
         controller.navMeshAgent.stoppingDistance = 0;
         controller.navMeshAgent.SetDestination(controller.lastAttackPosition);
-        controller.navMeshAgent.isStopped = false;
         //AdjustAnimation(controller);
     }
 }
