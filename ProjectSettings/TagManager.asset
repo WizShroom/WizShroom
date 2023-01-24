@@ -5,10 +5,11 @@ TagManager:
   serializedVersion: 2
   tags:
   - PlayerBullet
-  - Enemy
   - ActionBarSlot
   - Wall
   - Interactable
+  - Mob
+  - Enemy
   layers:
   - Default
   - TransparentFX

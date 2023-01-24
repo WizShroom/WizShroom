@@ -12,6 +12,8 @@ public class Spell : ScriptableObject
 
     public AudioClip spellAudioShoot;
 
+    public float chargeTime = 0;
+
     public virtual void Cast(MobController caster, MobController target)
     {
         Vector3 castDirection = (target.transform.position - caster.transform.position).normalized;
@@ -25,6 +27,18 @@ public class Spell : ScriptableObject
 
     public virtual IEnumerator CastCoroutine(MobController caster, Vector3 castDirection, MobController target = null)
     {
+
+        if (chargeTime > 0)
+        {
+            float resetTime = chargeTime;
+            while (chargeTime > 0)
+            {
+                chargeTime -= Time.deltaTime;
+                yield return null;
+            }
+            chargeTime = resetTime;
+        }
+
         for (int i = 0; i < Mathf.Max(castAmount, 1); i++)
         {
             switch (spellType)

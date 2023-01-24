@@ -237,7 +237,12 @@ public class MobController : MonoBehaviour
         {
             spawner.RemoveMob(this);
         }
-        Destroy(gameObject);
+        disabled = true;
+        GetComponentInChildren<Renderer>().enabled = false;
+        GetComponent<Collider>().enabled = false;
+        navMeshAgent.isStopped = true;
+        navMeshAgent.updatePosition = false;
+        Destroy(gameObject, 5);
     }
 
     public virtual void IncreaseExperience(float increaseAmount)
