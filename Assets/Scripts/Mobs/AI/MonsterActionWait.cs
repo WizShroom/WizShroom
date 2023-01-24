@@ -8,6 +8,13 @@ public class MonsterActionWait : MonsterAction
     public override void Act(MobAIController controller)
     {
         controller.navMeshAgent.isStopped = true;
+        GameController.Instance.StartCoroutine(ResetStoppedAgent(controller, 0.3f));
         //AdjustAnimation(controller);
+    }
+
+    public IEnumerator ResetStoppedAgent(MobAIController mobToReset, float timeToWait)
+    {
+        yield return new WaitForSeconds(timeToWait);
+        mobToReset.navMeshAgent.isStopped = false;
     }
 }

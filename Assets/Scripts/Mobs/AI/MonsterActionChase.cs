@@ -9,7 +9,6 @@ public class MonsterActionChase : MonsterAction
     {
         controller.navMeshAgent.stoppingDistance = 0;
         controller.navMeshAgent.destination = controller.target.transform.position;
-        controller.navMeshAgent.isStopped = false;
         //AdjustAnimation(controller);
     }
 }

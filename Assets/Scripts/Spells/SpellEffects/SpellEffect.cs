@@ -18,4 +18,10 @@ public class SpellEffect : ScriptableObject
 
     public virtual void OnMobEffect(MobController affectedMob, Vector3 castDirection = default(Vector3)) { }
 
+    public virtual IEnumerator ResetStoppedAgent(MobController mobToReset, float timeToWait)
+    {
+        yield return new WaitForSeconds(timeToWait);
+        mobToReset.navMeshAgent.isStopped = false;
+    }
+
 }
