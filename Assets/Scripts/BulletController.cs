@@ -10,6 +10,10 @@ public class BulletController : MonoBehaviour
     public float destroyTime = 10;
     public float destroyDistance = 10;
 
+    public float knockBackMultiplier = 1;
+    public float explosiveMultiplier = 1;
+    public float explosionFalloff = 1;
+
     public MobController shooter;
 
 
@@ -113,6 +117,17 @@ public class BulletController : MonoBehaviour
         bulletDamage = Mathf.Round(bulletDamage * 100f) / 100f;
         finalBulletSpeed = Mathf.Round(finalBulletSpeed * 100f) / 100f;
 
+        knockBackMultiplier = knockBackMultiplier *
+            (1 + (shooter.GetStatValueByType(StatType.Intelligence) / 300)) *
+            (1 + (shooter.GetStatValueByType(StatType.Wisdom) / 100));
+
+        explosiveMultiplier = explosiveMultiplier *
+            (1 + (shooter.GetStatValueByType(StatType.Intelligence) / 100)) *
+            (1 + (shooter.GetStatValueByType(StatType.Wisdom) / 300));
+
+        explosionFalloff = explosionFalloff *
+            (1 - (shooter.GetStatValueByType(StatType.Intelligence) / 200));
+
         rb.AddForce(shootDirection * finalBulletSpeed, ForceMode.Impulse);
         bulletShot = true;
     }
@@ -123,8 +138,6 @@ public class BulletController : MonoBehaviour
         {
             MobController monsterController = other.GetComponent<MobController>();
 
-            Vector3 hitDirection = (monsterController.transform.position - transform.position).normalized;
-
             foreach (SpellEffect spellEffect in spellEffects)
             {
                 if ((spellEffect.spellEffectType & SpellEffectType.ON_HIT) == 0)
@@ -132,7 +145,7 @@ public class BulletController : MonoBehaviour
                     continue;
                 }
 
-                spellEffect.OnCollisionEffect(monsterController, this, hitDirection);
+                spellEffect.OnCollisionEffect(monsterController, this, default(Vector3));
             }
             Destroy(gameObject);
         }

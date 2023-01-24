@@ -339,6 +339,9 @@ MonoBehaviour:
   navMeshAgent: {fileID: 0}
   spawner: {fileID: 0}
   mobAIController: {fileID: 1105141657678752561}
+  paused: 0
+  timeBetweenAttacks: 1
+  elapsedAttackTime: 0
 --- !u!114 &1105141657678752561
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -364,3 +367,4 @@ MonoBehaviour:
   homeBase: {x: 0, y: 0, z: 0}
   lastAttackPosition: {x: 0, y: 0, z: 0}
   aiActive: 1
+  targetFound: 0
