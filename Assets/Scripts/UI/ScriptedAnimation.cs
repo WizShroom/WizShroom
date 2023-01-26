@@ -36,6 +36,8 @@ public class ScriptedAnimation : ScriptableObject
 
         actor.navMeshAgent.speed = actor.speedToDestination;
 
+        actor.navMeshAgent.isStopped = false;
+
         if (actor.onlyDestination)
         {
             actor.navMeshAgent.SetDestination(actor.destination);
@@ -48,9 +50,10 @@ public class ScriptedAnimation : ScriptableObject
             if (actor.resetToInitialPosition)
             {
                 actor.navMeshAgent.Warp(actor.startingPosition);
-                actor.navMeshAgent.SetDestination(actor.navMeshAgent.transform.position);
             }
         }
+        actor.navMeshAgent.SetDestination(actor.navMeshAgent.transform.position);
+        actor.navMeshAgent.isStopped = true;
         yield return null;
     }
 

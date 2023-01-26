@@ -11,9 +11,9 @@ public class DialogueController : MonoBehaviour
     public GameObject hintImage;
     bool canActivate = false;
 
-    [SerializeField] TextMeshProUGUI dialogueText;
-    [SerializeField] Image mushSprite;
-    [SerializeField] Image talkerSprite;
+    TextMeshProUGUI dialogueText;
+    Image mushSprite;
+    Image talkerSprite;
 
     [SerializeField] Dialogue nextDialogue;
 
@@ -135,17 +135,19 @@ public class DialogueController : MonoBehaviour
                 yield return null;
             }
 
-            if (dialogue.animationToPlay)
+            yield return null;
+
+            if (dialogue.animationToPlay != null)
             {
                 if (dialogue.waitForAnimation)
                 {
                     UIHandler.Instance.DisableUIByType(UIType.Dialogue);
-                    yield return GameController.Instance.StartCoroutine(dialogue.animationToPlay.AnimateAll());
+                    yield return StartCoroutine(dialogue.animationToPlay.AnimateAll());
                     UIHandler.Instance.EnableUIByType(UIType.Dialogue);
                 }
                 else
                 {
-                    GameController.Instance.StartCoroutine(dialogue.animationToPlay.AnimateAll());
+                    StartCoroutine(dialogue.animationToPlay.AnimateAll());
                 }
             }
 
