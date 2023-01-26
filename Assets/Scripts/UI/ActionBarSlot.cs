@@ -55,8 +55,7 @@ public class ActionBarSlot : MonoBehaviour, IPointerUpHandler, IPointerDownHandl
             if (!equippedSpell.requireEnemy)
             {
                 Vector3 groundPosition = MouseGroundPositionSingleton.Instance.returnGroundPosition;
-                Vector3 castDirection = (groundPosition - caster.transform.position).normalized;
-                CastSpell(caster, castDirection);
+                CastSpell(caster, groundPosition);
                 return;
             }
             equippedSpell.Cast(caster, target);
@@ -64,7 +63,7 @@ public class ActionBarSlot : MonoBehaviour, IPointerUpHandler, IPointerDownHandl
         }
     }
 
-    public void CastSpell(MobController caster, Vector3 castDirection)
+    public void CastSpell(MobController caster, Vector3 targetPosition)
     {
         if (equippedSpell.cooldownRemaining <= 0f)
         {
@@ -72,7 +71,7 @@ public class ActionBarSlot : MonoBehaviour, IPointerUpHandler, IPointerDownHandl
             {
                 return;
             }
-            equippedSpell.Cast(caster, castDirection);
+            equippedSpell.Cast(caster, targetPosition);
             equippedSpell.cooldownRemaining = equippedSpell.cooldown;
         }
     }

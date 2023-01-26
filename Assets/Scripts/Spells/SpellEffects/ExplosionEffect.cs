@@ -4,6 +4,7 @@ using UnityEngine;
 public class ExplosionEffect : SpellEffect
 {
     public float explosionRadious = 5;
+    public GameObject explosionEffect;
     public override void OnCollisionEffect(GameObject objectHit, BulletController bulletController)
     {
         Explode(objectHit.transform.position, bulletController);
@@ -26,5 +27,8 @@ public class ExplosionEffect : SpellEffect
                 explodedMob.TakeDamage(bulletController.shooter, (bulletController.bulletDamage * bulletController.explosiveMultiplier) - distanceFromCenter);
             }
         }
+
+        GameObject explosion = Instantiate(explosionEffect, explosionPosition + Vector3.up, Quaternion.identity);
+        explosion.AddComponent<DeleteAfterTime>().CallDestroy(1f);
     }
 }

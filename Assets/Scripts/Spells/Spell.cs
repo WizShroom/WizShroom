@@ -16,16 +16,15 @@ public class Spell : ScriptableObject
 
     public virtual void Cast(MobController caster, MobController target)
     {
-        Vector3 castDirection = (target.transform.position - caster.transform.position).normalized;
-        caster.StartCoroutine(CastCoroutine(caster, castDirection, target));
+        caster.StartCoroutine(CastCoroutine(caster, target.transform.position, target));
     }
 
-    public virtual void Cast(MobController caster, Vector3 castDirection)
+    public virtual void Cast(MobController caster, Vector3 targetPosition)
     {
-        caster.StartCoroutine(CastCoroutine(caster, castDirection));
+        caster.StartCoroutine(CastCoroutine(caster, targetPosition));
     }
 
-    public virtual IEnumerator CastCoroutine(MobController caster, Vector3 castDirection, MobController target = null)
+    public virtual IEnumerator CastCoroutine(MobController caster, Vector3 targetPosition, MobController target = null)
     {
 
         if (chargeTime > 0)
@@ -38,15 +37,24 @@ public class Spell : ScriptableObject
             }
             chargeTime = resetTime;
         }
-
+        targetPosition.y = caster.castPosition.position.y;
+        Vector3 castDirection = (targetPosition - caster.transform.position).normalized;
         for (int i = 0; i < Mathf.Max(castAmount, 1); i++)
         {
             switch (spellType)
             {
                 case SpellType.SELF:
+
                     foreach (SpellEffect spellEffect in spellEffects)
                     {
                         spellEffect.OnMobEffect(caster, castDirection);
+                    }
+                    break;
+
+                case SpellType.WORLD:
+                    foreach (SpellEffect spellEffect in spellEffects)
+                    {
+                        spellEffect.OnWorldEffect(targetPosition);
                     }
                     break;
 
@@ -59,7 +67,7 @@ public class Spell : ScriptableObject
                         bulletController.spellEffects.Add(spellEffect);
                     }
                     bulletController.InitializeEffects();
-                    bulletController.FireBullet(castDirection.normalized, caster, target);
+                    bulletController.FireBullet(castDirection, caster, target);
                     bulletController.AfterFireEffects();
                     break;
 
@@ -101,6 +109,7 @@ public enum SpellType
     SELF,
     PROJECTILE,
     RANDOM,
+    WORLD,
 }
 
 [System.Flags]

@@ -41,8 +41,7 @@ public class ActionBarHolder : MonoBehaviour
             else
             {
                 Vector3 groundPosition = MouseGroundPositionSingleton.Instance.returnGroundPosition;
-                Vector3 castDirection = (groundPosition - playerController.transform.position).normalized;
-                actionBarSlots[i].CastSpell(playerController, castDirection);
+                actionBarSlots[i].CastSpell(playerController, groundPosition);
             }
         }
     }

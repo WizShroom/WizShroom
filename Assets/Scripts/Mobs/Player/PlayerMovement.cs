@@ -53,29 +53,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        if (paused)
-        {
-            return;
-        }
-
-        if (engagedEnemy)
-        {
-            AttackEnemy();
-            enemyHighlight.SetActive(true);
-            enemyHighlight.transform.position = engagedEnemy.transform.position + new Vector3(0, 0.5f, 0);
-        }
-        else
-        {
-            enemyHighlight.SetActive(false);
-            DisengageEnemy();
-        }
-
-        if (toInteract && Vector3.Distance(toInteract.transform.position, transform.position) <= toInteract.distanceForInteraction * 1.2f)
-        {
-            Interact();
-        }
-
-        if (Vector3.Distance(destination, transform.position) > 0.5f)
+        if (agent.remainingDistance > 0.5f && !agent.isStopped)
         {
             Vector3 direction = (destination - transform.position).normalized;
             if (Mathf.Abs(direction.x) > Mathf.Abs(direction.z))
@@ -119,6 +97,32 @@ public class PlayerMovement : MonoBehaviour
             stepTimePassed += Time.deltaTime;
 
         }
+
+        if (paused)
+        {
+            return;
+        }
+
+        if (engagedEnemy && !engagedEnemy.disabled)
+        {
+            AttackEnemy();
+            if (!enemyHighlight.activeSelf)
+            {
+                enemyHighlight.SetActive(true);
+            }
+            enemyHighlight.transform.position = engagedEnemy.transform.position + new Vector3(0, 0.5f, 0);
+        }
+        else if (engagedEnemy && engagedEnemy.disabled)
+        {
+            enemyHighlight.SetActive(false);
+            DisengageEnemy();
+        }
+
+        if (toInteract && Vector3.Distance(toInteract.transform.position, transform.position) <= toInteract.distanceForInteraction * 1.2f)
+        {
+            Interact();
+        }
+
         if (engagedEnemy)
         {
             Vector3 aimDirection = (engagedEnemy.transform.position - transform.position).normalized;

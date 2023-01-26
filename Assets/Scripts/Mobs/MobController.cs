@@ -12,9 +12,6 @@ public class MobController : MonoBehaviour
     public float mana;
     public int maxMana;
 
-    public Image healthBar;
-    public Image manaBar;
-
     public float experience;
     public float experienceOnKill;
     public int experienceForLevelUp;
@@ -42,7 +39,7 @@ public class MobController : MonoBehaviour
     [HideInInspector] public MobAIController mobAIController;
     [HideInInspector] public bool paused = false;
 
-    bool disabled = false;
+    [HideInInspector] public bool disabled = false;
 
     [HideInInspector] public float timeBetweenAttacks = 1f;
     [HideInInspector] public float elapsedAttackTime;
@@ -214,18 +211,7 @@ public class MobController : MonoBehaviour
         UpdateIndicators();
     }
 
-    public virtual void UpdateIndicators()
-    {
-        if (healthBar)
-        {
-            healthBar.fillAmount = health / maxHealth;
-        }
-
-        if (manaBar)
-        {
-            manaBar.fillAmount = mana / maxMana;
-        }
-    }
+    public virtual void UpdateIndicators() { }
 
     public virtual void Death(MobController damager)
     {
@@ -242,6 +228,7 @@ public class MobController : MonoBehaviour
         GetComponent<Collider>().enabled = false;
         navMeshAgent.isStopped = true;
         navMeshAgent.updatePosition = false;
+        navMeshAgent.enabled = false;
         Destroy(gameObject, 5);
     }
 
@@ -257,6 +244,7 @@ public class MobController : MonoBehaviour
     public virtual void LevelUp()
     {
         currentLevel++;
+        experience = Mathf.Max(experience - experienceForLevelUp, 0);
         experienceForLevelUp *= 2;
     }
 

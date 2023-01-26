@@ -19,7 +19,7 @@ MonoBehaviour:
     talkerSprite: {fileID: -352181154, guid: bec2eadc449eb2b4d81174c272d96e4b, type: 3}
     mushSprite: {fileID: -978265130, guid: 1b198aba7297e4444b95eaf7364078bc, type: 3}
     dialogueChoices: []
-    waitForAnimation: 1
+    waitForAnimation: 0
     animationToPlay: {fileID: 11400000, guid: b8d5957f53761e3408590be83938abf0, type: 2}
     sendSignalAfterPart: 0
     signalToSend: EnableMainPortal
@@ -36,7 +36,7 @@ MonoBehaviour:
     signalToSend: 
     clickable: 1
   - dialogueText: Come here!
-    dialogueDisplayTime: 2
+    dialogueDisplayTime: 1
     isMushTalking: 0
     talkerSprite: {fileID: 21300000, guid: f95f697d66d238446b1ab717def09945, type: 3}
     mushSprite: {fileID: 0}

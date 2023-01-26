@@ -19,9 +19,10 @@ public class GenerateSoundOnHitEffect : SpellEffect
     public void GenerateSound(Vector3 position)
     {
         GameObject soundEmitter = new GameObject("SoundEmitter");
+        soundEmitter.transform.position = position;
         AudioSource soundEmitterSource = soundEmitter.AddComponent<AudioSource>();
         soundEmitterSource.PlayOneShot(soundToPlayOnHit);
-        Destroy(soundEmitter, 5f);
+        Destroy(soundEmitter, 1f);//TODO: reuse gameobjects instead of instantiate
     }
 
 }

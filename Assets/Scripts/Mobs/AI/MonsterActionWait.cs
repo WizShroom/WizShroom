@@ -15,6 +15,9 @@ public class MonsterActionWait : MonsterAction
     public IEnumerator ResetStoppedAgent(MobAIController mobToReset, float timeToWait)
     {
         yield return new WaitForSeconds(timeToWait);
-        mobToReset.navMeshAgent.isStopped = false;
+        if (!mobToReset.mobController.disabled)
+        {
+            mobToReset.navMeshAgent.isStopped = false;
+        }
     }
 }
