@@ -16,9 +16,9 @@ public class SpellEffect : ScriptableObject
 
     public virtual void OnCollisionEffect(GameObject objectHit, BulletController bulletController) { }
 
-    public virtual void OnMobEffect(MobController affectedMob, Vector3 castDirection = default(Vector3)) { }
+    public virtual void OnMobEffect(MobController casterMob, MobController affectedMob, Vector3 castDirection = default(Vector3)) { }
 
-    public virtual void OnWorldEffect(Vector3 castPosition) { }
+    public virtual void OnWorldEffect(Vector3 castPosition, Vector3 startPosition = default(Vector3)) { }
 
     public virtual IEnumerator ResetStoppedAgent(MobController mobToReset, float timeToWait)
     {

@@ -7,7 +7,7 @@ public class MonsterDecisionTargetCloseFollow : MonsterDecision
 {
     public override bool Decide(MobAIController controller)
     {
-        if (controller.targetFound && Vector3.Distance(controller.target.transform.position, controller.transform.position) > 5)
+        if (controller.targetFound && Vector3.Distance(controller.target.transform.position, controller.transform.position) > controller.mobAIStats.followDistance)
         {
             controller.targetFound = false;
         }

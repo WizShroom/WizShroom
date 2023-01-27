@@ -4,12 +4,12 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - PlayerBullet
   - ActionBarSlot
   - Wall
   - Interactable
   - Mob
   - Enemy
+  - Bullet
   layers:
   - Default
   - TransparentFX
@@ -23,7 +23,7 @@ TagManager:
   - Wall
   - Barrier
   - Bullet
-  - 
+  - NPC
   - 
   - 
   - 

@@ -5,5 +5,7 @@ using UnityEngine;
 public class RoomConnection : MonoBehaviour
 {
     public DIRECTION ourDir;
+    public bool isVertical = false;
+    public RoomConnection otherVerticalConnection;
 
 }

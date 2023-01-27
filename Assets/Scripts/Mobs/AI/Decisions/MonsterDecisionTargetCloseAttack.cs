@@ -7,7 +7,7 @@ public class MonsterDecisionTargetCloseAttack : MonsterDecision
 {
     public override bool Decide(MobAIController controller)
     {
-        if (controller.targetFound && Vector3.Distance(controller.target.transform.position, controller.transform.position) < 2)
+        if (controller.targetFound && Vector3.Distance(controller.target.transform.position, controller.transform.position) < controller.mobAIStats.attackDistance)
         {
             return true;
         }

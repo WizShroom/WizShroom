@@ -84,7 +84,7 @@ public class GameController : SingletonMono<GameController>
         }
         totalProgress += 0.25f;
         UIHandler.Instance.UpdateLoadingScreen(totalProgress);
-        DungeonGenerator.Instance.PopulateDungeon();
+        StartCoroutine(DungeonGenerator.Instance.PopulateDungeon());
         yield return new WaitForSeconds(0.5f);
         UIHandler.Instance.DisableUIByType(UIType.LoadingScreen);
     }

@@ -134,7 +134,7 @@ public class BulletController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Enemy"))
+        if (other.gameObject != shooter.gameObject && (other.CompareTag("Enemy") || other.CompareTag("Player") || other.CompareTag("Mob")))
         {
             MobController monsterController = other.GetComponent<MobController>();
 
@@ -153,7 +153,7 @@ public class BulletController : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.CompareTag("PlayerBullet"))
+        if (other.gameObject.CompareTag("Bullet"))
         {
             return;
         }

@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -9,6 +10,25 @@ public class KnockBackEffect : SpellEffect
     public override void OnCollisionEffect(MobController mobHit, BulletController bulletController, Vector3 hitDirection = default(Vector3))
     {
 
+        ApplyKnockback(bulletController.shooter, mobHit, bulletController.knockBackMultiplier, hitDirection);
+
+    }
+
+    public override void OnMobEffect(MobController casterMob, MobController affectedMob, Vector3 hitDirection = default(Vector3))
+    {
+        Collider[] colliders = Physics.OverlapBox(casterMob.shootPoint.position + Vector3.right * 0.3f, new Vector3(0.5f, 0.5f, 0.5f), casterMob.shootPoint.rotation, LayerMask.GetMask("Player", "Enemy", "NPC"));
+        foreach (Collider collider in colliders)
+        {
+            if (casterMob.gameObject.layer != collider.gameObject.layer)
+            {
+                MobController hitMob = collider.GetComponent<MobController>();
+                ApplyKnockback(casterMob, hitMob, 30, hitDirection);
+            }
+        }
+    }
+
+    public void ApplyKnockback(MobController casterMob, MobController mobHit, float knockBackMultiplier, Vector3 hitDirection = default(Vector3))
+    {
         KnockBackDebuff knockBackDebuff = new KnockBackDebuff("Knockback" + id, 1f);
         if (mobHit.HasBuff(knockBackDebuff))
         {
@@ -16,13 +36,13 @@ public class KnockBackEffect : SpellEffect
         }
         mobHit.ApplyBuff(knockBackDebuff);
 
-        mobHit.navMeshAgent.isStopped = true;
-        Vector3 knockBackDirection = (mobHit.transform.position - bulletController.shooter.transform.position).normalized;
+        Vector3 knockBackDirection = (mobHit.transform.position - casterMob.transform.position).normalized;
         if (hitDirection != default(Vector3))
         {
             knockBackDirection = hitDirection;
         }
-        mobHit.navMeshAgent.velocity = knockBackDirection * knockBackStrength * bulletController.knockBackMultiplier;
-        GameController.Instance.StartCoroutine(ResetStoppedAgent(mobHit, 0.3f));
+        Vector3 knockbackToApply = knockBackDirection * knockBackStrength * knockBackMultiplier;
+        mobHit.navMeshAgent.Warp(mobHit.transform.position + knockbackToApply);
     }
+
 }
