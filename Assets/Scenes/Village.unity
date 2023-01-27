@@ -123,6 +123,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!4 &258322 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 297955014916082281, guid: e9db529bfa95c0942bf386120901e6c5, type: 3}
+  m_PrefabInstance: {fileID: 297955013798655440}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &617505
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26089,7 +26094,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!4 &729843227 stripped
 Transform:
@@ -69774,6 +69779,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4383882971595202, guid: e1154cf6ac27b2f45b4ae35582e7e363, type: 3}
   m_PrefabInstance: {fileID: 1957600434}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &1958665291 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 297955014560370720, guid: e9db529bfa95c0942bf386120901e6c5, type: 3}
+  m_PrefabInstance: {fileID: 297955013798655440}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1959644183
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -75929,6 +75939,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 297955014560370751, guid: e9db529bfa95c0942bf386120901e6c5, type: 3}
+      propertyPath: m_Name
+      value: ShootPoint
+      objectReference: {fileID: 0}
     - target: {fileID: 297955014760832656, guid: e9db529bfa95c0942bf386120901e6c5, type: 3}
       propertyPath: enemyHighlight
       value: 
@@ -75947,15 +75961,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 297955014760832743, guid: e9db529bfa95c0942bf386120901e6c5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 47.18
+      value: 50.9
       objectReference: {fileID: 0}
     - target: {fileID: 297955014760832743, guid: e9db529bfa95c0942bf386120901e6c5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.5
+      value: 0.65
       objectReference: {fileID: 0}
     - target: {fileID: 297955014760832743, guid: e9db529bfa95c0942bf386120901e6c5, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 94.18
+      value: 89.1
       objectReference: {fileID: 0}
     - target: {fileID: 297955014760832743, guid: e9db529bfa95c0942bf386120901e6c5, type: 3}
       propertyPath: m_LocalRotation.w
@@ -75994,6 +76008,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 541823393}
     - target: {fileID: 297955014760832750, guid: e9db529bfa95c0942bf386120901e6c5, type: 3}
+      propertyPath: pivotPoint
+      value: 
+      objectReference: {fileID: 258322}
+    - target: {fileID: 297955014760832750, guid: e9db529bfa95c0942bf386120901e6c5, type: 3}
+      propertyPath: shootPoint
+      value: 
+      objectReference: {fileID: 1958665291}
+    - target: {fileID: 297955014760832750, guid: e9db529bfa95c0942bf386120901e6c5, type: 3}
       propertyPath: statUIHolder
       value: 
       objectReference: {fileID: 1935054832}
@@ -76005,6 +76027,18 @@ PrefabInstance:
       propertyPath: mouseGroundHighlight
       value: 
       objectReference: {fileID: 884931596}
+    - target: {fileID: 879856231942931999, guid: e9db529bfa95c0942bf386120901e6c5, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.249
+      objectReference: {fileID: 0}
+    - target: {fileID: 879856231942931999, guid: e9db529bfa95c0942bf386120901e6c5, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.035
+      objectReference: {fileID: 0}
+    - target: {fileID: 3526278159239748849, guid: e9db529bfa95c0942bf386120901e6c5, type: 3}
+      propertyPath: m_CastShadows
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 6207266136606331553, guid: e9db529bfa95c0942bf386120901e6c5, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -76142,7 +76176,7 @@ PrefabInstance:
       objectReference: {fileID: 2036230967}
     - target: {fileID: 5877356204623788881, guid: dbebb9db8ec90ab479ff8fb542a04cb8, type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5877356204623788881, guid: dbebb9db8ec90ab479ff8fb542a04cb8, type: 3}
       propertyPath: m_LocalPosition.x
@@ -76477,7 +76511,6 @@ MonoBehaviour:
   experienceForLevelUp: 0
   currentLevel: 0
   canDie: 1
-  castPosition: {fileID: 0}
   stats:
   - statName: Health
     statValue: 1
@@ -76504,8 +76537,9 @@ MonoBehaviour:
   mobAIController: {fileID: 0}
   paused: 0
   disabled: 0
-  timeBetweenAttacks: 1
   elapsedAttackTime: 0
+  pivotPoint: {fileID: 0}
+  shootPoint: {fileID: 0}
   enableOnTrigger: 1
   enableDialogueOnTrigger: 1
   signalToTrigger: ActivateHunter

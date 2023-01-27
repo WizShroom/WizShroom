@@ -9,8 +9,6 @@ public class PlayerMovement : MonoBehaviour
     public float speed = 5;
 
     [HideInInspector] public NavMeshAgent agent;
-    public Transform pivotPoint;
-    public Transform shootPoint;
 
     public Vector3 destination;
 
@@ -129,7 +127,7 @@ public class PlayerMovement : MonoBehaviour
 
             float angle = Mathf.Atan2(aimDirection.z, aimDirection.x) * Mathf.Rad2Deg;
 
-            pivotPoint.eulerAngles = new Vector3(0, -angle, 0);
+            playerController.pivotPoint.eulerAngles = new Vector3(0, -angle, 0);
         }
         else
         {
@@ -138,7 +136,7 @@ public class PlayerMovement : MonoBehaviour
 
             float angle = Mathf.Atan2(aimDirection.z, aimDirection.x) * Mathf.Rad2Deg;
 
-            pivotPoint.eulerAngles = new Vector3(0, -angle, 0);
+            playerController.pivotPoint.eulerAngles = new Vector3(0, -angle, 0);
         }
 
         firstSound = true;
@@ -185,7 +183,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void AttackEnemy()
     {
-        playerAttack.Attack(pivotPoint, shootPoint, engagedEnemy);
+        playerAttack.Attack(playerController.pivotPoint, playerController.shootPoint, engagedEnemy);
     }
 
     public void PrepareInteract(Interactable toInteract)

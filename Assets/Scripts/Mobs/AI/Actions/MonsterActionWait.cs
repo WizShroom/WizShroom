@@ -8,7 +8,7 @@ public class MonsterActionWait : MonsterAction
     public override void Act(MobAIController controller)
     {
         controller.navMeshAgent.isStopped = true;
-        GameController.Instance.StartCoroutine(ResetStoppedAgent(controller, 0.3f));
+        GameController.Instance.StartCoroutine(ResetStoppedAgent(controller, controller.mobAIStats.waitDelay));
         //AdjustAnimation(controller);
     }
 

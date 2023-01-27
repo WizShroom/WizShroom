@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class DungeonGenerator : SingletonMono<DungeonGenerator>
 {
@@ -16,10 +17,13 @@ public class DungeonGenerator : SingletonMono<DungeonGenerator>
     public List<Vector3> gridPositions;
 
     public int maxDepth = 3;
+    public int maxHeight = 1;
 
     public int maxSize = 5;
 
     public bool testing = false;
+
+    public NavMeshSurface navMeshSurface;
 
     private void Start()
     {
@@ -53,7 +57,13 @@ public class DungeonGenerator : SingletonMono<DungeonGenerator>
         {
             yield return null;
         }
+
+        if (testing)
+        {
+            StartCoroutine(PopulateDungeon());
+        }
     }
+
 
     public IEnumerator BranchOut(RoomHolder startingRoomHolder)
     {
@@ -73,12 +83,25 @@ public class DungeonGenerator : SingletonMono<DungeonGenerator>
         }
         foreach (DIRECTION direction in availableDirections)
         {
+            if (direction == DIRECTION.UP || direction == DIRECTION.DOWN)
+            {
+                if (!startingRoomHolder.canGoVertical)
+                {
+                    continue;
+                }
+            }
+
             Vector3 nextGridPosition = startingRoomHolder.currentGridPosition + DirectionToVector3(direction);
 
             int xDirection = IsZDirection(initialDirection) ? 1 : 2;
             int zDirection = IsZDirection(initialDirection) ? 2 : 1;
 
-            float distance = Mathf.Max(Mathf.Abs(nextGridPosition.x - Vector3.zero.x) / xDirection, Mathf.Abs(nextGridPosition.z - Vector3.zero.z) / zDirection);
+            float distance = Mathf.Max(Mathf.Abs(nextGridPosition.x) / xDirection, Mathf.Abs(nextGridPosition.z) / zDirection);
+
+            if (Mathf.Abs(nextGridPosition.y) > maxHeight)
+            {
+                continue;
+            }
 
             if (gridPositions.Contains(nextGridPosition) || distance > maxSize / 2 || Random.Range(0, 101) > 98 || !IsCorrectDirection(initialDirection, Vector3.zero, nextGridPosition))
             {
@@ -153,7 +176,7 @@ public class DungeonGenerator : SingletonMono<DungeonGenerator>
         }
     }
 
-    public void PopulateDungeon()
+    public IEnumerator PopulateDungeon()
     {
         foreach (RoomHolder room in placedRooms)
         {
@@ -162,10 +185,15 @@ public class DungeonGenerator : SingletonMono<DungeonGenerator>
                 continue;
             }
 
-            for (int i = 0; i < Mathf.Min(room.currentDepth + Random.Range(-4, 2), 5); i++)
+            for (int i = 0; i < Mathf.Clamp(room.currentDepth + Random.Range(-5, 0), 1, 4); i++)
             {
-                room.spawners[Random.Range(0, room.spawners.Count)].Spawn(true);
+                MobSpawner mobSpawner = room.spawners[Random.Range(0, room.spawners.Count)];
+                if (!mobSpawner.Spawn(true))
+                {
+                    Debug.Log(mobSpawner + " Help");
+                }
             }
+            yield return null;
         }
     }
 
@@ -199,6 +227,10 @@ public class DungeonGenerator : SingletonMono<DungeonGenerator>
                 return DIRECTION.WEST;
             case DIRECTION.WEST:
                 return DIRECTION.EAST;
+            case DIRECTION.UP:
+                return DIRECTION.DOWN;
+            case DIRECTION.DOWN:
+                return DIRECTION.UP;
             default:
                 return DIRECTION.NORTH;
         }
@@ -216,6 +248,10 @@ public class DungeonGenerator : SingletonMono<DungeonGenerator>
                 return new Vector3(1, 0, 0);
             case DIRECTION.WEST:
                 return new Vector3(-1, 0, 0);
+            case DIRECTION.UP:
+                return new Vector3(0, 1, 0);
+            case DIRECTION.DOWN:
+                return new Vector3(0, -1, 0);
             default:
                 return Vector3.zero;
         }
@@ -223,7 +259,7 @@ public class DungeonGenerator : SingletonMono<DungeonGenerator>
 
     public List<DIRECTION> GetAvailableDirections(DIRECTION takenDirection)
     {
-        DIRECTION allDirections = DIRECTION.NORTH | DIRECTION.SOUTH | DIRECTION.EAST | DIRECTION.WEST;
+        DIRECTION allDirections = DIRECTION.NORTH | DIRECTION.SOUTH | DIRECTION.EAST | DIRECTION.WEST | DIRECTION.UP | DIRECTION.DOWN;
         DIRECTION availableDirections = allDirections & ~takenDirection;
         List<DIRECTION> availableDirectionsList = new List<DIRECTION>();
         foreach (DIRECTION direction in DIRECTION.GetValues(typeof(DIRECTION)))
@@ -264,6 +300,10 @@ public class DungeonGenerator : SingletonMono<DungeonGenerator>
                 return nextPosition.x >= defaultPosition.x;
             case DIRECTION.WEST:
                 return nextPosition.x <= defaultPosition.x;
+            case DIRECTION.UP:
+                return nextPosition.y >= defaultPosition.y;
+            case DIRECTION.DOWN:
+                return nextPosition.y <= defaultPosition.y;
             default:
                 return false;
         }
@@ -341,5 +381,7 @@ public enum DIRECTION
     NORTH = 1 << 0,
     SOUTH = 1 << 1,
     EAST = 1 << 2,
-    WEST = 1 << 3
+    WEST = 1 << 3,
+    UP = 1 << 4,
+    DOWN = 1 << 5,
 }

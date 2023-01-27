@@ -44,28 +44,8 @@ public class MobSpawner : MonoBehaviour
             return false;
         }
 
-        int iteration = 0;
-        int maxIteration = 1000;
-        Vector3 resultPosition = default(Vector3);
-        while (resultPosition == default(Vector3) && iteration < maxIteration)
-        {
-            Vector3 randomPosition = Random.insideUnitSphere * spawnRadious + transform.position;
-            randomPosition.y = 0;
-            NavMeshHit hit;
-            if (NavMesh.SamplePosition(randomPosition, out hit, 0.3f, NavMesh.AllAreas))
-            {
-                resultPosition = randomPosition;
-            }
-            iteration++;
-        }
-
-        if (resultPosition == default(Vector3))
-        {
-            return false;
-        }
-
         int randomIndex = Random.Range(0, mobsToSpawn.Count);
-        GameObject spawnedMob = Instantiate(mobsToSpawn[randomIndex], resultPosition, Quaternion.identity);
+        GameObject spawnedMob = Instantiate(mobsToSpawn[randomIndex], transform.position, Quaternion.identity);
         spawnedMob.transform.SetParent(transform);
 
         MobController mobController = spawnedMob.GetComponent<MobController>();

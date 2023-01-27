@@ -37,7 +37,7 @@ public class Spell : ScriptableObject
             }
             chargeTime = resetTime;
         }
-        targetPosition.y = caster.castPosition.position.y;
+        targetPosition.y = caster.shootPoint.position.y;
         Vector3 castDirection = (targetPosition - caster.transform.position).normalized;
         for (int i = 0; i < Mathf.Max(castAmount, 1); i++)
         {
@@ -47,7 +47,14 @@ public class Spell : ScriptableObject
 
                     foreach (SpellEffect spellEffect in spellEffects)
                     {
-                        spellEffect.OnMobEffect(caster, castDirection);
+                        spellEffect.OnMobEffect(caster, caster, castDirection);
+                    }
+                    break;
+
+                case SpellType.MELEE:
+                    foreach (SpellEffect spellEffect in spellEffects)
+                    {
+                        spellEffect.OnMobEffect(caster, target, castDirection);
                     }
                     break;
 
@@ -59,7 +66,7 @@ public class Spell : ScriptableObject
                     break;
 
                 case SpellType.PROJECTILE:
-                    GameObject bulletEntity = Instantiate(bulletPrefab, caster.castPosition.position, Quaternion.identity);
+                    GameObject bulletEntity = Instantiate(bulletPrefab, caster.shootPoint.position, Quaternion.identity);
                     BulletController bulletController = bulletEntity.GetComponent<BulletController>();
 
                     foreach (SpellEffect spellEffect in spellEffects)
@@ -93,7 +100,7 @@ public class Spell : ScriptableObject
                     {
                         foreach (SpellEffect spellEffect in spellEffects)
                         {
-                            spellEffect.OnMobEffect(selectedMob);
+                            spellEffect.OnMobEffect(caster, selectedMob);
                         }
                     }
                     break;
@@ -110,6 +117,7 @@ public enum SpellType
     PROJECTILE,
     RANDOM,
     WORLD,
+    MELEE,
 }
 
 [System.Flags]

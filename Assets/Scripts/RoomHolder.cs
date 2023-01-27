@@ -12,7 +12,9 @@ public class RoomHolder : MonoBehaviour
     public List<MobSpawner> spawners;
 
     public int currentDepth = 0;
+    public int currentYLevel = 0;
 
     public Vector3 currentGridPosition;
+    public bool canGoVertical = false;
 
 }

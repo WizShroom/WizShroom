@@ -10,7 +10,7 @@ public class CreateBarrierEffect : SpellEffect
     public float deleteTime = 5;
     public float maxAngle = 180f;
 
-    public override void OnMobEffect(MobController affectedMob, Vector3 castDirection = default)
+    public override void OnMobEffect(MobController casterMob, MobController affectedMob, Vector3 castDirection = default)
     {
         CreateBarrier(affectedMob, castDirection);
     }

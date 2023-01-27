@@ -19,8 +19,6 @@ public class MobController : MonoBehaviour
 
     public bool canDie = true;
 
-    public Transform castPosition;
-
     public List<Stat> stats = new List<Stat>(){
         new Stat(1, StatType.Health),
         new Stat(1, StatType.Strength),
@@ -40,9 +38,10 @@ public class MobController : MonoBehaviour
     [HideInInspector] public bool paused = false;
 
     [HideInInspector] public bool disabled = false;
-
-    [HideInInspector] public float timeBetweenAttacks = 1f;
     [HideInInspector] public float elapsedAttackTime;
+
+    public Transform pivotPoint;
+    public Transform shootPoint;
 
     private void Awake()
     {
@@ -92,9 +91,12 @@ public class MobController : MonoBehaviour
         {
             mobAIController.CallUpdateState();
         }
+        OnUpdate();
     }
 
-    public virtual void Attack(Vector3 attackDirection) { }
+    public virtual void OnUpdate() { }
+
+    public virtual void Attack() { }
 
     public int GetStatValueByType(StatType statType)
     {

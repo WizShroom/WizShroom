@@ -11,14 +11,13 @@ public class MonsterActionAttack : MonsterAction
         {
             return;
         }
-        Vector3 attackDirection = (controller.target.transform.position - controller.transform.position).normalized;
-        controller.mobController.Attack(attackDirection);
+        controller.mobController.Attack();
     }
 
     public bool CanAttack(MobAIController controller)
     {
         controller.mobController.elapsedAttackTime += Time.deltaTime;
-        if (controller.mobController.elapsedAttackTime < controller.mobController.timeBetweenAttacks)
+        if (controller.mobController.elapsedAttackTime < controller.mobAIStats.attackDelay)
         {
             return false;
         }

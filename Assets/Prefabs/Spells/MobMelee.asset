@@ -10,18 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 391271f63ed0d754c9a08f854c4469ac, type: 3}
-  m_Name: TestSpell
+  m_Name: MobMelee
   m_EditorClassIdentifier: 
   spellType: 1
   bulletPrefab: {fileID: 6404468398774599545, guid: b8149d5358170014f936e0c8478c083f, type: 3}
   castAmount: 1
   spellEffects:
-  - {fileID: 11400000, guid: f8a72bdf01583384e910f34806cca6b1, type: 2}
   - {fileID: 11400000, guid: 207b21b838f170546bb9b135813155ba, type: 2}
-  spellAudioShoot: {fileID: 8300000, guid: 4d6045179ede6d64488023709c0d25ef, type: 3}
+  spellAudioShoot: {fileID: 8300000, guid: e6b324f9fd76746469be8aa260e5bf48, type: 3}
   chargeTime: 0
-  key: 1
-  cooldown: 0.1
+  key: 
+  cooldown: 0
   cooldownRemaining: 0
-  UIImage: {fileID: 21300000, guid: 9326bc8b277285748a97823d4b5c72fc, type: 3}
+  UIImage: {fileID: 0}
   requireEnemy: 0
