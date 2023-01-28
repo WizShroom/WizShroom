@@ -9,6 +9,7 @@ public class DungeonGenerator : SingletonMono<DungeonGenerator>
     public DIRECTION initialDirection;
 
     public List<GameObject> roomsPrefab;
+    public List<GameObject> verticalRoomsPrefab;
 
     public GameObject startingRoom;
 
@@ -57,11 +58,6 @@ public class DungeonGenerator : SingletonMono<DungeonGenerator>
         {
             yield return null;
         }
-
-        if (testing)
-        {
-            StartCoroutine(PopulateDungeon());
-        }
     }
 
 
@@ -83,12 +79,14 @@ public class DungeonGenerator : SingletonMono<DungeonGenerator>
         }
         foreach (DIRECTION direction in availableDirections)
         {
+            bool verticalDirection = false;
             if (direction == DIRECTION.UP || direction == DIRECTION.DOWN)
             {
                 if (!startingRoomHolder.canGoVertical)
                 {
                     continue;
                 }
+                verticalDirection = true;
             }
 
             Vector3 nextGridPosition = startingRoomHolder.currentGridPosition + DirectionToVector3(direction);
@@ -111,7 +109,15 @@ public class DungeonGenerator : SingletonMono<DungeonGenerator>
             gridPositions.Add(nextGridPosition);
 
             Vector3 nextPosition = startingRoomHolder.transform.position + DirectionToVector3(direction) * startingRoomHolder.roomSize;
-            GameObject nextRoomEntry = Instantiate(roomsPrefab[Random.Range(0, roomsPrefab.Count)], gameObject.transform);
+            GameObject nextRoomEntry = null;
+            if (verticalDirection)
+            {
+                nextRoomEntry = Instantiate(verticalRoomsPrefab[Random.Range(0, verticalRoomsPrefab.Count)], gameObject.transform);
+            }
+            else
+            {
+                nextRoomEntry = Instantiate(roomsPrefab[Random.Range(0, roomsPrefab.Count)], gameObject.transform);
+            }
             nextRoomEntry.transform.position = nextPosition;
             RoomHolder nextRoomHolder = nextRoomEntry.GetComponent<RoomHolder>();
             placedRooms.Add(nextRoomHolder);
@@ -120,6 +126,12 @@ public class DungeonGenerator : SingletonMono<DungeonGenerator>
 
             startingRoomHolder.connectedRooms.Add(nextRoomHolder);
             nextRoomHolder.connectedRooms.Add(startingRoomHolder);
+
+            if (verticalDirection)
+            {
+                startingRoomHolder.GetConnectionByDir(direction).connectedRoom = nextRoomHolder;
+                nextRoomHolder.GetConnectionByDir(GetOppositeDirection(direction)).connectedRoom = startingRoomHolder;
+            }
 
             startingRoomHolder.connections |= direction;
             nextRoomHolder.connections |= GetOppositeDirection(direction);

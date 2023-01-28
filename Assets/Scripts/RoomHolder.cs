@@ -9,6 +9,7 @@ public class RoomHolder : MonoBehaviour
     public List<RoomHolder> connectedRooms = new List<RoomHolder>();
     public List<RoomConnection> roomConnectors;
     public List<RoomSeal> roomSeals;
+    public Transform roomLanding;
     public List<MobSpawner> spawners;
 
     public int currentDepth = 0;
@@ -16,5 +17,21 @@ public class RoomHolder : MonoBehaviour
 
     public Vector3 currentGridPosition;
     public bool canGoVertical = false;
+
+    public RoomConnection GetConnectionByDir(DIRECTION dir)
+    {
+        RoomConnection returnConnection = null;
+
+        foreach (RoomConnection roomConnection in roomConnectors)
+        {
+            if (roomConnection.ourDir == dir)
+            {
+                returnConnection = roomConnection;
+                break;
+            }
+        }
+
+        return returnConnection;
+    }
 
 }
