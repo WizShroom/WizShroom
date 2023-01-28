@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4411134161694262557}
   - component: {fileID: 1933038679529386455}
   - component: {fileID: 2740192799827175909}
+  - component: {fileID: 2376979120954357831}
   - component: {fileID: 1978641635528416385}
   m_Layer: 6
   m_Name: ConnectionUp
@@ -28,8 +29,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 131576493852577794}
   m_LocalRotation: {x: 0.000000059604638, y: 0, z: -0, w: 1}
-  m_LocalPosition: {x: 7, y: 1, z: 8}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 7, y: 0, z: 8}
+  m_LocalScale: {x: 1, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1468553745177961743}
@@ -102,6 +103,20 @@ MonoBehaviour:
   m_Area: 0
   m_IgnoreFromBuild: 0
   m_AffectedAgents: ffffffff
+--- !u!64 &2376979120954357831
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 131576493852577794}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -4339069625135121128, guid: 769c85284e58e4a4d9ccbcdf5c154c47, type: 3}
 --- !u!114 &1978641635528416385
 MonoBehaviour:
   m_ObjectHideFlags: 0

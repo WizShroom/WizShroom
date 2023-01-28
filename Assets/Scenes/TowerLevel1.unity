@@ -21494,7 +21494,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1150919721995274125, guid: 4489fc2b2c60a9d4cbb2aad4e76a1766, type: 3}
       propertyPath: m_LocalScale.y
-      value: 50
+      value: 23
       objectReference: {fileID: 0}
     - target: {fileID: 1150919721995274125, guid: 4489fc2b2c60a9d4cbb2aad4e76a1766, type: 3}
       propertyPath: m_LocalPosition.x
@@ -21506,7 +21506,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1150919721995274125, guid: 4489fc2b2c60a9d4cbb2aad4e76a1766, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -9.999683
       objectReference: {fileID: 0}
     - target: {fileID: 1150919721995274125, guid: 4489fc2b2c60a9d4cbb2aad4e76a1766, type: 3}
       propertyPath: m_LocalRotation.w
@@ -29950,10 +29950,10 @@ MonoBehaviour:
   startingRoom: {fileID: 4724597291838832645, guid: 61b5d4bdbb2d5f74b9c7ff51e045a5fd, type: 3}
   placedRooms: []
   gridPositions: []
-  maxDepth: 7
+  maxDepth: 5
   maxHeight: 1
-  maxSize: 5
-  testing: 1
+  maxSize: 3
+  testing: 0
   navMeshSurface: {fileID: 0}
 --- !u!4 &3492176760200919268 stripped
 Transform:

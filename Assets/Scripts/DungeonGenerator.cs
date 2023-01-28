@@ -122,7 +122,10 @@ public class DungeonGenerator : SingletonMono<DungeonGenerator>
             RoomHolder nextRoomHolder = nextRoomEntry.GetComponent<RoomHolder>();
             placedRooms.Add(nextRoomHolder);
 
-            RandomRoomRotation(nextRoomHolder);
+            if (nextRoomHolder.canRotate)
+            {
+                RandomRoomRotation(nextRoomHolder);
+            }
 
             startingRoomHolder.connectedRooms.Add(nextRoomHolder);
             nextRoomHolder.connectedRooms.Add(startingRoomHolder);
