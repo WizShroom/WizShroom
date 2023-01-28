@@ -17,6 +17,7 @@ public class RoomHolder : MonoBehaviour
 
     public Vector3 currentGridPosition;
     public bool canGoVertical = false;
+    public bool canRotate = false;
 
     public RoomConnection GetConnectionByDir(DIRECTION dir)
     {

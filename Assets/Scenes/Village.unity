@@ -14071,7 +14071,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneToGo: TowerLevel1
-  activeOnTrigger: 0
+  activeOnTrigger: 1
   signalToActivate: EnableMainPortal
   signalToDisable: DisableMainPortal
   portalEffect: {fileID: 7562466679555166767}
@@ -42840,7 +42840,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1173755882}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 52, y: 0.5, z: 71}
+  m_LocalPosition: {x: 44, y: 0.5, z: 88}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -75961,15 +75961,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 297955014760832743, guid: e9db529bfa95c0942bf386120901e6c5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 50.9
+      value: 44.7
       objectReference: {fileID: 0}
     - target: {fileID: 297955014760832743, guid: e9db529bfa95c0942bf386120901e6c5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.65
+      value: 0.60753775
       objectReference: {fileID: 0}
     - target: {fileID: 297955014760832743, guid: e9db529bfa95c0942bf386120901e6c5, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 89.1
+      value: 92.7
       objectReference: {fileID: 0}
     - target: {fileID: 297955014760832743, guid: e9db529bfa95c0942bf386120901e6c5, type: 3}
       propertyPath: m_LocalRotation.w
@@ -76432,10 +76432,11 @@ GameObject:
   m_Component:
   - component: {fileID: 8940417083490698366}
   - component: {fileID: 8940417083490698367}
+  - component: {fileID: 8940417083490698372}
   - component: {fileID: 8940417083490698370}
+  - component: {fileID: 8940417083490698371}
   - component: {fileID: 8940417083490698368}
   - component: {fileID: 8940417083490698369}
-  - component: {fileID: 8940417083490698371}
   m_Layer: 0
   m_Name: Hunter
   m_TagString: Mob
@@ -76654,6 +76655,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ID: Hunter01
+--- !u!195 &8940417083490698372
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8940417083490698364}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.54
+  m_Speed: 2
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!4 &8940417084675128156
 Transform:
   m_ObjectHideFlags: 0

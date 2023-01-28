@@ -142,12 +142,12 @@ public class DialogueController : MonoBehaviour
                 if (dialogue.waitForAnimation)
                 {
                     UIHandler.Instance.DisableUIByType(UIType.Dialogue);
-                    yield return StartCoroutine(dialogue.animationToPlay.AnimateAll());
+                    yield return GameController.Instance.StartCoroutine(dialogue.animationToPlay.AnimateAll());
                     UIHandler.Instance.EnableUIByType(UIType.Dialogue);
                 }
                 else
                 {
-                    StartCoroutine(dialogue.animationToPlay.AnimateAll());
+                    GameController.Instance.StartCoroutine(dialogue.animationToPlay.AnimateAll());
                 }
             }
 

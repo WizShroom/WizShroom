@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 723591882365577641}
   - component: {fileID: 5845869961112851430}
   - component: {fileID: 2536954793377807035}
+  - component: {fileID: 2303675587013623159}
   m_Layer: 6
   m_Name: ConnectionDown
   m_TagString: Untagged
@@ -28,8 +29,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1227875811427485820}
   m_LocalRotation: {x: 0.7071068, y: 0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1.0000002, z: 1.0000002}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1460773600527264897}
@@ -118,6 +119,19 @@ MonoBehaviour:
   ourDir: 32
   isVertical: 1
   connectedRoom: {fileID: 0}
+--- !u!65 &2303675587013623159
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1227875811427485820}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2, y: 4.000002, z: 0.08187423}
+  m_Center: {x: 0, y: 2.000001, z: 0.9590636}
 --- !u!1 &4517376170437162580
 GameObject:
   m_ObjectHideFlags: 0

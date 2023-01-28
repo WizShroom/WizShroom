@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6ab1f1c70e2687f42b44e79446ad3f40, type: 3}
-  m_Name: MoveToPosition
+  m_Name: FirstEncounter
   m_EditorClassIdentifier: 
   animations:
   - animationActors:

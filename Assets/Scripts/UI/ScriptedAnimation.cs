@@ -54,13 +54,12 @@ public class ScriptedAnimation : ScriptableObject
         }
         actor.navMeshAgent.SetDestination(actor.navMeshAgent.transform.position);
         actor.navMeshAgent.isStopped = true;
-        yield return null;
     }
 
-    public IEnumerator AnimateEffect(AnimationEffect animationEffect)
+    public virtual IEnumerator AnimateEffect(AnimationEffect animationEffect)
     {
-        Instantiate(animationEffect.effectToPlay, animationEffect.positionToPlayAt, Quaternion.identity);
         yield return null;
+        Instantiate(animationEffect.effectToPlay, animationEffect.positionToPlayAt, Quaternion.identity);
     }
 
 
