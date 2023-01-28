@@ -328,6 +328,7 @@ MonoBehaviour:
   - {fileID: 3024979966113490370}
   - {fileID: 2302352055623908166}
   - {fileID: 2518662361524703587}
+  roomLanding: {fileID: 0}
   spawners:
   - {fileID: 8445801419921903418}
   - {fileID: 1150330435944168510}
@@ -336,7 +337,7 @@ MonoBehaviour:
   currentDepth: 0
   currentYLevel: 0
   currentGridPosition: {x: 0, y: 0, z: 0}
-  canGoVertical: 1
+  canGoVertical: 0
 --- !u!1 &5210177744341233969
 GameObject:
   m_ObjectHideFlags: 0
