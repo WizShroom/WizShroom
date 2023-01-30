@@ -13,17 +13,6 @@ MonoBehaviour:
   m_Name: FirstEncounter
   m_EditorClassIdentifier: 
   dialogueSegments:
-  - dialogueText: 
-    dialogueDisplayTime: 0
-    isMushTalking: 1
-    talkerSprite: {fileID: 0}
-    mushSprite: {fileID: -978265130, guid: 1b198aba7297e4444b95eaf7364078bc, type: 3}
-    dialogueChoices: []
-    waitForAnimation: 0
-    animationToPlay: {fileID: 11400000, guid: b8d5957f53761e3408590be83938abf0, type: 2}
-    sendSignalAfterPart: 0
-    signalToSend: 
-    clickable: 1
   - dialogueText: ???
     dialogueDisplayTime: 2
     isMushTalking: 1
@@ -31,7 +20,8 @@ MonoBehaviour:
     mushSprite: {fileID: -978265130, guid: 1b198aba7297e4444b95eaf7364078bc, type: 3}
     dialogueChoices: []
     waitForAnimation: 0
-    animationToPlay: {fileID: 0}
+    animationBeforeDialogue: 1
+    animationToPlay: {fileID: 11400000, guid: b8d5957f53761e3408590be83938abf0, type: 2}
     sendSignalAfterPart: 0
     signalToSend: 
     clickable: 1

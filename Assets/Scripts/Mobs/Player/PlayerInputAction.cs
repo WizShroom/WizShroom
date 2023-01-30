@@ -12,6 +12,7 @@ public class PlayerInputAction : MonoBehaviour
     PlayerController playerController;
 
     public GameObject mouseGroundHighlight;
+    Animator mouseGroundHighlightAnimator;
 
     bool paused;
 
@@ -29,6 +30,7 @@ public class PlayerInputAction : MonoBehaviour
     {
         playerMovement = GetComponent<PlayerMovement>();
         playerController = GetComponent<PlayerController>();
+        mouseGroundHighlightAnimator = mouseGroundHighlight.transform.GetChild(0).GetComponent<Animator>();
     }
 
     void Update()
@@ -43,8 +45,9 @@ public class PlayerInputAction : MonoBehaviour
 
         Vector3 highlightPosition = groundPosition;
         highlightPosition.y += 0.25f;
-        if (Input.GetMouseButtonDown(0) && !isOverUI && groundPosition != default(Vector3))
+        if (Input.GetMouseButton(0) && !isOverUI && groundPosition != default(Vector3))
         {
+            mouseGroundHighlightAnimator.StopPlayback();
             if (Input.GetKey(KeyCode.LeftShift))
             {
                 playerMovement.MoveToPosition(highlightPosition);
@@ -55,8 +58,10 @@ public class PlayerInputAction : MonoBehaviour
                 playerMovement.MoveToPosition(highlightPosition, false);
             }
             mouseGroundHighlight.transform.position = new Vector3(highlightPosition.x, highlightPosition.y + 0.25f, highlightPosition.z);
-            Animator groundHighlightAnimator = mouseGroundHighlight.transform.GetChild(0).GetComponent<Animator>();
-            groundHighlightAnimator.Play("GroundHighlight");
+        }
+        if (Input.GetMouseButtonUp(0))
+        {
+            mouseGroundHighlightAnimator.Play("GroundHighlight");
         }
 
         if (Input.GetMouseButtonDown(1) && !isOverUI)

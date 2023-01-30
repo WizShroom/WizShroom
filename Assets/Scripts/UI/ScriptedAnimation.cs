@@ -17,43 +17,57 @@ public class ScriptedAnimation : ScriptableObject
 
             foreach (AnimationActor animationActor in animationActors)
             {
-                yield return GameController.Instance.StartCoroutine(AnimateActor(animationActor));
+                if (animationActor.animateOnlyThis)
+                {
+                    yield return GameController.Instance.StartCoroutine(AnimateActor(animationActor));
+                }
+                else
+                {
+                    GameController.Instance.StartCoroutine(AnimateActor(animationActor));
+                }
             }
 
             List<AnimationEffect> animationEffects = animation.animationEffects;
             foreach (AnimationEffect animationEffect in animationEffects)
             {
-                yield return GameController.Instance.StartCoroutine(AnimateEffect(animationEffect));
+                if (animationEffect.animateOnlyThis)
+                {
+                    yield return GameController.Instance.StartCoroutine(AnimateEffect(animationEffect));
+                }
+                else
+                {
+                    GameController.Instance.StartCoroutine(AnimateEffect(animationEffect));
+                }
             }
         }
     }
 
     public virtual IEnumerator AnimateActor(AnimationActor actor)
     {
-        actor.navMeshAgent = GameController.Instance.GetGameObjectFromID(actor.ActorID).GetComponent<NavMeshAgent>();
-        actor.startingSpeed = actor.navMeshAgent.speed;
-        actor.startingPosition = actor.navMeshAgent.transform.position;
+        NavMeshAgent actorAgent = GameController.Instance.GetGameObjectFromID(actor.ActorID).GetComponent<NavMeshAgent>();
+        actor.startingSpeed = actorAgent.speed;
+        actor.startingPosition = actorAgent.transform.position;
 
-        actor.navMeshAgent.speed = actor.speedToDestination;
+        actorAgent.speed = actor.speedToDestination;
 
-        actor.navMeshAgent.isStopped = false;
+        actorAgent.isStopped = false;
 
         if (actor.onlyDestination)
         {
-            actor.navMeshAgent.SetDestination(actor.destination);
-            while (actor.navMeshAgent.remainingDistance > 0.5f)
+            actorAgent.SetDestination(actor.destination);
+            while (actorAgent.pathPending || actorAgent.remainingDistance > 0.5f)
             {
                 yield return null;
             }
 
-            actor.navMeshAgent.speed = actor.startingSpeed;
+            actorAgent.speed = actor.startingSpeed;
             if (actor.resetToInitialPosition)
             {
-                actor.navMeshAgent.Warp(actor.startingPosition);
+                actorAgent.Warp(actor.startingPosition);
             }
         }
-        actor.navMeshAgent.SetDestination(actor.navMeshAgent.transform.position);
-        actor.navMeshAgent.isStopped = true;
+        actorAgent.SetDestination(actorAgent.transform.position);
+        actorAgent.isStopped = true;
     }
 
     public virtual IEnumerator AnimateEffect(AnimationEffect animationEffect)
@@ -84,6 +98,7 @@ public struct AnimationActor
     public List<Vector3> pathToFollow;
     public float speedToDestination;
     public bool resetToInitialPosition;
+    public bool animateOnlyThis;
 }
 
 [System.Serializable]
@@ -91,4 +106,5 @@ public struct AnimationEffect
 {
     public GameObject effectToPlay;
     public Vector3 positionToPlayAt;
+    public bool animateOnlyThis;
 }

@@ -136,7 +136,7 @@ public class BulletController : MonoBehaviour
     {
         if (other.gameObject != shooter.gameObject && (other.CompareTag("Enemy") || other.CompareTag("Player") || other.CompareTag("Mob")))
         {
-            MobController monsterController = other.GetComponent<MobController>();
+            MobController mobController = other.GetComponent<MobController>();
 
             foreach (SpellEffect spellEffect in spellEffects)
             {
@@ -145,8 +145,15 @@ public class BulletController : MonoBehaviour
                     continue;
                 }
 
-                spellEffect.OnCollisionEffect(monsterController, this, default(Vector3));
+                spellEffect.OnCollisionEffect(mobController, this, default(Vector3));
             }
+
+            if (mobController.mobAIController)
+            {
+                mobController.mobAIController.lastAttackPosition = shooter.transform.position;
+            }
+            mobController.TakeDamage(shooter, bulletDamage);
+
             Destroy(gameObject);
         }
     }

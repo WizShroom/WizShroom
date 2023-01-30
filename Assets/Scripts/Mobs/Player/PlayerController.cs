@@ -17,6 +17,8 @@ public class PlayerController : MobController
     CharacterScreenType characterScreenType;
     InGameScreenType inGameScreenType;
 
+    public List<Quest> currentQuests;
+
     public override void Initialize()
     {
         base.Initialize();

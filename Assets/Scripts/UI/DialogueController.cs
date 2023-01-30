@@ -14,11 +14,15 @@ public class DialogueController : MonoBehaviour
     TextMeshProUGUI dialogueText;
     Image mushSprite;
     Image talkerSprite;
+    Button positiveResponseButton;
+    Button negativeResponseButton;
+    bool choosing;
 
     [SerializeField] Dialogue nextDialogue;
 
     bool talking = false;
     bool canSkipDialogue = false;
+    bool isPositiveChoice = false;
 
     public bool triggeredBySignal = false;
     public string signalToTrigger;
@@ -39,6 +43,10 @@ public class DialogueController : MonoBehaviour
         dialogueText = dialogueScreenType.dialogueText;
         mushSprite = dialogueScreenType.mushTalking;
         talkerSprite = dialogueScreenType.otherTalking;
+        positiveResponseButton = dialogueScreenType.positiveResponse;
+        negativeResponseButton = dialogueScreenType.negativeResponse;
+        positiveResponseButton.gameObject.SetActive(false);
+        negativeResponseButton.gameObject.SetActive(false);
         if (hintImage)
         {
             hintImage.SetActive(false);
@@ -86,6 +94,8 @@ public class DialogueController : MonoBehaviour
         yield return null;
 
         talking = true;
+        bool hasChoice = false;
+        Dialogue newDialogue = null;
 
         UIHandler.Instance.EnableUIByType(UIType.Dialogue);
         UIHandler.Instance.DisableUIByType(UIType.InGame);
@@ -105,6 +115,29 @@ public class DialogueController : MonoBehaviour
                 talkerSprite.enabled = true;
                 talkerSprite.sprite = dialogue.talkerSprite;
             }
+
+            if (dialogue.dialogueAnimationControls.animationToPlay != null && dialogue.dialogueAnimationControls.animationBeforeDialogue)
+            {
+                if (dialogue.dialogueAnimationControls.waitForAnimation)
+                {
+                    UIHandler.Instance.DisableUIByType(UIType.Dialogue);
+                    yield return GameController.Instance.StartCoroutine(dialogue.dialogueAnimationControls.animationToPlay.AnimateAll());
+                    UIHandler.Instance.EnableUIByType(UIType.Dialogue);
+                }
+                else
+                {
+                    GameController.Instance.StartCoroutine(dialogue.dialogueAnimationControls.animationToPlay.AnimateAll());
+                }
+            }
+
+            choosing = false;
+            hasChoice = dialogue.choiceAndQuest.hasChoiceToMake;
+            if (hasChoice)
+            {
+                dialogueTextToDisplay = dialogue.choiceAndQuest.dialogueChoice.dialogueChoiceText;
+                choosing = true;
+            }
+
             for (int i = 0; i < dialogueTextToDisplay.Length; i++)
             {
                 if (dialogue.clickable)
@@ -137,17 +170,30 @@ public class DialogueController : MonoBehaviour
 
             yield return null;
 
-            if (dialogue.animationToPlay != null)
+            if (choosing)
             {
-                if (dialogue.waitForAnimation)
+                positiveResponseButton.gameObject.SetActive(true);
+                negativeResponseButton.gameObject.SetActive(true);
+                positiveResponseButton.onClick.AddListener(() => OnChoiceMade(true));
+                negativeResponseButton.onClick.AddListener(() => OnChoiceMade(false));
+            }
+
+            while (choosing)
+            {
+                yield return null;
+            }
+
+            if (dialogue.dialogueAnimationControls.animationToPlay != null && !dialogue.dialogueAnimationControls.animationBeforeDialogue)
+            {
+                if (dialogue.dialogueAnimationControls.waitForAnimation)
                 {
                     UIHandler.Instance.DisableUIByType(UIType.Dialogue);
-                    yield return GameController.Instance.StartCoroutine(dialogue.animationToPlay.AnimateAll());
+                    yield return StartCoroutine(dialogue.dialogueAnimationControls.animationToPlay.AnimateAll());
                     UIHandler.Instance.EnableUIByType(UIType.Dialogue);
                 }
                 else
                 {
-                    GameController.Instance.StartCoroutine(dialogue.animationToPlay.AnimateAll());
+                    StartCoroutine(dialogue.dialogueAnimationControls.animationToPlay.AnimateAll());
                 }
             }
 
@@ -156,10 +202,37 @@ public class DialogueController : MonoBehaviour
                 GameSignalHandler.Instance.SendSignal(gameObject, dialogue.signalToSend);
             }
             yield return null;
+
+            if (dialogue.newDialogue)
+            {
+                newDialogue = dialogue.newDialogue;
+                break;
+            }
+
+            if (hasChoice)
+            {
+                if (positiveResponseButton)
+                {
+                    newDialogue = dialogue.choiceAndQuest.dialogueChoice.positiveDialogue;
+                }
+                else
+                {
+                    newDialogue = dialogue.choiceAndQuest.dialogueChoice.negativeDialogue;
+                }
+                break;
+            }
         }
-        GameEventHandler.Instance.SendEvent(gameObject, EVENT.RESUMED);
-        UIHandler.Instance.DisableUIByType(UIType.Dialogue);
-        UIHandler.Instance.EnableUIByType(UIType.InGame);
+
+        if (!hasChoice || newDialogue == null)
+        {
+            GameEventHandler.Instance.SendEvent(gameObject, EVENT.RESUMED);
+            UIHandler.Instance.DisableUIByType(UIType.Dialogue);
+            UIHandler.Instance.EnableUIByType(UIType.InGame);
+        }
+        else
+        {
+            StartDialogue(newDialogue);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -209,5 +282,13 @@ public class DialogueController : MonoBehaviour
         {
             StartDialogue();
         }
+    }
+
+    public void OnChoiceMade(bool isPositiveResponse)
+    {
+        isPositiveChoice = isPositiveResponse;
+        positiveResponseButton.gameObject.SetActive(false);
+        negativeResponseButton.gameObject.SetActive(false);
+        choosing = false;
     }
 }

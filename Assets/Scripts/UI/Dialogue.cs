@@ -13,15 +13,17 @@ public class Dialogue : ScriptableObject
 [System.Serializable]
 public struct DialogueSegment
 {
+    [TextArea(5, 5)]
     public string dialogueText;
     public float dialogueDisplayTime;
     public bool isMushTalking;
     public Sprite talkerSprite;
     public Sprite mushSprite;
-    public List<DialogueChoice> dialogueChoices;
+    public ChoiceAndQuest choiceAndQuest;
 
-    public bool waitForAnimation;
-    public ScriptedAnimation animationToPlay;
+    public Dialogue newDialogue;
+
+    public DialogueAnimationControls dialogueAnimationControls;
 
     public bool sendSignalAfterPart;
     public string signalToSend;
@@ -30,8 +32,27 @@ public struct DialogueSegment
 }
 
 [System.Serializable]
+public struct ChoiceAndQuest
+{
+    public bool hasChoiceToMake;
+    public DialogueChoice dialogueChoice;
+    public bool canChooseQuest;
+    public bool questRequirePositiveOutcome;
+    public Quest questToGive;
+}
+
+[System.Serializable]
+public struct DialogueAnimationControls
+{
+    public bool waitForAnimation;
+    public bool animationBeforeDialogue;
+    public ScriptedAnimation animationToPlay;
+}
+
+[System.Serializable]
 public struct DialogueChoice
 {
-    public string dialogueChoice;
-    public Dialogue followOnDialogue;
+    public string dialogueChoiceText;
+    public Dialogue positiveDialogue;
+    public Dialogue negativeDialogue;
 }

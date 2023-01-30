@@ -51,7 +51,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        if (agent.remainingDistance > 0.5f && !agent.isStopped)
+        if (Vector3.Distance(transform.position, destination) > 1 && !agent.isStopped)
         {
             Vector3 direction = (destination - transform.position).normalized;
             if (Mathf.Abs(direction.x) > Mathf.Abs(direction.z))

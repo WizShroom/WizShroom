@@ -9,4 +9,6 @@ public class DialogueScreenType : UITypeController
     public TextMeshProUGUI dialogueText;
     public Image mushTalking;
     public Image otherTalking;
+    public Button positiveResponse;
+    public Button negativeResponse;
 }

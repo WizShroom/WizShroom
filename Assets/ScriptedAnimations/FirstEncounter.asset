@@ -23,3 +23,5 @@ MonoBehaviour:
       pathToFollow: []
       speedToDestination: 2
       resetToInitialPosition: 0
+      animateOnlyThis: 1
+    animationEffects: []
