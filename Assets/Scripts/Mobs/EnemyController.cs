@@ -10,14 +10,4 @@ public class EnemyController : MobController
     {
         attackSpell.Cast(this, mobAIController.target.GetComponent<MobController>());
     }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Bullet"))
-        {
-            BulletController bullet = other.GetComponent<BulletController>();
-            mobAIController.lastAttackPosition = bullet.shooter.transform.position;
-            TakeDamage(bullet.shooter, bullet.bulletDamage);
-        }
-    }
 }

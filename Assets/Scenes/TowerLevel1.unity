@@ -21477,71 +21477,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4252784401376168, guid: 22a3fd8d3e59a1149bdcd775c0e87241, type: 3}
   m_PrefabInstance: {fileID: 1484763729}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &1497885360
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 3492176760200919268}
-    m_Modifications:
-    - target: {fileID: 1150919721995274125, guid: 4489fc2b2c60a9d4cbb2aad4e76a1766, type: 3}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1150919721995274125, guid: 4489fc2b2c60a9d4cbb2aad4e76a1766, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 1150919721995274125, guid: 4489fc2b2c60a9d4cbb2aad4e76a1766, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 23
-      objectReference: {fileID: 0}
-    - target: {fileID: 1150919721995274125, guid: 4489fc2b2c60a9d4cbb2aad4e76a1766, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1150919721995274125, guid: 4489fc2b2c60a9d4cbb2aad4e76a1766, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.001
-      objectReference: {fileID: 0}
-    - target: {fileID: 1150919721995274125, guid: 4489fc2b2c60a9d4cbb2aad4e76a1766, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -9.999683
-      objectReference: {fileID: 0}
-    - target: {fileID: 1150919721995274125, guid: 4489fc2b2c60a9d4cbb2aad4e76a1766, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 1150919721995274125, guid: 4489fc2b2c60a9d4cbb2aad4e76a1766, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 1150919721995274125, guid: 4489fc2b2c60a9d4cbb2aad4e76a1766, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1150919721995274125, guid: 4489fc2b2c60a9d4cbb2aad4e76a1766, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1150919721995274125, guid: 4489fc2b2c60a9d4cbb2aad4e76a1766, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 90
-      objectReference: {fileID: 0}
-    - target: {fileID: 1150919721995274125, guid: 4489fc2b2c60a9d4cbb2aad4e76a1766, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1150919721995274125, guid: 4489fc2b2c60a9d4cbb2aad4e76a1766, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7187515273477190809, guid: 4489fc2b2c60a9d4cbb2aad4e76a1766, type: 3}
-      propertyPath: m_Name
-      value: Ground
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 4489fc2b2c60a9d4cbb2aad4e76a1766, type: 3}
 --- !u!1001 &1504130137
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -29948,18 +29883,18 @@ MonoBehaviour:
   verticalRoomsPrefab:
   - {fileID: 4724597291838832645, guid: 36883612a9f009d4aab5bf88472742aa, type: 3}
   startingRoom: {fileID: 4724597291838832645, guid: 61b5d4bdbb2d5f74b9c7ff51e045a5fd, type: 3}
+  ground: {fileID: 7187515273477190809, guid: 4489fc2b2c60a9d4cbb2aad4e76a1766, type: 3}
   placedRooms: []
   gridPositions: []
-  maxDepth: 5
+  maxDepth: 7
   maxHeight: 1
-  maxSize: 3
+  maxSize: 5
   testing: 0
   navMeshSurface: {fileID: 0}
---- !u!4 &3492176760200919268 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 9109272751653644673, guid: 9f57f19888d6fb24bb714625fa3b3fa5, type: 3}
-  m_PrefabInstance: {fileID: 3492176760200919265}
-  m_PrefabAsset: {fileID: 0}
+  availableTreasureRooms: 1
+  treasureRoomsPrefab:
+  - {fileID: 4724597291838832645, guid: 48f5fd7a6dfca4649b5c8afabb267b3b, type: 3}
+  bossRoomsPrefab: []
 --- !u!23 &3586453652057280132
 MeshRenderer:
   m_ObjectHideFlags: 0

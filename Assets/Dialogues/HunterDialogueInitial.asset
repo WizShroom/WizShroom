@@ -18,9 +18,20 @@ MonoBehaviour:
     isMushTalking: 0
     talkerSprite: {fileID: 21300000, guid: f95f697d66d238446b1ab717def09945, type: 3}
     mushSprite: {fileID: 0}
-    dialogueChoices: []
-    waitForAnimation: 0
-    animationToPlay: {fileID: 11400000, guid: b8d5957f53761e3408590be83938abf0, type: 2}
+    choiceAndQuest:
+      hasChoiceToMake: 0
+      dialogueChoice:
+        dialogueChoiceText: 
+        positiveDialogue: {fileID: 0}
+        negativeDialogue: {fileID: 0}
+      canChooseQuest: 0
+      questRequirePositiveOutcome: 0
+      questToGive: {fileID: 0}
+    newDialogue: {fileID: 0}
+    dialogueAnimationControls:
+      waitForAnimation: 0
+      animationBeforeDialogue: 0
+      animationToPlay: {fileID: 0}
     sendSignalAfterPart: 0
     signalToSend: 
     clickable: 1
@@ -29,9 +40,20 @@ MonoBehaviour:
     isMushTalking: 1
     talkerSprite: {fileID: -352181154, guid: bec2eadc449eb2b4d81174c272d96e4b, type: 3}
     mushSprite: {fileID: -978265130, guid: 1b198aba7297e4444b95eaf7364078bc, type: 3}
-    dialogueChoices: []
-    waitForAnimation: 0
-    animationToPlay: {fileID: 0}
+    choiceAndQuest:
+      hasChoiceToMake: 0
+      dialogueChoice:
+        dialogueChoiceText: 
+        positiveDialogue: {fileID: 0}
+        negativeDialogue: {fileID: 0}
+      canChooseQuest: 0
+      questRequirePositiveOutcome: 0
+      questToGive: {fileID: 0}
+    newDialogue: {fileID: 0}
+    dialogueAnimationControls:
+      waitForAnimation: 0
+      animationBeforeDialogue: 1
+      animationToPlay: {fileID: 11400000, guid: b8d5957f53761e3408590be83938abf0, type: 2}
     sendSignalAfterPart: 0
     signalToSend: 
     clickable: 1
@@ -40,10 +62,21 @@ MonoBehaviour:
     isMushTalking: 0
     talkerSprite: {fileID: 21300000, guid: f95f697d66d238446b1ab717def09945, type: 3}
     mushSprite: {fileID: 0}
-    dialogueChoices: []
-    waitForAnimation: 1
-    animationToPlay: {fileID: 11400000, guid: 1bb4becdb9869e144a587c85798b0164, type: 2}
-    sendSignalAfterPart: 1
+    choiceAndQuest:
+      hasChoiceToMake: 0
+      dialogueChoice:
+        dialogueChoiceText: 
+        positiveDialogue: {fileID: 0}
+        negativeDialogue: {fileID: 0}
+      canChooseQuest: 0
+      questRequirePositiveOutcome: 0
+      questToGive: {fileID: 0}
+    newDialogue: {fileID: 0}
+    dialogueAnimationControls:
+      waitForAnimation: 1
+      animationBeforeDialogue: 0
+      animationToPlay: {fileID: 11400000, guid: 1bb4becdb9869e144a587c85798b0164, type: 2}
+    sendSignalAfterPart: 0
     signalToSend: 
     clickable: 1
   - dialogueText: Who are you?
@@ -51,9 +84,20 @@ MonoBehaviour:
     isMushTalking: 0
     talkerSprite: {fileID: -352181154, guid: bec2eadc449eb2b4d81174c272d96e4b, type: 3}
     mushSprite: {fileID: -978265130, guid: 1b198aba7297e4444b95eaf7364078bc, type: 3}
-    dialogueChoices: []
-    waitForAnimation: 0
-    animationToPlay: {fileID: 0}
+    choiceAndQuest:
+      hasChoiceToMake: 0
+      dialogueChoice:
+        dialogueChoiceText: 
+        positiveDialogue: {fileID: 0}
+        negativeDialogue: {fileID: 0}
+      canChooseQuest: 0
+      questRequirePositiveOutcome: 0
+      questToGive: {fileID: 0}
+    newDialogue: {fileID: 0}
+    dialogueAnimationControls:
+      waitForAnimation: 0
+      animationBeforeDialogue: 0
+      animationToPlay: {fileID: 0}
     sendSignalAfterPart: 0
     signalToSend: 
     clickable: 1
@@ -62,9 +106,20 @@ MonoBehaviour:
     isMushTalking: 1
     talkerSprite: {fileID: -352181154, guid: bec2eadc449eb2b4d81174c272d96e4b, type: 3}
     mushSprite: {fileID: -978265130, guid: 1b198aba7297e4444b95eaf7364078bc, type: 3}
-    dialogueChoices: []
-    waitForAnimation: 0
-    animationToPlay: {fileID: 0}
+    choiceAndQuest:
+      hasChoiceToMake: 0
+      dialogueChoice:
+        dialogueChoiceText: 
+        positiveDialogue: {fileID: 0}
+        negativeDialogue: {fileID: 0}
+      canChooseQuest: 0
+      questRequirePositiveOutcome: 0
+      questToGive: {fileID: 0}
+    newDialogue: {fileID: 0}
+    dialogueAnimationControls:
+      waitForAnimation: 0
+      animationBeforeDialogue: 0
+      animationToPlay: {fileID: 0}
     sendSignalAfterPart: 0
     signalToSend: 
     clickable: 1
@@ -73,9 +128,20 @@ MonoBehaviour:
     isMushTalking: 0
     talkerSprite: {fileID: -352181154, guid: bec2eadc449eb2b4d81174c272d96e4b, type: 3}
     mushSprite: {fileID: -978265130, guid: 1b198aba7297e4444b95eaf7364078bc, type: 3}
-    dialogueChoices: []
-    waitForAnimation: 0
-    animationToPlay: {fileID: 0}
+    choiceAndQuest:
+      hasChoiceToMake: 0
+      dialogueChoice:
+        dialogueChoiceText: 
+        positiveDialogue: {fileID: 0}
+        negativeDialogue: {fileID: 0}
+      canChooseQuest: 0
+      questRequirePositiveOutcome: 0
+      questToGive: {fileID: 0}
+    newDialogue: {fileID: 0}
+    dialogueAnimationControls:
+      waitForAnimation: 0
+      animationBeforeDialogue: 0
+      animationToPlay: {fileID: 0}
     sendSignalAfterPart: 0
     signalToSend: 
     clickable: 1
@@ -84,9 +150,20 @@ MonoBehaviour:
     isMushTalking: 0
     talkerSprite: {fileID: -352181154, guid: bec2eadc449eb2b4d81174c272d96e4b, type: 3}
     mushSprite: {fileID: -978265130, guid: 1b198aba7297e4444b95eaf7364078bc, type: 3}
-    dialogueChoices: []
-    waitForAnimation: 0
-    animationToPlay: {fileID: 11400000, guid: b8d5957f53761e3408590be83938abf0, type: 2}
+    choiceAndQuest:
+      hasChoiceToMake: 0
+      dialogueChoice:
+        dialogueChoiceText: 
+        positiveDialogue: {fileID: 0}
+        negativeDialogue: {fileID: 0}
+      canChooseQuest: 0
+      questRequirePositiveOutcome: 0
+      questToGive: {fileID: 0}
+    newDialogue: {fileID: 0}
+    dialogueAnimationControls:
+      waitForAnimation: 0
+      animationBeforeDialogue: 0
+      animationToPlay: {fileID: 0}
     sendSignalAfterPart: 0
     signalToSend: 
     clickable: 1
@@ -95,9 +172,20 @@ MonoBehaviour:
     isMushTalking: 1
     talkerSprite: {fileID: -352181154, guid: bec2eadc449eb2b4d81174c272d96e4b, type: 3}
     mushSprite: {fileID: -978265130, guid: 1b198aba7297e4444b95eaf7364078bc, type: 3}
-    dialogueChoices: []
-    waitForAnimation: 0
-    animationToPlay: {fileID: 0}
+    choiceAndQuest:
+      hasChoiceToMake: 0
+      dialogueChoice:
+        dialogueChoiceText: 
+        positiveDialogue: {fileID: 0}
+        negativeDialogue: {fileID: 0}
+      canChooseQuest: 0
+      questRequirePositiveOutcome: 0
+      questToGive: {fileID: 0}
+    newDialogue: {fileID: 0}
+    dialogueAnimationControls:
+      waitForAnimation: 0
+      animationBeforeDialogue: 0
+      animationToPlay: {fileID: 0}
     sendSignalAfterPart: 0
     signalToSend: 
     clickable: 1
@@ -106,9 +194,20 @@ MonoBehaviour:
     isMushTalking: 0
     talkerSprite: {fileID: -352181154, guid: bec2eadc449eb2b4d81174c272d96e4b, type: 3}
     mushSprite: {fileID: -978265130, guid: 1b198aba7297e4444b95eaf7364078bc, type: 3}
-    dialogueChoices: []
-    waitForAnimation: 0
-    animationToPlay: {fileID: 0}
+    choiceAndQuest:
+      hasChoiceToMake: 0
+      dialogueChoice:
+        dialogueChoiceText: 
+        positiveDialogue: {fileID: 0}
+        negativeDialogue: {fileID: 0}
+      canChooseQuest: 0
+      questRequirePositiveOutcome: 0
+      questToGive: {fileID: 0}
+    newDialogue: {fileID: 0}
+    dialogueAnimationControls:
+      waitForAnimation: 0
+      animationBeforeDialogue: 0
+      animationToPlay: {fileID: 0}
     sendSignalAfterPart: 0
     signalToSend: 
     clickable: 1
@@ -118,9 +217,20 @@ MonoBehaviour:
     isMushTalking: 0
     talkerSprite: {fileID: -352181154, guid: bec2eadc449eb2b4d81174c272d96e4b, type: 3}
     mushSprite: {fileID: -978265130, guid: 1b198aba7297e4444b95eaf7364078bc, type: 3}
-    dialogueChoices: []
-    waitForAnimation: 1
-    animationToPlay: {fileID: 11400000, guid: 2aa08e1b4096ca84d80eb315b70a4c71, type: 2}
+    choiceAndQuest:
+      hasChoiceToMake: 0
+      dialogueChoice:
+        dialogueChoiceText: 
+        positiveDialogue: {fileID: 0}
+        negativeDialogue: {fileID: 0}
+      canChooseQuest: 0
+      questRequirePositiveOutcome: 0
+      questToGive: {fileID: 0}
+    newDialogue: {fileID: 0}
+    dialogueAnimationControls:
+      waitForAnimation: 0
+      animationBeforeDialogue: 1
+      animationToPlay: {fileID: 11400000, guid: 2aa08e1b4096ca84d80eb315b70a4c71, type: 2}
     sendSignalAfterPart: 0
     signalToSend: 
     clickable: 1
@@ -129,21 +239,133 @@ MonoBehaviour:
     isMushTalking: 0
     talkerSprite: {fileID: -352181154, guid: bec2eadc449eb2b4d81174c272d96e4b, type: 3}
     mushSprite: {fileID: -978265130, guid: 1b198aba7297e4444b95eaf7364078bc, type: 3}
-    dialogueChoices: []
-    waitForAnimation: 1
-    animationToPlay: {fileID: 11400000, guid: 99c79d862b5b7e141a7f51b92cd0abaf, type: 2}
+    choiceAndQuest:
+      hasChoiceToMake: 0
+      dialogueChoice:
+        dialogueChoiceText: 
+        positiveDialogue: {fileID: 0}
+        negativeDialogue: {fileID: 0}
+      canChooseQuest: 0
+      questRequirePositiveOutcome: 0
+      questToGive: {fileID: 0}
+    newDialogue: {fileID: 0}
+    dialogueAnimationControls:
+      waitForAnimation: 0
+      animationBeforeDialogue: 0
+      animationToPlay: {fileID: 0}
     sendSignalAfterPart: 0
     signalToSend: 
-    clickable: 0
-  - dialogueText: I'll open the portal for you to the first floor, i hope you'll
-      have more luck than i did...
+    clickable: 1
+  - dialogueText: ...
+    dialogueDisplayTime: 2
+    isMushTalking: 1
+    talkerSprite: {fileID: -352181154, guid: bec2eadc449eb2b4d81174c272d96e4b, type: 3}
+    mushSprite: {fileID: -978265130, guid: 1b198aba7297e4444b95eaf7364078bc, type: 3}
+    choiceAndQuest:
+      hasChoiceToMake: 0
+      dialogueChoice:
+        dialogueChoiceText: 
+        positiveDialogue: {fileID: 0}
+        negativeDialogue: {fileID: 0}
+      canChooseQuest: 0
+      questRequirePositiveOutcome: 0
+      questToGive: {fileID: 0}
+    newDialogue: {fileID: 0}
+    dialogueAnimationControls:
+      waitForAnimation: 0
+      animationBeforeDialogue: 1
+      animationToPlay: {fileID: 11400000, guid: 6a07cf00818dc014686af5e290515199, type: 2}
+    sendSignalAfterPart: 0
+    signalToSend: 
+    clickable: 1
+  - dialogueText: Hehe i see you are persistent... Fine, i'll open the portal for
+      you
     dialogueDisplayTime: 2
     isMushTalking: 0
     talkerSprite: {fileID: -352181154, guid: bec2eadc449eb2b4d81174c272d96e4b, type: 3}
     mushSprite: {fileID: -978265130, guid: 1b198aba7297e4444b95eaf7364078bc, type: 3}
-    dialogueChoices: []
-    waitForAnimation: 0
-    animationToPlay: {fileID: 0}
-    sendSignalAfterPart: 1
-    signalToSend: EnableMainPortal
+    choiceAndQuest:
+      hasChoiceToMake: 0
+      dialogueChoice:
+        dialogueChoiceText: 
+        positiveDialogue: {fileID: 0}
+        negativeDialogue: {fileID: 0}
+      canChooseQuest: 0
+      questRequirePositiveOutcome: 0
+      questToGive: {fileID: 0}
+    newDialogue: {fileID: 0}
+    dialogueAnimationControls:
+      waitForAnimation: 0
+      animationBeforeDialogue: 0
+      animationToPlay: {fileID: 0}
+    sendSignalAfterPart: 0
+    signalToSend: 
+    clickable: 1
+  - dialogueText: But first you need to gather something for me
+    dialogueDisplayTime: 2
+    isMushTalking: 0
+    talkerSprite: {fileID: -352181154, guid: bec2eadc449eb2b4d81174c272d96e4b, type: 3}
+    mushSprite: {fileID: -978265130, guid: 1b198aba7297e4444b95eaf7364078bc, type: 3}
+    choiceAndQuest:
+      hasChoiceToMake: 0
+      dialogueChoice:
+        dialogueChoiceText: 
+        positiveDialogue: {fileID: 0}
+        negativeDialogue: {fileID: 0}
+      canChooseQuest: 0
+      questRequirePositiveOutcome: 0
+      questToGive: {fileID: 0}
+    newDialogue: {fileID: 0}
+    dialogueAnimationControls:
+      waitForAnimation: 0
+      animationBeforeDialogue: 0
+      animationToPlay: {fileID: 0}
+    sendSignalAfterPart: 0
+    signalToSend: 
+    clickable: 1
+  - dialogueText: Go east and find a small clearing, there you'll find a particular
+      erb with blue petals.
+    dialogueDisplayTime: 2
+    isMushTalking: 0
+    talkerSprite: {fileID: -352181154, guid: bec2eadc449eb2b4d81174c272d96e4b, type: 3}
+    mushSprite: {fileID: -978265130, guid: 1b198aba7297e4444b95eaf7364078bc, type: 3}
+    choiceAndQuest:
+      hasChoiceToMake: 0
+      dialogueChoice:
+        dialogueChoiceText: 
+        positiveDialogue: {fileID: 0}
+        negativeDialogue: {fileID: 0}
+      canChooseQuest: 0
+      questRequirePositiveOutcome: 0
+      questToGive: {fileID: 0}
+    newDialogue: {fileID: 0}
+    dialogueAnimationControls:
+      waitForAnimation: 0
+      animationBeforeDialogue: 0
+      animationToPlay: {fileID: 0}
+    sendSignalAfterPart: 0
+    signalToSend: 
+    clickable: 1
+  - dialogueText: ~QUEST~
+    dialogueDisplayTime: 2
+    isMushTalking: 0
+    talkerSprite: {fileID: -352181154, guid: bec2eadc449eb2b4d81174c272d96e4b, type: 3}
+    mushSprite: {fileID: -978265130, guid: 1b198aba7297e4444b95eaf7364078bc, type: 3}
+    choiceAndQuest:
+      hasChoiceToMake: 1
+      dialogueChoice:
+        dialogueChoiceText: Find it and bring it to me, i'll open the portal after
+          it's done. Sounds Good?
+        positiveDialogue: {fileID: 11400000, guid: e4cf8df077bebb7488420cca41147ca4, type: 2}
+        negativeDialogue: {fileID: 11400000, guid: e4cf8df077bebb7488420cca41147ca4, type: 2}
+      canChooseQuest: 1
+      questRequirePositiveOutcome: 1
+      questToGive: {fileID: 0}
+    newDialogue: {fileID: 0}
+    dialogueAnimationControls:
+      waitForAnimation: 0
+      animationBeforeDialogue: 0
+      animationToPlay: {fileID: 0}
+    sendSignalAfterPart: 0
+    signalToSend: 
     clickable: 1

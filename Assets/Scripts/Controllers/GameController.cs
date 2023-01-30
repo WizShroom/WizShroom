@@ -34,6 +34,11 @@ public class GameController : SingletonMono<GameController>
     {
         GameObject returnGameobject = null;
 
+        if (entitiesID == null)
+        {
+            return null;
+        }
+
         foreach (AssignID idToCheck in entitiesID)
         {
             if (idToCheck.ID == ID)

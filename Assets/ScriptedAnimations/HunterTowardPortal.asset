@@ -14,15 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animations:
   - animationActors:
-    - ActorID: MushPlayer
-      navMeshAgent: {fileID: 0}
-      startingPosition: {x: 0, y: 0, z: 0}
-      startingSpeed: 0
-      onlyDestination: 1
-      destination: {x: 44, y: 0.5, z: 88}
-      pathToFollow: []
-      speedToDestination: 3
-      resetToInitialPosition: 0
     - ActorID: Hunter01
       navMeshAgent: {fileID: 0}
       startingPosition: {x: 0, y: 0, z: 0}
@@ -32,4 +23,15 @@ MonoBehaviour:
       pathToFollow: []
       speedToDestination: 4
       resetToInitialPosition: 0
+      animateOnlyThis: 0
+    - ActorID: MushPlayer
+      navMeshAgent: {fileID: 0}
+      startingPosition: {x: 0, y: 0, z: 0}
+      startingSpeed: 0
+      onlyDestination: 1
+      destination: {x: 44, y: 0.5, z: 88}
+      pathToFollow: []
+      speedToDestination: 3
+      resetToInitialPosition: 0
+      animateOnlyThis: 0
     animationEffects: []
