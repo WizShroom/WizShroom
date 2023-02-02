@@ -21,6 +21,7 @@ public struct DialogueSegment
     public Sprite mushSprite;
     public ChoiceAndQuest choiceAndQuest;
 
+    public bool startNewDirectly;
     public Dialogue newDialogue;
 
     public DialogueAnimationControls dialogueAnimationControls;
@@ -29,6 +30,10 @@ public struct DialogueSegment
     public string signalToSend;
 
     public bool clickable;
+    public bool disableControllerAfter;
+
+    public bool checkQuestRequirement;
+    public Quest questToCheck;
 }
 
 [System.Serializable]
@@ -52,7 +57,12 @@ public struct DialogueAnimationControls
 [System.Serializable]
 public struct DialogueChoice
 {
+    [TextArea(5, 5)]
     public string dialogueChoiceText;
     public Dialogue positiveDialogue;
+    public bool positiveDisableController;
+    public bool positiveEnableController;
     public Dialogue negativeDialogue;
+    public bool negativeDisableController;
+    public bool negativeEnableController;
 }
