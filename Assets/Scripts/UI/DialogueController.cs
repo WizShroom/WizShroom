@@ -95,7 +95,9 @@ public class DialogueController : MonoBehaviour
 
         talking = true;
         bool hasChoice = false;
+        bool startNewDirectly = false;
         Dialogue newDialogue = null;
+        bool toDisable = false;
 
         UIHandler.Instance.EnableUIByType(UIType.Dialogue);
         UIHandler.Instance.DisableUIByType(UIType.InGame);
@@ -128,6 +130,12 @@ public class DialogueController : MonoBehaviour
                 {
                     GameController.Instance.StartCoroutine(dialogue.dialogueAnimationControls.animationToPlay.AnimateAll());
                 }
+            }
+
+            startNewDirectly = false;
+            if (dialogue.startNewDirectly)
+            {
+                startNewDirectly = true;
             }
 
             choosing = false;
@@ -174,6 +182,8 @@ public class DialogueController : MonoBehaviour
             {
                 positiveResponseButton.gameObject.SetActive(true);
                 negativeResponseButton.gameObject.SetActive(true);
+                positiveResponseButton.onClick.RemoveAllListeners();
+                negativeResponseButton.onClick.RemoveAllListeners();
                 positiveResponseButton.onClick.AddListener(() => OnChoiceMade(true));
                 negativeResponseButton.onClick.AddListener(() => OnChoiceMade(false));
             }
@@ -211,27 +221,80 @@ public class DialogueController : MonoBehaviour
 
             if (hasChoice)
             {
-                if (positiveResponseButton)
+                if (isPositiveChoice)
                 {
                     newDialogue = dialogue.choiceAndQuest.dialogueChoice.positiveDialogue;
+                    if (dialogue.choiceAndQuest.canChooseQuest && dialogue.choiceAndQuest.questRequirePositiveOutcome)
+                    {
+                        PlayerController playerController = GameController.Instance.GetGameObjectFromID("MushPlayer").GetComponent<PlayerController>();
+                        playerController.currentQuests.Add(dialogue.choiceAndQuest.questToGive);
+                    }
+                    if (dialogue.choiceAndQuest.dialogueChoice.positiveEnableController)
+                    {
+                        disabled = false;
+                    }
+                    if (dialogue.choiceAndQuest.dialogueChoice.positiveDisableController)
+                    {
+                        disabled = true;
+                    }
                 }
                 else
                 {
                     newDialogue = dialogue.choiceAndQuest.dialogueChoice.negativeDialogue;
+                    if (dialogue.choiceAndQuest.canChooseQuest && !dialogue.choiceAndQuest.questRequirePositiveOutcome)
+                    {
+                        PlayerController playerController = GameController.Instance.GetGameObjectFromID("MushPlayer").GetComponent<PlayerController>();
+                        playerController.currentQuests.Add(dialogue.choiceAndQuest.questToGive);
+                    }
+                    if (dialogue.choiceAndQuest.dialogueChoice.negativeEnableController)
+                    {
+                        disabled = false;
+                    }
+                    if (dialogue.choiceAndQuest.dialogueChoice.negativeDisableController)
+                    {
+                        disabled = true;
+                    }
                 }
                 break;
             }
+
+            if (dialogue.checkQuestRequirement && dialogue.questToCheck.completedQuest)
+            {
+                newDialogue = dialogue.questToCheck.questCompleted;
+                break;
+            }
+            else if (dialogue.checkQuestRequirement && !dialogue.questToCheck.completedQuest)
+            {
+                newDialogue = dialogue.questToCheck.questOnGoing;
+                break;
+            }
+            else if ((dialogue.checkQuestRequirement && dialogue.questToCheck.failedQuest))
+            {
+                newDialogue = dialogue.questToCheck.questFailed;
+                break;
+            }
+
+            if (dialogue.disableControllerAfter)
+            {
+                toDisable = true;
+            }
         }
 
-        if (!hasChoice || newDialogue == null)
+        if (!hasChoice || newDialogue == null || !startNewDirectly)
         {
             GameEventHandler.Instance.SendEvent(gameObject, EVENT.RESUMED);
             UIHandler.Instance.DisableUIByType(UIType.Dialogue);
             UIHandler.Instance.EnableUIByType(UIType.InGame);
+            disabled = toDisable;
+            if (newDialogue != null)
+            {
+                nextDialogue = newDialogue;
+            }
         }
         else
         {
-            StartDialogue(newDialogue);
+            nextDialogue = newDialogue;
+            StartDialogue();
         }
     }
 

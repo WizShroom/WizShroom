@@ -23,10 +23,15 @@ MonoBehaviour:
       dialogueChoice:
         dialogueChoiceText: 
         positiveDialogue: {fileID: 0}
+        positiveDisableController: 0
+        positiveEnableController: 0
         negativeDialogue: {fileID: 0}
+        negativeDisableController: 0
+        negativeEnableController: 0
       canChooseQuest: 0
       questRequirePositiveOutcome: 0
       questToGive: {fileID: 0}
+    startNewDirectly: 0
     newDialogue: {fileID: 0}
     dialogueAnimationControls:
       waitForAnimation: 0
@@ -35,3 +40,6 @@ MonoBehaviour:
     sendSignalAfterPart: 0
     signalToSend: 
     clickable: 1
+    disableControllerAfter: 0
+    checkQuestRequirement: 1
+    questToCheck: {fileID: 11400000, guid: f118c1b42b0171f489a6cb091fb57c64, type: 2}
