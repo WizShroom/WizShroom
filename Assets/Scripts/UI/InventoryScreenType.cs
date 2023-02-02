@@ -5,5 +5,7 @@ using UnityEngine.UI;
 
 public class InventoryScreenType : UITypeController
 {
+    public Transform inventorySlotContainer;
+
     public InventoryItemOverlay inventoryItemOverlay;
 }
