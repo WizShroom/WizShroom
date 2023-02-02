@@ -30,7 +30,7 @@ public class PlayerInputAction : MonoBehaviour
     {
         playerMovement = GetComponent<PlayerMovement>();
         playerController = GetComponent<PlayerController>();
-        mouseGroundHighlightAnimator = mouseGroundHighlight.transform.GetChild(0).GetComponent<Animator>();
+        mouseGroundHighlightAnimator = mouseGroundHighlight.GetComponent<Animator>();
     }
 
     void Update()
