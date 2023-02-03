@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class SpellEffect : ScriptableObject
 {
+
+    //#TODO: Spell compatibility, spells can be mixed into one, effects have a whitelist of other effects that are able to be mixed to, donator check if its 
+    //effects can be mixed not the receiver. 
     public SpellEffectType spellEffectType;
 
     public virtual void OnCreationEffect(BulletController bulletController) { }

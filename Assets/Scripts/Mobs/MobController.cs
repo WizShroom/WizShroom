@@ -28,6 +28,16 @@ public class MobController : MonoBehaviour
         new Stat(1, StatType.Luck),
     };
 
+    public List<ResistanceStat> resistances = new List<ResistanceStat>()
+    {
+        new ResistanceStat(0, ResistanceType.BRUTE),
+        new ResistanceStat(0, ResistanceType.BURN),
+        new ResistanceStat(0, ResistanceType.NATURE),
+        new ResistanceStat(0, ResistanceType.MAGIC),
+        new ResistanceStat(0, ResistanceType.DARK),
+        new ResistanceStat(0, ResistanceType.KARMA),
+    };
+
     public List<Buff> buffs = new List<Buff>();
 
     public AudioSource audioSource;
@@ -136,6 +146,44 @@ public class MobController : MonoBehaviour
         UpdateMobValues();
     }
 
+    public int GetResistanceValueByType(ResistanceType resistanceType)
+    {
+        foreach (ResistanceStat resistance in resistances)
+        {
+            if (resistance.GetResistanceType() == resistanceType)
+            {
+                return resistance.GetValue();
+            }
+        }
+        return 0;
+    }
+
+    public ResistanceStat GetResistanceByType(ResistanceType resistanceType)
+    {
+        foreach (ResistanceStat resistance in resistances)
+        {
+            if (resistance.GetResistanceType() == resistanceType)
+            {
+                return resistance;
+            }
+        }
+        return null;
+    }
+
+    public void IncreaseResistanceValue(ResistanceType resistanceType, int increaseAmount = 1)
+    {
+        ResistanceStat resistanceToImprove = GetResistanceByType(resistanceType);
+        resistanceToImprove.IncreaseValue(increaseAmount);
+        UpdateMobValues();
+    }
+
+    public void DecreaseResistanceValue(ResistanceType resistanceType, int decreaseAmount = 1)
+    {
+        ResistanceStat resistanceToDecrease = GetResistanceByType(resistanceType);
+        resistanceToDecrease.DecreaseValue(decreaseAmount);
+        UpdateMobValues();
+    }
+
     private void UpdateMobValues()
     {
         health = maxHealth = GetStatValueByType(StatType.Health) * 10;
@@ -150,45 +198,27 @@ public class MobController : MonoBehaviour
         switch (damageType)
         {
             case DamageType.BRUTE:
-                finalDamage = incomingDamage *
-                    (1 - (GetStatValueByType(StatType.Health) / 500f)) *
-                    (1 - (GetStatValueByType(StatType.Luck) / (2000f + Random.Range(-500f, 500f)))) *
-                    (1 - (GetStatValueByType(StatType.Strength) / (600f + GetStatValueByType(StatType.Strength))));
+                finalDamage = incomingDamage - GetResistanceValueByType(ResistanceType.BRUTE);
                 break;
 
             case DamageType.BURN:
-                finalDamage = incomingDamage *
-                    (1 - (GetStatValueByType(StatType.Strength) / 500f)) *
-                    (1 - (GetStatValueByType(StatType.Luck) / (2000f + Random.Range(-500f, 500f)))) *
-                    (1 - (GetStatValueByType(StatType.Strength) / (600f + GetStatValueByType(StatType.Strength))));
+                finalDamage = incomingDamage - GetResistanceValueByType(ResistanceType.BURN);
                 break;
 
             case DamageType.NATURE:
-                finalDamage = incomingDamage *
-                    (1 - (GetStatValueByType(StatType.Agility) / 500f)) *
-                    (1 - (GetStatValueByType(StatType.Luck) / (2000f + Random.Range(-500f, 500f)))) *
-                    (1 - (GetStatValueByType(StatType.Strength) / (600f + GetStatValueByType(StatType.Strength))));
+                finalDamage = incomingDamage - GetResistanceValueByType(ResistanceType.NATURE);
                 break;
 
             case DamageType.MAGIC:
-                finalDamage = incomingDamage *
-                    (1 - (GetStatValueByType(StatType.Intelligence) / 500f)) *
-                    (1 - (GetStatValueByType(StatType.Luck) / (2000f + Random.Range(-500f, 500f)))) *
-                    (1 - (GetStatValueByType(StatType.Wisdom) / (600f + GetStatValueByType(StatType.Wisdom))));
+                finalDamage = incomingDamage - GetResistanceValueByType(ResistanceType.MAGIC);
                 break;
 
             case DamageType.DARK:
-                finalDamage = incomingDamage *
-                    (1 - (GetStatValueByType(StatType.Wisdom) / 500f)) *
-                    (1 - (GetStatValueByType(StatType.Luck) / (2000f + Random.Range(-500f, 500f)))) *
-                    (1 - (GetStatValueByType(StatType.Intelligence) / (600f + GetStatValueByType(StatType.Intelligence))));
+                finalDamage = incomingDamage - GetResistanceValueByType(ResistanceType.DARK);
                 break;
 
             case DamageType.KARMA:
-                finalDamage = incomingDamage *
-                    (1 - (GetStatValueByType(StatType.Luck) / 500f)) *
-                    (1 - (GetStatValueByType(StatType.Luck) / (2000f + Random.Range(-500f, 500f)))) *
-                    (1 - (GetStatValueByType(StatType.Wisdom) / (600f + GetStatValueByType(StatType.Wisdom))));
+                finalDamage = incomingDamage - GetResistanceValueByType(ResistanceType.KARMA);
                 break;
         }
 
@@ -250,20 +280,23 @@ public class MobController : MonoBehaviour
         experienceForLevelUp *= 2;
     }
 
-    public virtual void ApplyBuff(Buff buffToApply)
+    public virtual bool ApplyBuff(Buff buffToApply)
     {
         if (HasBuff(buffToApply) && !buffToApply.canHaveMultiple)
         {
-            return;
+            Buff existingBuff = GetExistingBuff(buffToApply);
+            existingBuff.elapsedTime = 0;
+            return true;
         }
 
         buffs.Add(buffToApply);
         buffToApply.ApplyEffect();
         if (buffToApply.duration <= 0)
         {
-            return;
+            return false;
         }
         StartCoroutine(RemoveBuffAfterDuration(buffToApply));
+        return true;
     }
 
     public virtual void RemoveBuff(Buff buffToRemove)
@@ -274,7 +307,11 @@ public class MobController : MonoBehaviour
 
     public virtual IEnumerator RemoveBuffAfterDuration(Buff buffToRemove)
     {
-        yield return new WaitForSeconds(buffToRemove.duration);
+        while (buffToRemove.elapsedTime < buffToRemove.duration)
+        {
+            buffToRemove.elapsedTime += Time.deltaTime;
+            yield return null;
+        }
         RemoveBuff(buffToRemove);
     }
 
@@ -286,6 +323,16 @@ public class MobController : MonoBehaviour
             return true;
         }
         return false;
+    }
+
+    public Buff GetExistingBuff(Buff buffToCheck)
+    {
+        Buff existingBuff = buffs.Find(buff => buff.name == buffToCheck.name);
+        if (existingBuff != null)
+        {
+            return existingBuff;
+        }
+        return null;
     }
 
     public void OnEventReceived(GameObject source, EVENT eventReceived)

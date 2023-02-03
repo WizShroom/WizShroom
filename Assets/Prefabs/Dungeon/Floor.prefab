@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 9027735822223792438}
   - component: {fileID: 5507145636250975650}
   - component: {fileID: 8364758823267400928}
+  - component: {fileID: 7034775621242120848}
+  - component: {fileID: 8122102992589880204}
   m_Layer: 0
   m_Name: Floor
   m_TagString: Untagged
@@ -100,3 +102,32 @@ MonoBehaviour:
   m_Area: 0
   m_IgnoreFromBuild: 0
   m_AffectedAgents: ffffffff
+--- !u!65 &7034775621242120848
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3110287239960851271}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.004817, y: 0.250328, z: 2.000578}
+  m_Center: {x: -0.0050754845, y: 0, z: 0.0003169775}
+--- !u!114 &8122102992589880204
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3110287239960851271}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c63ca7a792275f6408f5ea314f80821a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stepSounds:
+  - {fileID: 8300000, guid: c4e7414bfcd3f514292b05f9a026714c, type: 3}
+  - {fileID: 8300000, guid: 9ee8c3fb8862d17408b3c8b58b9abc69, type: 3}
+  - {fileID: 8300000, guid: 3867cb809c1c2174f9c3c5d4c2ca640b, type: 3}

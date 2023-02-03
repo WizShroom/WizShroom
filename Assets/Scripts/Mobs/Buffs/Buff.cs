@@ -7,6 +7,7 @@ public class Buff
 {
     public string name;
     public float duration;
+    public float elapsedTime;
     public bool canHaveMultiple = false;
 
     public Buff(string name, float duration, bool canHaveMultiple = false)
