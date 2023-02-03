@@ -53,6 +53,8 @@ public class MobController : MonoBehaviour
     public Transform pivotPoint;
     public Transform shootPoint;
 
+    public string mobID;
+
     private void Awake()
     {
         OnAwake();
@@ -249,7 +251,7 @@ public class MobController : MonoBehaviour
     {
         if (damager)
         {
-            damager.IncreaseExperience(experienceOnKill);
+            damager.MobKilled(this);
         }
         if (spawner)
         {
@@ -262,6 +264,11 @@ public class MobController : MonoBehaviour
         navMeshAgent.updatePosition = false;
         navMeshAgent.enabled = false;
         Destroy(gameObject, 5);
+    }
+
+    public virtual void MobKilled(MobController killedMob)
+    {
+        IncreaseExperience(killedMob.experienceOnKill);
     }
 
     public virtual void IncreaseExperience(float increaseAmount)

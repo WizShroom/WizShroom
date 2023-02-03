@@ -57,6 +57,113 @@ public class PlayerController : MobController
         characterScreenType.UpdateExpBar(experience, experienceForLevelUp, currentLevel);
     }
 
+    public override void MobKilled(MobController killedMob)
+    {
+        base.MobKilled(killedMob);
+        CheckQuestsMob(killedMob);
+    }
+
+    public void CheckQuestsMob(MobController killedMob)
+    {
+        foreach (Quest questToCheck in currentQuests)
+        {
+            CheckQuestMobRequirements(questToCheck, killedMob);
+        }
+    }
+
+    public void CheckQuestsItem(Item givenItem, int itemTotal)
+    {
+        foreach (Quest questToCheck in currentQuests)
+        {
+            CheckQuestItemRequirements(questToCheck, givenItem, itemTotal);
+        }
+    }
+
+    public void CheckQuestItemRequirements(Quest questToCheck, Item aquiredItem, int itemTotal)
+    {
+        for (int i = 0; i < questToCheck.questSegments.Count; i++)
+        {
+            QuestSegment questSegment = questToCheck.questSegments[i];
+            for (int j = 0; j < questSegment.requiredItems.Count; j++)
+            {
+                QuestItem questItem = questSegment.requiredItems[j];
+                if (aquiredItem != questItem.itemToTake)
+                {
+                    continue;
+                }
+                if (itemTotal >= questItem.itemAmount)
+                {
+                    questItem.itemDone = true;
+                }
+            }
+            CheckSegmentRequirement(questSegment);
+        }
+        CheckQuestDone(questToCheck);
+    }
+
+    public void CheckQuestMobRequirements(Quest questToCheck, MobController killedMob)
+    {
+        for (int i = 0; i < questToCheck.questSegments.Count; i++)
+        {
+            QuestSegment questSegment = questToCheck.questSegments[i];
+            for (int j = 0; j < questSegment.requiredKills.Count; j++)
+            {
+                QuestKill questKill = questSegment.requiredKills[j];
+                if (killedMob.mobID == questKill.monsterID)
+                {
+                    questKill.currentKills++;
+                }
+
+                if (questKill.currentKills >= questKill.killAmount)
+                {
+                    questKill.killDone = true;
+                }
+            }
+            CheckSegmentRequirement(questSegment);
+        }
+        CheckQuestDone(questToCheck);
+    }
+
+    public void CheckSegmentRequirement(QuestSegment segment)
+    {
+        bool itemDone = true;
+        bool killDone = true;
+        foreach (QuestItem questItem in segment.requiredItems)
+        {
+            if (!questItem.itemDone)
+            {
+                itemDone = false;
+            }
+        }
+        foreach (QuestKill questKill in segment.requiredKills)
+        {
+            if (!questKill.killDone)
+            {
+                killDone = false;
+            }
+        }
+        if (itemDone && killDone)
+        {
+            segment.completedSegment = true;
+        }
+    }
+
+    public void CheckQuestDone(Quest questToCheck)
+    {
+        bool questDone = true;
+        foreach (QuestSegment questSegment in questToCheck.questSegments)
+        {
+            if (!questSegment.completedSegment)
+            {
+                questDone = false;
+            }
+        }
+        if (questDone)
+        {
+            questToCheck.completedQuest = true;
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Interactable"))
