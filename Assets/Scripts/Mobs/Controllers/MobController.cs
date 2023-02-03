@@ -195,6 +195,10 @@ public class MobController : MonoBehaviour
 
     public virtual void TakeDamage(MobController damager, float incomingDamage = 1, DamageType damageType = DamageType.BRUTE)
     {
+        if (disabled)
+        {
+            return;
+        }
         float finalDamage = 0;
 
         switch (damageType)
@@ -249,6 +253,10 @@ public class MobController : MonoBehaviour
 
     public virtual void Death(MobController damager)
     {
+        if (disabled)
+        {
+            return;
+        }
         if (damager)
         {
             damager.MobKilled(this);
@@ -258,11 +266,11 @@ public class MobController : MonoBehaviour
             spawner.RemoveMob(this);
         }
         disabled = true;
-        GetComponentInChildren<Renderer>().enabled = false;
-        GetComponent<Collider>().enabled = false;
         navMeshAgent.isStopped = true;
         navMeshAgent.updatePosition = false;
         navMeshAgent.enabled = false;
+        GetComponentInChildren<Renderer>().enabled = false;
+        GetComponent<Collider>().enabled = false;
         Destroy(gameObject, 5);
     }
 

@@ -18,12 +18,12 @@ public class Quest : ScriptableObject
 [System.Serializable]
 public struct QuestSegment
 {
-    public bool completedSegment;
+    [SerializeField] public bool completedSegment;
     [TextArea(5, 5)]
-    public string segmentDescription;
-    public bool isOptional;
-    public List<QuestItem> requiredItems;
-    public List<QuestKill> requiredKills;
+    [SerializeField] public string segmentDescription;
+    [SerializeField] public bool isOptional;
+    [SerializeField] public List<QuestItem> requiredItems;
+    [SerializeField] public List<QuestKill> requiredKills;
 }
 
 [System.Serializable]
@@ -37,8 +37,8 @@ public struct QuestItem
 [System.Serializable]
 public struct QuestKill
 {
-    public bool killDone;
-    public string monsterID;
-    public int currentKills;
-    public int killAmount;
+    [SerializeField] public bool killDone;
+    [SerializeField] public string monsterID;
+    [SerializeField] public int currentKills;
+    [SerializeField] public int killAmount;
 }

@@ -416,6 +416,25 @@ MonoBehaviour:
   - statName: Luck
     statValue: 1
     statType: 5
+  resistances:
+  - resistanceName: BRUTE
+    resistanceValue: 0
+    resistanceType: 0
+  - resistanceName: BURN
+    resistanceValue: 0
+    resistanceType: 1
+  - resistanceName: NATURE
+    resistanceValue: 0
+    resistanceType: 2
+  - resistanceName: MAGIC
+    resistanceValue: 0
+    resistanceType: 3
+  - resistanceName: DARK
+    resistanceValue: 0
+    resistanceType: 4
+  - resistanceName: KARMA
+    resistanceValue: 0
+    resistanceType: 5
   buffs: []
   audioSource: {fileID: 0}
   navMeshAgent: {fileID: 0}
@@ -426,7 +445,8 @@ MonoBehaviour:
   elapsedAttackTime: 0
   pivotPoint: {fileID: 1575358575992049868}
   shootPoint: {fileID: 2655294606516925100}
-  attackSpell: {fileID: 11400000, guid: f50680da64fdec74d9ee9261c9f922a5, type: 2}
+  mobID: BasicMob
+  attackSpell: {fileID: 11400000, guid: 3086acc394792424f8b32638b5f095df, type: 2}
 --- !u!114 &1105141657678752561
 MonoBehaviour:
   m_ObjectHideFlags: 0

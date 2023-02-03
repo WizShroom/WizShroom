@@ -18,10 +18,10 @@ MonoBehaviour:
       navMeshAgent: {fileID: 0}
       startingPosition: {x: 0, y: 0, z: 0}
       startingSpeed: 0
-      onlyDestination: 0
-      destination: {x: 54.58, y: 0.39, z: 69.06}
+      onlyDestination: 1
+      destination: {x: 54.85, y: 0.5, z: 69.08}
       pathToFollow: []
-      speedToDestination: 0
+      speedToDestination: 2
       resetToInitialPosition: 0
       animateOnlyThis: 0
     animationEffects: []

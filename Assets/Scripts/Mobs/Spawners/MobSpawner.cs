@@ -8,12 +8,18 @@ public class MobSpawner : MonoBehaviour
     public List<GameObject> mobsToSpawn;
     public List<MobController> spawnedMobs;
 
-    public int spawnRadious = 3;
+    public int spawnRadious = 15;
 
     public string signalToSpawn;
 
     public MobSpawnersManager ourManager;
     public PlayerController player;
+
+    public string spawningMobID;
+
+    public int maxMobToSpawn = 5;
+    public int spawnDelay = 5;
+    float elapsedTime;
 
     private void Awake()
     {
@@ -29,6 +35,35 @@ public class MobSpawner : MonoBehaviour
     {
         ourManager = manager;
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        spawningMobID = ourManager.spawningMobID;
+    }
+
+    private void Update()
+    {
+        if (ourManager)
+        {
+            return;
+        }
+
+        if (player && Vector3.Distance(player.transform.position, transform.position) > spawnRadious)
+        {
+            return;
+        }
+
+        if (spawnedMobs.Count >= maxMobToSpawn)
+        {
+            return;
+        }
+
+        if (elapsedTime < spawnDelay)
+        {
+            elapsedTime += Time.deltaTime;
+            return;
+        }
+
+        elapsedTime = 0;
+        Spawn();
+
     }
 
     public bool Spawn(bool forced = false)
@@ -39,7 +74,7 @@ public class MobSpawner : MonoBehaviour
             return false;
         }
 
-        if (!forced && player && Vector3.Distance(player.transform.position, transform.position) < 10)
+        if (!forced && player && Vector3.Distance(player.transform.position, transform.position) < spawnRadious)
         {
             return false;
         }
@@ -49,6 +84,7 @@ public class MobSpawner : MonoBehaviour
         spawnedMob.transform.SetParent(transform);
 
         MobController mobController = spawnedMob.GetComponent<MobController>();
+        mobController.mobID = spawningMobID;
 
         spawnedMobs.Add(mobController);
         mobController.spawner = this;
