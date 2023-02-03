@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 799140e4880c2f146b17f4037ae61f46, type: 3}
+  m_Name: Done
+  m_EditorClassIdentifier: 
+  dialogueSegments:
+  - dialogueText: Thanks for finding the flowers! I'll open the portal now
+    dialogueDisplayTime: 1
+    isMushTalking: 0
+    talkerSprite: {fileID: -352181154, guid: bec2eadc449eb2b4d81174c272d96e4b, type: 3}
+    mushSprite: {fileID: 0}
+    choiceAndQuest:
+      hasChoiceToMake: 0
+      dialogueChoice:
+        dialogueChoiceText: 
+        positiveDialogue: {fileID: 0}
+        positiveDisableController: 0
+        positiveEnableController: 0
+        negativeDialogue: {fileID: 0}
+        negativeDisableController: 0
+        negativeEnableController: 0
+      canChooseQuest: 0
+      questRequirePositiveOutcome: 0
+      questToGive: {fileID: 0}
+    startNewDirectly: 1
+    newDialogue: {fileID: 11400000, guid: 0d8c0ee442706ff48a23f6678560c737, type: 2}
+    dialogueAnimationControls:
+      waitForAnimation: 0
+      animationBeforeDialogue: 0
+      animationToPlay: {fileID: 0}
+    sendSignalAfterPart: 0
+    signalToSend: 
+    clickable: 1
+    disableControllerAfter: 0
+    checkQuestRequirement: 0
+    questToCheck: {fileID: 0}

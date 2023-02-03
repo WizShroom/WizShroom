@@ -65,7 +65,7 @@ public class DialogueController : MonoBehaviour
             return;
         }
 
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             ActivateDialogue();
             disabled = true;
@@ -103,6 +103,21 @@ public class DialogueController : MonoBehaviour
         UIHandler.Instance.DisableUIByType(UIType.InGame);
         foreach (DialogueSegment dialogue in _dialogue.dialogueSegments)
         {
+            if (dialogue.checkQuestRequirement && dialogue.questToCheck.completedQuest)
+            {
+                newDialogue = dialogue.questToCheck.questCompleted;
+                break;
+            }
+            else if (dialogue.checkQuestRequirement && !dialogue.questToCheck.completedQuest)
+            {
+                newDialogue = dialogue.questToCheck.questOnGoing;
+                break;
+            }
+            else if ((dialogue.checkQuestRequirement && dialogue.questToCheck.failedQuest))
+            {
+                newDialogue = dialogue.questToCheck.questFailed;
+                break;
+            }
             string dialogueTextToDisplay = dialogue.dialogueText;
             dialogueText.text = "";
             if (dialogue.isMushTalking)
@@ -255,22 +270,6 @@ public class DialogueController : MonoBehaviour
                         disabled = true;
                     }
                 }
-                break;
-            }
-
-            if (dialogue.checkQuestRequirement && dialogue.questToCheck.completedQuest)
-            {
-                newDialogue = dialogue.questToCheck.questCompleted;
-                break;
-            }
-            else if (dialogue.checkQuestRequirement && !dialogue.questToCheck.completedQuest)
-            {
-                newDialogue = dialogue.questToCheck.questOnGoing;
-                break;
-            }
-            else if ((dialogue.checkQuestRequirement && dialogue.questToCheck.failedQuest))
-            {
-                newDialogue = dialogue.questToCheck.questFailed;
                 break;
             }
 

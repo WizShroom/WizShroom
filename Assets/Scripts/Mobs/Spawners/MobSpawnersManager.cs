@@ -8,6 +8,7 @@ public class MobSpawnersManager : MonoBehaviour
 
     public int maxMobAmount = 30;
     public int currentMobAmount;
+    public string spawningMobID;
 
     public float maxSpawnDelay = 3;
     public float minSpawnDelay = 1;

@@ -65,21 +65,23 @@ public class PlayerController : MobController
 
     public void CheckQuestsMob(MobController killedMob)
     {
-        foreach (Quest questToCheck in currentQuests)
+        for (int i = 0; i < currentQuests.Count; i++)
         {
-            CheckQuestMobRequirements(questToCheck, killedMob);
+            Quest questToCheck = currentQuests[i];
+            CheckQuestMobRequirements(ref questToCheck, killedMob);
         }
     }
 
     public void CheckQuestsItem(Item givenItem, int itemTotal)
     {
-        foreach (Quest questToCheck in currentQuests)
+        for (int i = 0; i < currentQuests.Count; i++)
         {
-            CheckQuestItemRequirements(questToCheck, givenItem, itemTotal);
+            Quest questToCheck = currentQuests[i];
+            CheckQuestItemRequirements(ref questToCheck, givenItem, itemTotal);
         }
     }
 
-    public void CheckQuestItemRequirements(Quest questToCheck, Item aquiredItem, int itemTotal)
+    public void CheckQuestItemRequirements(ref Quest questToCheck, Item aquiredItem, int itemTotal)
     {
         for (int i = 0; i < questToCheck.questSegments.Count; i++)
         {
@@ -93,15 +95,30 @@ public class PlayerController : MobController
                 }
                 if (itemTotal >= questItem.itemAmount)
                 {
-                    questItem.itemDone = true;
+                    questSegment = new QuestSegment
+                    {
+                        completedSegment = questSegment.completedSegment,
+                        segmentDescription = questSegment.segmentDescription,
+                        isOptional = questSegment.isOptional,
+                        requiredItems = new List<QuestItem>(questSegment.requiredItems),
+                        requiredKills = new List<QuestKill>(questSegment.requiredKills)
+                    };
+                    questSegment.requiredItems[j] = new QuestItem
+                    {
+                        itemDone = true,
+                        itemToTake = questItem.itemToTake,
+                        itemAmount = questItem.itemAmount
+                    };
+                    questToCheck.questSegments[i] = questSegment;
                 }
             }
-            CheckSegmentRequirement(questSegment);
+            CheckSegmentCompletion(ref questSegment);
+            questToCheck.questSegments[i] = questSegment;
         }
-        CheckQuestDone(questToCheck);
+        CheckQuestDone(ref questToCheck);
     }
 
-    public void CheckQuestMobRequirements(Quest questToCheck, MobController killedMob)
+    public void CheckQuestMobRequirements(ref Quest questToCheck, MobController killedMob)
     {
         for (int i = 0; i < questToCheck.questSegments.Count; i++)
         {
@@ -118,24 +135,26 @@ public class PlayerController : MobController
                 {
                     questKill.killDone = true;
                 }
+                questSegment.requiredKills[j] = questKill;
             }
-            CheckSegmentRequirement(questSegment);
+            CheckSegmentCompletion(ref questSegment);
+            questToCheck.questSegments[i] = questSegment;
         }
-        CheckQuestDone(questToCheck);
+        CheckQuestDone(ref questToCheck);
     }
 
-    public void CheckSegmentRequirement(QuestSegment segment)
+    private void CheckSegmentCompletion(ref QuestSegment questSegment)
     {
         bool itemDone = true;
         bool killDone = true;
-        foreach (QuestItem questItem in segment.requiredItems)
+        foreach (QuestItem questItem in questSegment.requiredItems)
         {
             if (!questItem.itemDone)
             {
                 itemDone = false;
             }
         }
-        foreach (QuestKill questKill in segment.requiredKills)
+        foreach (QuestKill questKill in questSegment.requiredKills)
         {
             if (!questKill.killDone)
             {
@@ -144,11 +163,11 @@ public class PlayerController : MobController
         }
         if (itemDone && killDone)
         {
-            segment.completedSegment = true;
+            questSegment.completedSegment = true;
         }
     }
 
-    public void CheckQuestDone(Quest questToCheck)
+    public void CheckQuestDone(ref Quest questToCheck)
     {
         bool questDone = true;
         foreach (QuestSegment questSegment in questToCheck.questSegments)
