@@ -5,23 +5,47 @@ using UnityEngine.UI;
 
 public class Inventory : SingletonMono<Inventory>
 {
-
-    public GameObject inventorySlotPrefab;
     public List<InventorySlot> inventorySlots;
 
-    public int slotAmount = 40;
+    public int miceliumAmount = 0;
 
     private void Start()
     {
-        InventoryScreenType inventoryScreen = (InventoryScreenType)UIHandler.Instance.GetUITypeControllerByType(UIType.Inventory);
-        Transform inventorySlotContainer = inventoryScreen.inventorySlotContainer;
-        for (int i = 0; i < slotAmount; i++)
+        for (int i = 0; i < inventorySlots.Count; i++)
         {
-            GameObject inventorySlotEntity = Instantiate(inventorySlotPrefab, inventorySlotContainer);
-            InventorySlot inventorySlot = inventorySlotEntity.GetComponent<InventorySlot>();
+            InventorySlot inventorySlot = inventorySlots[i];
             inventorySlot.slotID = i;
-            inventorySlots.Add(inventorySlot);
+            inventorySlot.amount.text = "";
         }
+    }
+
+    public void AddItem(Item itemToAdd, int addAmount = 1)
+    {
+        ItemType itemToAddType = itemToAdd.itemType;
+        switch (itemToAddType)
+        {
+            case ItemType.CONSUMABLE:
+                AddItemToFreeSlot(itemToAdd, addAmount);
+                break;
+            case ItemType.CURRENCY:
+                AddMicelium(addAmount);
+                break;
+        }
+    }
+
+    public void AddMicelium(int addAmount)
+    {
+        miceliumAmount += addAmount;
+    }
+
+    public bool RemoveMicelium(int removeAmount)
+    {
+        if (miceliumAmount - removeAmount < 0)
+        {
+            return false;
+        }
+        miceliumAmount = Mathf.Max(0, miceliumAmount - removeAmount);
+        return true;
     }
 
     public void AddItemToFreeSlot(Item itemToAdd, int addAmount = 1)
@@ -37,11 +61,23 @@ public class Inventory : SingletonMono<Inventory>
         }
     }
 
-    public void MergeSlots(int giverSlotID, int takerSlotID)
+    public void CheckMergeability(int giverSlotID, int takerSlotID)
     {
         InventorySlot giverSlot = GetInventorySlotByID(giverSlotID);
         InventorySlot takerSlot = GetInventorySlotByID(takerSlotID);
 
+        if (giverSlot.containedItem.item == takerSlot.containedItem.item || takerSlot.containedItem.item == null)
+        {
+            MergeSlots(giverSlot, takerSlot);
+        }
+        else
+        {
+            SwapSlots(giverSlot, takerSlot);
+        }
+    }
+
+    public void MergeSlots(InventorySlot giverSlot, InventorySlot takerSlot)
+    {
         int remainingAmount = takerSlot.AddItem(giverSlot.containedItem.item, giverSlot.containedItem.itemAmount);
         if (remainingAmount > 0)
         {
@@ -51,6 +87,15 @@ public class Inventory : SingletonMono<Inventory>
         {
             giverSlot.RemoveItem(removeCompletely: true);
         }
+    }
+
+    public void SwapSlots(InventorySlot giverSlot, InventorySlot takerSlot)
+    {
+        Item takerTempItem = takerSlot.containedItem.item;
+        int takerTempAmount = takerSlot.containedItem.itemAmount;
+
+        takerSlot.SetItem(giverSlot.containedItem.item, giverSlot.containedItem.itemAmount);
+        giverSlot.SetItem(takerTempItem, takerTempAmount);
     }
 
     public InventorySlot GetInventorySlotByID(int slotID)

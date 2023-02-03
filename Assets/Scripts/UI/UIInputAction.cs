@@ -24,6 +24,10 @@ public class UIInputAction : MonoBehaviour
             statUIHolder.UpdateStatUIs();
             UIHandler.Instance.ToggleUIType(UIType.CharacterInfo);
         }
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            UIHandler.Instance.ToggleUIType(UIType.Inventory);
+        }
     }
 
 }

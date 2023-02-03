@@ -24,6 +24,13 @@ public class GameController : SingletonMono<GameController>
 
     private void Start()
     {
+        UIHandler.Instance.DisableUIByTypeList(new List<UIType>(){
+            UIType.CharacterInfo,
+            UIType.LoadingScreen,
+            UIType.Inventory,
+            UIType.Dialogue,
+            UIType.MainMenu,
+        });
         UIHandler.Instance.EnableUIByTypeList(new List<UIType>(){
             UIType.InGame,
         });
@@ -53,7 +60,7 @@ public class GameController : SingletonMono<GameController>
 
     public void LoadScene(string sceneName)
     {
-        mush.navMeshAgent.isStopped = true;
+        GameEventHandler.Instance.SendEvent(gameObject, EVENT.PAUSED);
         StartCoroutine(LoadSceneAsync(sceneName));
     }
 
@@ -98,8 +105,8 @@ public class GameController : SingletonMono<GameController>
     {
         mush.navMeshAgent.Warp(new Vector3(0, 0, 0));
         mush.navMeshAgent.SetDestination(mush.transform.position);
-        mush.navMeshAgent.isStopped = false;
         Camera.main.transform.position = mush.transform.position + new Vector3(-5, 10, -5);
+        GameEventHandler.Instance.SendEvent(gameObject, EVENT.RESUMED);
     }
 
     public IEnumerator BuildNavmesh()

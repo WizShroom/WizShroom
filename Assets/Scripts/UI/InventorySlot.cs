@@ -9,6 +9,7 @@ public class InventorySlot : EventTrigger
 {
     public int slotID;
     public Image slotImage;
+    public TextMeshProUGUI amount;
     public InventoryItem containedItem = new InventoryItem();
 
     public bool ContainItem(Item itemToCheck = null)
@@ -48,10 +49,11 @@ public class InventorySlot : EventTrigger
         int newAmount = storedAmount + returnAmount;
         returnAmount = Mathf.Max(0, newAmount - itemToAdd.itemCap);
 
-        containedItem.itemName = itemToAdd.itemName;
+        UpdateName(itemToAdd.itemName);
         UpdateSprite(itemToAdd.itemSprite);
         containedItem.item = itemToAdd;
-        containedItem.itemAmount = newAmount > itemToAdd.itemCap ? itemToAdd.itemCap : newAmount;
+        int amountToStore = newAmount > itemToAdd.itemCap ? itemToAdd.itemCap : newAmount;
+        UpdateAmount(amountToStore);
 
         return returnAmount;
     }
@@ -64,7 +66,8 @@ public class InventorySlot : EventTrigger
         int newAmount = storedAmount + returnAmount;
         returnAmount = Mathf.Max(0, newAmount - containedItem.item.itemCap);
 
-        containedItem.itemAmount = newAmount > containedItem.item.itemCap ? containedItem.item.itemCap : newAmount;
+        int amountToStore = newAmount > containedItem.item.itemCap ? containedItem.item.itemCap : newAmount;
+        UpdateAmount(amountToStore);
 
         return returnAmount;
     }
@@ -73,29 +76,43 @@ public class InventorySlot : EventTrigger
     {
         if (containedItem.itemAmount - removeAmount <= 0 || removeCompletely)
         {
-            containedItem.itemName = "";
+            UpdateName("");
             UpdateSprite(null);
             containedItem.item = null;
-            containedItem.itemAmount = 0;
+            UpdateAmount(0);
         }
         else
         {
-            containedItem.itemAmount -= removeAmount;
+
+            int remainingAmount = containedItem.itemAmount - removeAmount;
+            UpdateAmount(remainingAmount);
         }
     }
 
     public void SetItem(Item itemToSet, int amountToSet = 1)
     {
-        containedItem.itemName = itemToSet.itemName;
+        UpdateName(itemToSet.itemName);
         UpdateSprite(itemToSet.itemSprite);
         containedItem.item = itemToSet;
-        containedItem.itemAmount = amountToSet;
+        UpdateAmount(amountToSet);
     }
 
     public void UpdateSprite(Sprite spriteToSet)
     {
         containedItem.itemSprite = spriteToSet;
         slotImage.sprite = spriteToSet;
+    }
+
+    public void UpdateName(string nameToSet)
+    {
+        containedItem.itemName = nameToSet;
+    }
+
+    public void UpdateAmount(int amountToSet)
+    {
+        containedItem.itemAmount = amountToSet;
+        string textAmount = containedItem.itemAmount > 0 ? containedItem.itemAmount.ToString() : "";
+        amount.text = textAmount;
     }
 
     public override void OnPointerUp(PointerEventData eventData)
@@ -106,8 +123,21 @@ public class InventorySlot : EventTrigger
             InventorySlot otherSlot = eventData.pointerCurrentRaycast.gameObject.GetComponent<InventorySlot>();
             if (otherSlot != null && otherSlot != this && otherSlot.CompareTag("InventorySlot"))
             {
-                Inventory.Instance.MergeSlots(slotID, otherSlot.slotID);
+                Inventory.Instance.CheckMergeability(slotID, otherSlot.slotID);
             }
+        }
+    }
+
+    public override void OnPointerClick(PointerEventData eventData)
+    {
+        if (containedItem.item == null)
+        {
+            return;
+        }
+        PlayerController playerController = GameController.Instance.GetGameObjectFromID("MushPlayer").GetComponent<PlayerController>();
+        if (containedItem.item.UseItem(playerController))
+        {
+            RemoveItem();
         }
     }
 }

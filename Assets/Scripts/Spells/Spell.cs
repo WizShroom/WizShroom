@@ -5,6 +5,8 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Spells/Basic")]
 public class Spell : ScriptableObject
 {
+    public string spellName;
+    public Sprite spellSprite;
     public SpellType spellType;
     public GameObject bulletPrefab;
     public int castAmount = 1;
