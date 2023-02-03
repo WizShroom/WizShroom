@@ -16,6 +16,14 @@ public class Spell : ScriptableObject
 
     public float chargeTime = 0;
 
+    public string key;
+    public float cooldown;
+    public float cooldownRemaining;
+    public Sprite UIImage;
+    public bool requireEnemy = false;
+
+    public int spellLevel;
+
     public virtual void Cast(MobController caster, MobController target)
     {
         caster.StartCoroutine(CastCoroutine(caster, target.transform.position, target));
