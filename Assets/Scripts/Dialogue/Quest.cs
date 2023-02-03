@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 [CreateAssetMenu(fileName = "Quest", menuName = "Quest", order = 0)]
 public class Quest : ScriptableObject
@@ -20,6 +21,7 @@ public struct QuestSegment
     public bool completedSegment;
     [TextArea(5, 5)]
     public string segmentDescription;
+    public bool isOptional;
     public List<QuestItem> requiredItems;
     public List<QuestKill> requiredKills;
 }
@@ -27,13 +29,16 @@ public struct QuestSegment
 [System.Serializable]
 public struct QuestItem
 {
-    public string itemID;
-    public int itemAmount;
+    [SerializeField] public bool itemDone;
+    [SerializeField] public Item itemToTake;
+    [SerializeField] public int itemAmount;
 }
 
 [System.Serializable]
 public struct QuestKill
 {
+    public bool killDone;
     public string monsterID;
+    public int currentKills;
     public int killAmount;
 }

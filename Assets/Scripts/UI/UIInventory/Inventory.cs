@@ -31,6 +31,31 @@ public class Inventory : SingletonMono<Inventory>
                 AddMicelium(addAmount);
                 break;
         }
+
+        PlayerController playerController = GameController.Instance.GetGameObjectFromID("MushPlayer").GetComponent<PlayerController>();
+        int itemTotal = GetItemTotal(itemToAdd);
+        playerController.CheckQuestsItem(itemToAdd, itemTotal);
+    }
+
+    public int GetItemTotal(Item itemToCheck)
+    {
+        int returnValue = 0;
+
+        if (itemToCheck.itemType == ItemType.CURRENCY)
+        {
+            return miceliumAmount;
+        }
+
+        foreach (InventorySlot inventorySlot in inventorySlots)
+        {
+            if (inventorySlot.containedItem.item == null || inventorySlot.containedItem.item != itemToCheck)
+            {
+                continue;
+            }
+            returnValue += inventorySlot.containedItem.itemAmount;
+        }
+
+        return returnValue;
     }
 
     public void AddMicelium(int addAmount)

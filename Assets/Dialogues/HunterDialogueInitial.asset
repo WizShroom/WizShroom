@@ -484,7 +484,7 @@ MonoBehaviour:
         negativeEnableController: 1
       canChooseQuest: 1
       questRequirePositiveOutcome: 1
-      questToGive: {fileID: 0}
+      questToGive: {fileID: 11400000, guid: f118c1b42b0171f489a6cb091fb57c64, type: 2}
     startNewDirectly: 0
     newDialogue: {fileID: 0}
     dialogueAnimationControls:

@@ -22,6 +22,10 @@ public class Interactable : MonoBehaviour
 
     public List<string> signalsToSend;
 
+    public bool onlyRegisteredInteractionSignal;
+    public delegate void InteractSignal();
+    public event InteractSignal OnInteracted;
+
     private void Awake()
     {
         GameSignalHandler.Instance.OnSignalReceived += OnSignalReceived;
@@ -41,6 +45,16 @@ public class Interactable : MonoBehaviour
 
         if (canSendSignal && (!triggeredBySignal || alwaysSendSignals))
         {
+            if (onlyRegisteredInteractionSignal)
+            {
+                OnInteracted?.Invoke();
+                triggered = !triggered;
+                if (disableOnTrigger)
+                {
+                    disabled = true;
+                }
+                return;
+            }
             foreach (string SignalToSend in signalsToSend)
             {
                 GameSignalHandler.Instance.SendSignal(gameObject, SignalToSend);
