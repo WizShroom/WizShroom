@@ -61,6 +61,7 @@ public class GameController : SingletonMono<GameController>
     public void LoadScene(string sceneName)
     {
         GameEventHandler.Instance.SendEvent(gameObject, EVENT.PAUSED);
+        GameEventHandler.Instance.SendEvent(gameObject, EVENT.LOADINGLEVEL);
         StartCoroutine(LoadSceneAsync(sceneName));
     }
 
@@ -77,36 +78,54 @@ public class GameController : SingletonMono<GameController>
             UIHandler.Instance.UpdateLoadingScreen(totalProgress);
             yield return null;
         }
-
-        totalProgress = 0.5f;
-
-        Task dungeonGen = new Task(DungeonGenerator.Instance.GenerateDungeon());
-        while (dungeonGen.Running)
-        {
-            yield return null;
-        }
-
-        totalProgress += 0.25f;
-        UIHandler.Instance.UpdateLoadingScreen(totalProgress);
-
-        Task navMeshBuild = new Task(BuildNavmesh());
-        while (navMeshBuild.Running)
-        {
-            yield return null;
-        }
-        totalProgress += 0.25f;
-        UIHandler.Instance.UpdateLoadingScreen(totalProgress);
-        StartCoroutine(DungeonGenerator.Instance.PopulateDungeon());
-        yield return new WaitForSeconds(0.5f);
-        UIHandler.Instance.DisableUIByType(UIType.LoadingScreen);
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        mush.navMeshAgent.Warp(new Vector3(0, 0, 0));
+        SceneInformation sceneInformation = GameObject.FindGameObjectWithTag("SceneInformation").GetComponent<SceneInformation>();
+        StartCoroutine(FinishLoading(sceneInformation.sceneFlags));
+    }
+
+    public IEnumerator FinishLoading(SceneLoadingFlags sceneLoadingFlags)
+    {
+        float totalProgress = 0.5f;
+
+        if ((sceneLoadingFlags & SceneLoadingFlags.RequireDungeon) == SceneLoadingFlags.RequireDungeon)
+        {
+            Task dungeonGen = new Task(DungeonGenerator.Instance.GenerateDungeon());
+            while (dungeonGen.Running)
+            {
+                yield return null;
+            }
+        }
+
+        totalProgress += 0.25f;
+        UIHandler.Instance.UpdateLoadingScreen(totalProgress);
+        if ((sceneLoadingFlags & SceneLoadingFlags.RequireNavMesh) == SceneLoadingFlags.RequireNavMesh)
+        {
+            Task navMeshBuild = new Task(BuildNavmesh());
+            while (navMeshBuild.Running)
+            {
+                yield return null;
+            }
+        }
+
+        totalProgress += 0.25f;
+        UIHandler.Instance.UpdateLoadingScreen(totalProgress);
+
+        if ((sceneLoadingFlags & SceneLoadingFlags.RequireDungeon) == SceneLoadingFlags.RequireDungeon)
+        {
+            StartCoroutine(DungeonGenerator.Instance.PopulateDungeon());
+        }
+        yield return new WaitForSeconds(0.5f);
+
+        GameObject levelLanding = GameObject.FindGameObjectWithTag("LevelLanding");
+        mush.navMeshAgent.Warp(levelLanding.transform.position);
         mush.navMeshAgent.SetDestination(mush.transform.position);
         Camera.main.transform.position = mush.transform.position + new Vector3(-5, 10, -5);
+        UIHandler.Instance.DisableUIByType(UIType.LoadingScreen);
         GameEventHandler.Instance.SendEvent(gameObject, EVENT.RESUMED);
+        GameEventHandler.Instance.SendEvent(gameObject, EVENT.LOADEDLEVEL);
     }
 
     public IEnumerator BuildNavmesh()

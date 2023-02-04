@@ -26,10 +26,11 @@ public class PlayerController : MobController
         actionBarHolder.playerMovement = GetComponent<PlayerMovement>();
         actionBarHolder.playerController = this;
         inGameScreenType = (InGameScreenType)UIHandler.Instance.GetUITypeControllerByType(UIType.InGame);
-        UpdateIndicators();
         characterScreenType = (CharacterScreenType)UIHandler.Instance.GetUITypeControllerByType(UIType.CharacterInfo);
+        UpdateIndicators();
         characterScreenType.UpdateExpBar(experience, experienceForLevelUp, currentLevel);
         characterScreenType.UpdateTitle(this, initialTitle);
+        characterScreenType.UpdateStats(health, maxHealth, mana, maxMana);
     }
 
     public override void UpdateIndicators()
@@ -41,6 +42,7 @@ public class PlayerController : MobController
         inGameScreenType.UpdateHealth(health, maxHealth);
         inGameScreenType.UpdateMana(mana, maxMana);
         inGameScreenType.UpdateExpBar(experience, experienceForLevelUp, currentLevel);
+        characterScreenType.UpdateStats(health, maxHealth, mana, maxMana);
     }
 
     public override void IncreaseExperience(float increaseAmount)

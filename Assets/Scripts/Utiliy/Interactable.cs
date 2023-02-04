@@ -15,6 +15,7 @@ public class Interactable : MonoBehaviour
 
     public bool canSendSignal = true;
     public bool alwaysSendSignals = true;
+    public bool onlyRegisteredInteractionSignal;
 
     public List<string> triggerOnSignals;
     public List<string> disableOnSignals;
@@ -22,7 +23,6 @@ public class Interactable : MonoBehaviour
 
     public List<string> signalsToSend;
 
-    public bool onlyRegisteredInteractionSignal;
     public delegate void InteractSignal();
     public event InteractSignal OnInteracted;
 

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 33583730029358272}
   - component: {fileID: 23009263249696568}
   - component: {fileID: -6016020431598240833}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: rpgpp_lt_tree_pine_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}

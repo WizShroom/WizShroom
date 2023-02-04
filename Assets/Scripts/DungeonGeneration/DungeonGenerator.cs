@@ -57,7 +57,6 @@ public class DungeonGenerator : SingletonMono<DungeonGenerator>
         gridPositions.Add(startingRoomHolder.currentGridPosition);
 
         Task branch = new Task(BranchOut(startingRoomHolder));
-
         while (branch.Running)
         {
             yield return null;
@@ -77,10 +76,20 @@ public class DungeonGenerator : SingletonMono<DungeonGenerator>
 
         if (testing)
         {
+            Task navMesh = new Task(NavMeshGenerate());
+            while (navMesh.Running)
+            {
+                yield return null;
+            }
             StartCoroutine(PopulateDungeon());
         }
     }
 
+    public IEnumerator NavMeshGenerate()
+    {
+        navMeshSurface.BuildNavMesh();
+        yield return null;
+    }
 
     public IEnumerator BranchOut(RoomHolder startingRoomHolder)
     {
@@ -261,10 +270,7 @@ public class DungeonGenerator : SingletonMono<DungeonGenerator>
 
             room.SpawnDestroyables();
 
-            if (!testing)
-            {
-                room.SpawnMobs();
-            }
+            room.SpawnMobs();
 
             yield return null;
         }

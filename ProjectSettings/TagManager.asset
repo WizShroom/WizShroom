@@ -12,6 +12,8 @@ TagManager:
   - Bullet
   - InventorySlot
   - SpellSlot
+  - LevelLanding
+  - SceneInformation
   layers:
   - Default
   - TransparentFX

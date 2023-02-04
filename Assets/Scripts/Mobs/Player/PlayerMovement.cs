@@ -26,6 +26,8 @@ public class PlayerMovement : MonoBehaviour
     public float timeBetweenSteps = 1f;
     float stepTimePassed = 0;
 
+    bool levelIsLoading = false;
+
     private void Awake()
     {
         GameEventHandler.Instance.OnEventReceived += OnEventReceived;
@@ -48,6 +50,11 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        if (levelIsLoading)
+        {
+            return;
+        }
+
         if (Vector3.Distance(transform.position, destination) > 1 && !agent.isStopped)
         {
             Vector3 direction = (destination - transform.position).normalized;
@@ -207,6 +214,14 @@ public class PlayerMovement : MonoBehaviour
         {
             OnResumed();
         }
+        if (receivedEvent == EVENT.LOADINGLEVEL)
+        {
+            OnLoadingLevel();
+        }
+        if (receivedEvent == EVENT.LOADEDLEVEL)
+        {
+            OnLoadedLevel();
+        }
     }
 
     public void OnPaused()
@@ -217,5 +232,15 @@ public class PlayerMovement : MonoBehaviour
     public void OnResumed()
     {
         paused = false;
+    }
+
+    public void OnLoadingLevel()
+    {
+        levelIsLoading = true;
+    }
+
+    public void OnLoadedLevel()
+    {
+        levelIsLoading = false;
     }
 }

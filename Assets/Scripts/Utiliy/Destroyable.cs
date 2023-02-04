@@ -36,6 +36,7 @@ public class Destroyable : MonoBehaviour
     {
         SoundManager.Instance.PlaySoundOneShot(breakClip, ourSource);
         GetComponent<Renderer>().enabled = false;
+        GetComponent<Collider>().enabled = false;
         Destroy(gameObject, 1f);
     }
 }

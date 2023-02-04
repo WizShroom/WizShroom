@@ -16,5 +16,7 @@ public class GameEventHandler : Singleton<GameEventHandler>
 public enum EVENT
 {
     RESUMED,
-    PAUSED
+    PAUSED,
+    LOADINGLEVEL,
+    LOADEDLEVEL,
 }

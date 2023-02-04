@@ -17,6 +17,7 @@ public class MobSpawner : MonoBehaviour
 
     public string spawningMobID;
 
+    public bool canSpawnIndipendently = false;
     public int maxMobToSpawn = 5;
     public int spawnDelay = 5;
     float elapsedTime;
@@ -40,7 +41,7 @@ public class MobSpawner : MonoBehaviour
 
     private void Update()
     {
-        if (ourManager)
+        if (ourManager || !canSpawnIndipendently)
         {
             return;
         }
