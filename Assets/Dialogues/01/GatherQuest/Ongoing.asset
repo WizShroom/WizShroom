@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 799140e4880c2f146b17f4037ae61f46, type: 3}
   m_Name: Ongoing
   m_EditorClassIdentifier: 
+  checkQuestRequirement: 1
+  questToCheck: {fileID: 11400000, guid: f118c1b42b0171f489a6cb091fb57c64, type: 2}
   dialogueSegments:
   - dialogueText: Hey! You've returned! But you still don't have the flower, come
       back once you manage to find it!
@@ -42,5 +44,3 @@ MonoBehaviour:
     signalToSend: 
     clickable: 1
     disableControllerAfter: 0
-    checkQuestRequirement: 1
-    questToCheck: {fileID: 11400000, guid: f118c1b42b0171f489a6cb091fb57c64, type: 2}

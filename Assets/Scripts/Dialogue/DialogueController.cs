@@ -55,9 +55,10 @@ public class DialogueController : MonoBehaviour
 
     private void Update()
     {
-        if (talking && !canSkipDialogue && Input.GetMouseButtonUp(0))
+        if (talking && !canSkipDialogue && (Input.GetMouseButtonUp(0) || Input.GetKeyUp(KeyCode.Space)))
         {
             canSkipDialogue = true;
+            return;
         }
 
         if (disabled || !canActivate)
@@ -101,23 +102,25 @@ public class DialogueController : MonoBehaviour
 
         UIHandler.Instance.EnableUIByType(UIType.Dialogue);
         UIHandler.Instance.DisableUIByType(UIType.InGame);
+
+        if (_dialogue.checkQuestRequirement && _dialogue.questToCheck)
+        {
+            if (_dialogue.questToCheck.completedQuest)
+            {
+                _dialogue = _dialogue.questToCheck.questCompleted;
+            }
+            else if (_dialogue.questToCheck.completedQuest)
+            {
+                _dialogue = _dialogue.questToCheck.questOnGoing;
+            }
+            else if (_dialogue.questToCheck.failedQuest)
+            {
+                _dialogue = _dialogue.questToCheck.questFailed;
+            }
+        }
+
         foreach (DialogueSegment dialogue in _dialogue.dialogueSegments)
         {
-            if (dialogue.checkQuestRequirement && dialogue.questToCheck.completedQuest)
-            {
-                newDialogue = dialogue.questToCheck.questCompleted;
-                break;
-            }
-            else if (dialogue.checkQuestRequirement && !dialogue.questToCheck.completedQuest)
-            {
-                newDialogue = dialogue.questToCheck.questOnGoing;
-                break;
-            }
-            else if ((dialogue.checkQuestRequirement && dialogue.questToCheck.failedQuest))
-            {
-                newDialogue = dialogue.questToCheck.questFailed;
-                break;
-            }
             string dialogueTextToDisplay = dialogue.dialogueText;
             dialogueText.text = "";
             if (dialogue.isMushTalking)
@@ -279,7 +282,7 @@ public class DialogueController : MonoBehaviour
             }
         }
 
-        if (!hasChoice || newDialogue == null || !startNewDirectly)
+        if (!hasChoice && !startNewDirectly)
         {
             GameEventHandler.Instance.SendEvent(gameObject, EVENT.RESUMED);
             UIHandler.Instance.DisableUIByType(UIType.Dialogue);
@@ -290,7 +293,7 @@ public class DialogueController : MonoBehaviour
                 nextDialogue = newDialogue;
             }
         }
-        else
+        else if (startNewDirectly && newDialogue != null)
         {
             nextDialogue = newDialogue;
             StartDialogue();

@@ -19297,6 +19297,7 @@ MonoBehaviour:
   - {fileID: 854049274383323603}
   - {fileID: 8991080975384860740}
   - {fileID: 5947429305923932856}
+  chests: []
   currentDepth: 0
   currentYLevel: 0
   currentGridPosition: {x: 0, y: 0, z: 0}
@@ -26400,7 +26401,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1891962811217498822, guid: acc46b34d5e063243a7cae327afb7a08, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 6
+      value: 5.5
       objectReference: {fileID: 0}
     - target: {fileID: 1891962811217498822, guid: acc46b34d5e063243a7cae327afb7a08, type: 3}
       propertyPath: m_LocalRotation.w

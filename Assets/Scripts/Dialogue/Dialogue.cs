@@ -6,8 +6,9 @@ using UnityEngine;
 public class Dialogue : ScriptableObject
 {
     [Header("Dialogue")]
+    public bool checkQuestRequirement;
+    public Quest questToCheck;
     public List<DialogueSegment> dialogueSegments = new List<DialogueSegment>();
-
 }
 
 [System.Serializable]
@@ -31,9 +32,6 @@ public struct DialogueSegment
 
     public bool clickable;
     public bool disableControllerAfter;
-
-    public bool checkQuestRequirement;
-    public Quest questToCheck;
 }
 
 [System.Serializable]

@@ -9,7 +9,9 @@ public class CharacterScreenType : UITypeController
 
     public TextMeshProUGUI characterLevel;
     public TextMeshProUGUI characterTitle;
-    public TitleHolder currentTitle;
+    public TextMeshProUGUI characterHealth;
+    public TextMeshProUGUI characterMana;
+    [HideInInspector] public TitleHolder currentTitle;
     public Image expBar;
 
     public void UpdateTitle(MobController targetMob, TitleHolder title)
@@ -27,6 +29,12 @@ public class CharacterScreenType : UITypeController
     {
         expBar.fillAmount = currentExp / maxExp;
         characterLevel.text = "Level: " + currentLevel.ToString();
+    }
+
+    public void UpdateStats(float currentHP, int maxHP, float currentMP, int maxMP)
+    {
+        characterHealth.text = currentHP.ToString() + "/" + maxHP.ToString() + " HP";
+        characterMana.text = currentMP.ToString() + "/" + maxMP.ToString() + " MP";
     }
 
 }
