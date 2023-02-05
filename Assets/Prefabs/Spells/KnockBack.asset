@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: KnockBack
   m_EditorClassIdentifier: 
   spellName: knockback
-  spellSprite: {fileID: 21300000, guid: daf2ab606d4db0d4f9ecf4c02137d2a8, type: 3}
+  spellSprite: {fileID: 21300000, guid: 1911fd22e702be04f91ec05a17e142ea, type: 3}
   spellType: 1
   bulletPrefab: {fileID: 6404468398774599545, guid: b8149d5358170014f936e0c8478c083f, type: 3}
   castAmount: 1
@@ -25,6 +25,5 @@ MonoBehaviour:
   key: 
   cooldown: 0.2
   cooldownRemaining: 0
-  UIImage: {fileID: 21300000, guid: daf2ab606d4db0d4f9ecf4c02137d2a8, type: 3}
   requireEnemy: 0
   spellLevel: 1

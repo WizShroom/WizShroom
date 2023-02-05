@@ -12,8 +12,7 @@ public class GameController : SingletonMono<GameController>
 
     public List<AssignID> entitiesID;
 
-    public SpellDatabase spellDatabase;
-    public SpellEffectDatabase spellEffectDatabase;
+    public AssetsDatabase assetsDatabase;
 
     private void Awake()
     {
