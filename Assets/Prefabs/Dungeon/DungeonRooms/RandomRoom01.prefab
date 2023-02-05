@@ -349,6 +349,7 @@ MonoBehaviour:
   - {fileID: 3647550294910431424}
   - {fileID: 1391805508874242071}
   - {fileID: 269170324334244060}
+  chests: []
   currentDepth: 0
   currentYLevel: 0
   currentGridPosition: {x: 0, y: 0, z: 0}

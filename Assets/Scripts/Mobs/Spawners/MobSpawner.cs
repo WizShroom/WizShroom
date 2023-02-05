@@ -7,6 +7,7 @@ public class MobSpawner : MonoBehaviour
 {
     public List<GameObject> mobsToSpawn;
     public List<MobController> spawnedMobs;
+    [HideInInspector] public List<GameObject> monsterPathPoints;
 
     public int spawnRadious = 15;
 
@@ -41,7 +42,7 @@ public class MobSpawner : MonoBehaviour
 
     private void Update()
     {
-        if (ourManager || !canSpawnIndipendently)
+        if (ourManager && !canSpawnIndipendently)
         {
             return;
         }
@@ -70,7 +71,7 @@ public class MobSpawner : MonoBehaviour
     public bool Spawn(bool forced = false)
     {
 
-        if (mobsToSpawn.Count <= 0)
+        if (mobsToSpawn.Count <= 0 && !ourManager)
         {
             return false;
         }
@@ -80,12 +81,33 @@ public class MobSpawner : MonoBehaviour
             return false;
         }
 
-        int randomIndex = Random.Range(0, mobsToSpawn.Count);
-        GameObject spawnedMob = Instantiate(mobsToSpawn[randomIndex], transform.position, Quaternion.identity);
+        if (ourManager && spawnedMobs.Count >= maxMobToSpawn)
+        {
+            return false;
+        }
+
+        List<GameObject> spawnsPrefab = ourManager ? new List<GameObject>(ourManager.mobPrefabs) : new List<GameObject>(mobsToSpawn);
+
+        int randomIndex = Random.Range(0, spawnsPrefab.Count);
+        GameObject spawnedMob = Instantiate(spawnsPrefab[randomIndex], transform.position, Quaternion.identity);
         spawnedMob.transform.SetParent(transform);
 
         MobController mobController = spawnedMob.GetComponent<MobController>();
         mobController.mobID = spawningMobID;
+
+        if (monsterPathPoints.Count > 0)
+        {
+            List<GameObject> spawnersCopy = new List<GameObject>(monsterPathPoints);
+            for (int i = 0; i < spawnersCopy.Count; i++)
+            {
+                GameObject temp = spawnersCopy[i];
+                int random = Random.Range(i, spawnersCopy.Count);
+                spawnersCopy[i] = spawnersCopy[random];
+                spawnersCopy[random] = temp;
+            }
+
+            mobController.mobAIController.patrolPoints.AddRange(spawnersCopy);
+        }
 
         spawnedMobs.Add(mobController);
         mobController.spawner = this;
@@ -95,14 +117,13 @@ public class MobSpawner : MonoBehaviour
 
     public void RemoveMob(MobController mobController)
     {
-        if (spawnedMobs.Contains(mobController))
+        if (spawnedMobs.Remove(mobController))
         {
-            spawnedMobs.Remove(mobController);
             if (!ourManager)
             {
                 return;
             }
-            ourManager.DecreaseMobAmount();
+            ourManager.OurMobKilled();
         }
     }
 

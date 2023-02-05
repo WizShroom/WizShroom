@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 799140e4880c2f146b17f4037ae61f46, type: 3}
   m_Name: HunterOpenPortal
   m_EditorClassIdentifier: 
+  checkQuestRequirement: 0
+  questToCheck: {fileID: 0}
   dialogueSegments:
   - dialogueText: Let's go!
     dialogueDisplayTime: 1
@@ -41,8 +43,6 @@ MonoBehaviour:
     signalToSend: 
     clickable: 1
     disableControllerAfter: 0
-    checkQuestRequirement: 0
-    questToCheck: {fileID: 0}
   - dialogueText: Portal open!!!
     dialogueDisplayTime: 1
     isMushTalking: 0
@@ -71,8 +71,6 @@ MonoBehaviour:
     signalToSend: EnableMainPortal
     clickable: 1
     disableControllerAfter: 0
-    checkQuestRequirement: 0
-    questToCheck: {fileID: 0}
   - dialogueText: ...
     dialogueDisplayTime: 1
     isMushTalking: 1
@@ -101,8 +99,6 @@ MonoBehaviour:
     signalToSend: 
     clickable: 1
     disableControllerAfter: 0
-    checkQuestRequirement: 0
-    questToCheck: {fileID: 0}
   - dialogueText: All done
     dialogueDisplayTime: 1
     isMushTalking: 0
@@ -131,8 +127,6 @@ MonoBehaviour:
     signalToSend: 
     clickable: 1
     disableControllerAfter: 0
-    checkQuestRequirement: 0
-    questToCheck: {fileID: 0}
   - dialogueText: Come and find me if you'll ever need my help...
     dialogueDisplayTime: 1
     isMushTalking: 0
@@ -151,7 +145,7 @@ MonoBehaviour:
       canChooseQuest: 0
       questRequirePositiveOutcome: 0
       questToGive: {fileID: 0}
-    startNewDirectly: 1
+    startNewDirectly: 0
     newDialogue: {fileID: 0}
     dialogueAnimationControls:
       waitForAnimation: 0
@@ -161,5 +155,3 @@ MonoBehaviour:
     signalToSend: 
     clickable: 1
     disableControllerAfter: 1
-    checkQuestRequirement: 0
-    questToCheck: {fileID: 0}

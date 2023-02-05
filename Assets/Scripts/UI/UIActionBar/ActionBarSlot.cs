@@ -84,7 +84,7 @@ public class ActionBarSlot : MonoBehaviour, IPointerUpHandler, IPointerDownHandl
             slotSprite.sprite = null;
             return;
         }
-        slotSprite.sprite = equippedSpell.UIImage;
+        slotSprite.sprite = equippedSpell.spellSprite;
         if (!initial)
         {
             return;

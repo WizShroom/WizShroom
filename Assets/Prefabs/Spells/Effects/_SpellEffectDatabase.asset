@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5239fd48c8e4174594b98f37591658c, type: 3}
+  m_Name: _SpellEffectDatabase
+  m_EditorClassIdentifier: 
+  spellEffects:
+  - {fileID: 11400000, guid: e82ccb17fac0d4b4c9808d81c9f839f0, type: 2}
+  - {fileID: 11400000, guid: 668fd2ed790800f40a09018dd51348f7, type: 2}
+  - {fileID: 11400000, guid: 5b8f663d26643f643aea4f4dca366806, type: 2}
+  - {fileID: 11400000, guid: f8a72bdf01583384e910f34806cca6b1, type: 2}
+  - {fileID: 11400000, guid: 0b810c5015bb1f545b1da2e213e8bd63, type: 2}
+  - {fileID: 11400000, guid: 207b21b838f170546bb9b135813155ba, type: 2}

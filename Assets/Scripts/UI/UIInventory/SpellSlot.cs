@@ -9,6 +9,7 @@ public class SpellSlot : EventTrigger
     public int slotID;
     public Image slotImage;
     public SpellSlotItem containedSpell;
+    public ActionBarSlot connectedActionBar;
 
     public bool ContainSpell()
     {
@@ -34,6 +35,11 @@ public class SpellSlot : EventTrigger
 
     public void RemoveSpell()
     {
+        if (connectedActionBar)
+        {
+            connectedActionBar.RemoveSpell();
+            connectedActionBar = null;
+        }
         containedSpell.spell = null;
         containedSpell.spellName = "";
         containedSpell.spellSprite = null;
@@ -67,7 +73,7 @@ public class SpellSlot : EventTrigger
                 ActionBarSlot otherSlot = otherObj.GetComponent<ActionBarSlot>();
                 if (otherSlot != null)
                 {
-                    otherSlot.AddSpell(containedSpell.spell);
+                    SpellsInventory.Instance.ConnectToActionBarSlot(this, otherSlot);
                 }
             }
 

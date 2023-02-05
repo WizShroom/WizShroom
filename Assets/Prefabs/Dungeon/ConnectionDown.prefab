@@ -145,7 +145,7 @@ GameObject:
   - component: {fileID: 9222205169595674896}
   - component: {fileID: 1497726983725581187}
   - component: {fileID: 5094155804721490140}
-  m_Layer: 6
+  m_Layer: 2
   m_Name: Warper
   m_TagString: Untagged
   m_Icon: {fileID: 0}

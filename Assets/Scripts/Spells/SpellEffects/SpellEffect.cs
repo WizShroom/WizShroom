@@ -9,6 +9,9 @@ public class SpellEffect : ScriptableObject
     //effects can be mixed not the receiver. 
     public SpellEffectType spellEffectType;
 
+    public List<SpellEffect> compatibleEffects;
+    public List<SpellEffect> incompatibleEffects;
+
     public int spellEffectLevel;
 
     public virtual void OnCreationEffect(BulletController bulletController) { }
