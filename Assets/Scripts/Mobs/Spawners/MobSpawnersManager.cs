@@ -5,24 +5,41 @@ using UnityEngine;
 public class MobSpawnersManager : MonoBehaviour
 {
     public List<MobSpawner> mobSpawners;
-
-    public int maxMobAmount = 30;
-    public int currentMobAmount;
+    public List<GameObject> mobPrefabs;
     public string spawningMobID;
 
-    public float maxSpawnDelay = 3;
-    public float minSpawnDelay = 1;
-    float elapsedTime;
-
     bool paused;
+    public bool spawnerActive;
+
+    #region Normal Spawn
+    [Header("Normal Spawn")]
+    public int maxMobAmount = 0;
+    public int amountOfEnemiesSpawned = 0;
+    public int amountOfEnemiesKilled = 0;
+    public int numberOfEnemiesPerLevelUp = 0;
+    public int numberOfEnemiesPerLevelUpIncrease = 0;
+    public bool infiniteEnemies = false;
+    public int remainingEnemiesToSpawn = 99999;
+    #endregion
+
+    #region Boss Spawn
+    [Header("Boss Spawn")]
+    public bool canSpawnBoss = true;
+    public int bossAfterMobAmount = 0;
+    public int bossAfterMobAmountIncrease = 0;
+    public int bossGuardsAmount = 0;
+    public int bossGuardsAmountIncrease = 0;
+
+    public int currentBossAmount = 0;
+    public bool isBossPresent = false;
+    public GameObject bossPrefab;
+    public RoomHolder bossRoom;
+    #endregion
 
     private void Awake()
     {
         GameEventHandler.Instance.OnEventReceived += OnEventReceived;
-        foreach (MobSpawner mobSpawner in mobSpawners)
-        {
-            mobSpawner.ConnectManager(this);
-        }
+        ConnectToSpawners();
     }
 
     private void OnDestroy()
@@ -32,29 +49,101 @@ public class MobSpawnersManager : MonoBehaviour
 
     private void Update()
     {
-        if (currentMobAmount >= maxMobAmount || paused)
+        if (!spawnerActive || paused)
+        {
+            return;
+        }
+        SetupSpawn();
+    }
+
+    public void SetupSpawn()
+    {
+        PrepareSpawnInitialCheck();
+    }
+
+    public void ConnectToSpawners()
+    {
+        foreach (MobSpawner mobSpawner in mobSpawners)
+        {
+            mobSpawner.ConnectManager(this);
+        }
+    }
+
+    public void OurMobKilled()
+    {
+        amountOfEnemiesSpawned--;
+        amountOfEnemiesKilled++;
+    }
+
+    public void PrepareSpawnInitialCheck()
+    {
+        if (amountOfEnemiesSpawned >= maxMobAmount || (remainingEnemiesToSpawn <= 0 && !infiniteEnemies))
         {
             return;
         }
 
-        if (elapsedTime > Random.Range(minSpawnDelay, maxSpawnDelay))
+        if (canSpawnBoss && !isBossPresent && amountOfEnemiesKilled >= bossAfterMobAmount)
         {
-            MobSpawner pickedSpawner = mobSpawners[Random.Range(0, mobSpawners.Count)];
-            if (!pickedSpawner.Spawn())
-            {
-                return;
-            }
-            currentMobAmount++;
-            elapsedTime = 0;
+            SpawnBoss();
         }
-        elapsedTime += Time.deltaTime;
+        /* int storedLevel = mobLevel;
+        mobLevel = Mathf.Max(Random.Range(-5, 6) + mobLevel, 1); */
+        bool spawned = SpawnMob();
+        //mobLevel = storedLevel;
+        if (!spawned)
+        {
+            return;
+        }
+        PostMobSpawnCheck();
     }
 
-    public void DecreaseMobAmount()
+    public void PostMobSpawnCheck()
     {
-        currentMobAmount -= 1;
+        amountOfEnemiesSpawned++;
+        if (amountOfEnemiesKilled > numberOfEnemiesPerLevelUp)
+        {
+            //mobLevel += mobLevelIncrease;
+            numberOfEnemiesPerLevelUp += numberOfEnemiesPerLevelUpIncrease;
+        }
+        if (infiniteEnemies)
+        {
+            return;
+        }
+        remainingEnemiesToSpawn--;
     }
 
+    public void SpawnBoss()
+    {
+        if (!isBossPresent)
+        {
+            isBossPresent = true;
+            if (bossRoom && bossRoom.bossSpawnPosition)
+            {
+                GameObject boss = Instantiate(bossPrefab, bossRoom.bossSpawnPosition.transform.position, Quaternion.identity);
+            }
+        }
+    }
+
+    private bool SpawnMob()
+    {
+        if (mobSpawners.Count == 0)
+        {
+            return false;
+        }
+
+        List<MobSpawner> spawnersCopy = new List<MobSpawner>(mobSpawners);
+        for (int i = 0; i < spawnersCopy.Count; i++)
+        {
+            MobSpawner temp = spawnersCopy[i];
+            int randomIndex = Random.Range(i, spawnersCopy.Count);
+            spawnersCopy[i] = spawnersCopy[randomIndex];
+            spawnersCopy[randomIndex] = temp;
+        }
+
+        int randomSpawner = Random.Range(0, spawnersCopy.Count);
+        MobSpawner spawner = spawnersCopy[randomSpawner];
+        return spawner.Spawn(true);
+    }
 
     public void OnEventReceived(GameObject source, EVENT receivedEvent)
     {
@@ -76,6 +165,11 @@ public class MobSpawnersManager : MonoBehaviour
     public void OnResumed()
     {
         paused = false;
+    }
+
+    public void SetActive(bool active)
+    {
+        spawnerActive = active;
     }
 
 }

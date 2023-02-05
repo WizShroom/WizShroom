@@ -32,6 +32,9 @@ public class DungeonGenerator : SingletonMono<DungeonGenerator>
     public List<GameObject> treasureRoomsPrefab;
     public List<GameObject> bossRoomsPrefab;
 
+    public GameObject mobSpawnerManager;
+    MobSpawnersManager ourSpawnerManager;
+
     private void Start()
     {
         if (testing)
@@ -42,6 +45,10 @@ public class DungeonGenerator : SingletonMono<DungeonGenerator>
 
     public IEnumerator GenerateDungeon()
     {
+
+        GameObject mobSpawnerEntity = Instantiate(mobSpawnerManager, gameObject.transform);
+        ourSpawnerManager = mobSpawnerEntity.GetComponent<MobSpawnersManager>();
+        ourSpawnerManager.SetActive(false);
 
         availableBossRooms = maxSize * maxSize > 25 ? 2 : 1;
         availableTreasureRooms = maxSize * maxSize > 25 ? 3 : 2;
@@ -259,6 +266,29 @@ public class DungeonGenerator : SingletonMono<DungeonGenerator>
 
                 }
             }
+
+            yield return null;
+
+            foreach (MobSpawner mobSpawner in room.spawners)
+            {
+                mobSpawner.maxMobToSpawn = Random.Range(0, 3);
+
+                List<GameObject> pathPoints = new List<GameObject>();
+                foreach (PropSpawner pathPoint in room.propSpawners)
+                {
+                    pathPoints.Add(pathPoint.gameObject);
+                }
+                for (int i = 0; i < pathPoints.Count; i++)
+                {
+                    GameObject temp = pathPoints[i];
+                    int random = Random.Range(i, pathPoints.Count);
+                    pathPoints[i] = pathPoints[random];
+                    pathPoints[random] = temp;
+                }
+                mobSpawner.monsterPathPoints.AddRange(pathPoints);
+
+                ourSpawnerManager.mobSpawners.Add(mobSpawner);
+            }
         }
     }
 
@@ -270,10 +300,12 @@ public class DungeonGenerator : SingletonMono<DungeonGenerator>
 
             room.SpawnDestroyables();
 
-            room.SpawnMobs();
+            //room.SpawnMobs();
 
             yield return null;
         }
+
+        ourSpawnerManager.SetActive(true);
     }
 
     public bool CanSpawnTreasure(RoomHolder previousRoom)

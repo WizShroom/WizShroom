@@ -14,6 +14,7 @@ public class WarpToLocation : MonoBehaviour
             NavMeshAgent otherAgent = other.GetComponent<NavMeshAgent>();
             otherAgent.Warp(ourConnection.connectedRoom.roomLanding.position);
             otherAgent.SetDestination(otherAgent.transform.position);
+            Camera.main.transform.position = otherAgent.transform.position + new Vector3(-6, 10, -6);
         }
     }
 }

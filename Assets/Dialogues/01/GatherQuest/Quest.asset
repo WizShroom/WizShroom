@@ -23,7 +23,11 @@ MonoBehaviour:
     - itemDone: 0
       itemToTake: {fileID: 11400000, guid: c43af3d10a574b944990474a9da41f71, type: 2}
       itemAmount: 3
-    requiredKills: []
+    requiredKills:
+    - killDone: 0
+      monsterID: 
+      currentKills: 0
+      killAmount: 0
   questOnGoing: {fileID: 11400000, guid: 46d9905aa1137d5438154859c0d23555, type: 2}
   questCompleted: {fileID: 11400000, guid: c95196e49d6fb2843be33da46cee84c3, type: 2}
   questFailed: {fileID: 11400000, guid: ad45607f70b38c446ac8ee7fbdd8ad05, type: 2}

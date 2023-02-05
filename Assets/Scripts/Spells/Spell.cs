@@ -2,6 +2,34 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+[System.Serializable]
+public class SpellData
+{
+    public string spellName;
+    public string spellSpritePath;
+    public string spellType;
+    public string bulletPath;
+    public int castAmount;
+    public List<int> effects = new List<int>();
+
+    public string audioShootPath;
+
+    public SpellData(Spell spell)
+    {
+        spellName = spell.spellName;
+        spellSpritePath = spell.spellSprite.name + ".png";
+        spellType = spell.spellType.ToString();
+        foreach (SpellEffect spellEffect in spell.spellEffects)
+        {
+            if (spellEffect != null)
+            {
+                effects.Add(GameController.Instance.spellEffectDatabase.spellEffectsIDs[spellEffect]);
+            }
+        }
+    }
+}
+
 [CreateAssetMenu(menuName = "Spells/Basic")]
 public class Spell : ScriptableObject
 {
@@ -19,7 +47,6 @@ public class Spell : ScriptableObject
     public string key;
     public float cooldown;
     public float cooldownRemaining;
-    public Sprite UIImage;
     public bool requireEnemy = false;
 
     public int spellLevel;
@@ -95,6 +122,10 @@ public class Spell : ScriptableObject
                     {
                         Vector3 direction = (collider.transform.position - caster.transform.position).normalized;
                         if (Physics.Raycast(caster.transform.position, direction, Mathf.Infinity, LayerMask.NameToLayer("Wall")))
+                        {
+                            continue;
+                        }
+                        if (Physics.Raycast(caster.transform.position, direction, Mathf.Infinity, LayerMask.NameToLayer("Ground")))
                         {
                             continue;
                         }

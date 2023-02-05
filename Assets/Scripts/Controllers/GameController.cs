@@ -12,6 +12,9 @@ public class GameController : SingletonMono<GameController>
 
     public List<AssignID> entitiesID;
 
+    public SpellDatabase spellDatabase;
+    public SpellEffectDatabase spellEffectDatabase;
+
     private void Awake()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;

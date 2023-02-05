@@ -61,7 +61,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mobSpawners: []
-  maxMobAmount: 30
-  currentMobAmount: 0
-  maxSpawnDelay: 3
-  minSpawnDelay: 1
+  mobPrefabs:
+  - {fileID: 1105141657678752554, guid: 81828ddc4c15499469f2797794c249a6, type: 3}
+  spawningMobID: 
+  spawnerActive: 0
+  maxMobAmount: 50
+  amountOfEnemiesSpawned: 0
+  amountOfEnemiesKilled: 0
+  numberOfEnemiesPerLevelUp: 10
+  numberOfEnemiesPerLevelUpIncrease: 10
+  infiniteEnemies: 0
+  remainingEnemiesToSpawn: 100
+  canSpawnBoss: 1
+  bossAfterMobAmount: 30
+  bossAfterMobAmountIncrease: 0
+  bossGuardsAmount: 0
+  bossGuardsAmountIncrease: 0
+  currentBossAmount: 0
+  isBossPresent: 0
+  bossPrefab: {fileID: 1105141657678752554, guid: 81828ddc4c15499469f2797794c249a6, type: 3}

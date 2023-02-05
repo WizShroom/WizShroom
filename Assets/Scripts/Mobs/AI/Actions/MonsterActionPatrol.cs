@@ -33,7 +33,7 @@ public class MonsterActionPatrol : MonsterAction
             return;
         }
 
-        controller.navMeshAgent.destination = controller.patrolPoints[controller.wayPointListIndex].transform.position;
+        controller.navMeshAgent.SetDestination(controller.patrolPoints[controller.wayPointListIndex].transform.position);
 
         if (controller.navMeshAgent.remainingDistance <= controller.navMeshAgent.stoppingDistance && !controller.navMeshAgent.pathPending)
         {

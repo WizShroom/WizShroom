@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b3103dec34651645a837f043e319981, type: 3}
+  m_Name: KnockBack
+  m_EditorClassIdentifier: 
+  spellName: knockback
+  spellSprite: {fileID: 21300000, guid: daf2ab606d4db0d4f9ecf4c02137d2a8, type: 3}
+  spellType: 1
+  bulletPrefab: {fileID: 6404468398774599545, guid: b8149d5358170014f936e0c8478c083f, type: 3}
+  castAmount: 1
+  spellEffects:
+  - {fileID: 11400000, guid: f8a72bdf01583384e910f34806cca6b1, type: 2}
+  - {fileID: 11400000, guid: 207b21b838f170546bb9b135813155ba, type: 2}
+  spellAudioShoot: {fileID: 0}
+  chargeTime: 0
+  key: 
+  cooldown: 0.2
+  cooldownRemaining: 0
+  UIImage: {fileID: 21300000, guid: daf2ab606d4db0d4f9ecf4c02137d2a8, type: 3}
+  requireEnemy: 0
+  spellLevel: 1

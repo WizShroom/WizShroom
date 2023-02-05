@@ -18,6 +18,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 6404468398774599545, guid: b8149d5358170014f936e0c8478c083f, type: 3}
   castAmount: 1
   spellEffects:
+  - {fileID: 11400000, guid: f8a72bdf01583384e910f34806cca6b1, type: 2}
   - {fileID: 11400000, guid: 207b21b838f170546bb9b135813155ba, type: 2}
   spellAudioShoot: {fileID: 8300000, guid: 4d6045179ede6d64488023709c0d25ef, type: 3}
   chargeTime: 0

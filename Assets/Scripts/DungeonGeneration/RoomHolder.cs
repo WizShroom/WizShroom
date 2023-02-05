@@ -14,6 +14,8 @@ public class RoomHolder : MonoBehaviour
     public List<PropSpawner> propSpawners;
     public List<GameObject> chests;
 
+    public GameObject bossSpawnPosition;
+
     public int currentDepth = 0;
     public int currentYLevel = 0;
 
