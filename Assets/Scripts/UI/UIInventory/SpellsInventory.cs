@@ -91,15 +91,24 @@ public class SpellsInventory : SingletonMono<SpellsInventory>
         {
             SpellData spellFromFile = JsonUtility.FromJson<SpellData>(File.ReadAllText(file));
             List<SpellEffect> fromFileEffects = new List<SpellEffect>();
-            foreach (int spellEffect in spellFromFile.effects)
+            foreach (int spellEffect in spellFromFile.spellEffects)
             {
-                fromFileEffects.Add(GameController.Instance.spellEffectDatabase.spellEffects[spellEffect]);
+                fromFileEffects.Add(GameController.Instance.assetsDatabase.spellEffects[spellEffect]);
             }
             bool equal = fromFileEffects.OrderBy(x => x.name).SequenceEqual(newSpell.OrderBy(x => x.name));
             if (equal)
             {
                 existingSpellWithEffects = ScriptableObject.CreateInstance<Spell>();
+                existingSpellWithEffects.spellName = spellFromFile.spellName;
+                existingSpellWithEffects.spellSprite = GameController.Instance.assetsDatabase.sprites[spellFromFile.spellSpriteID];
+                existingSpellWithEffects.spellType = (SpellType)System.Enum.Parse(typeof(SpellType), spellFromFile.spellType);
+                existingSpellWithEffects.bulletPrefab = spellFromFile.spellProjectile == -1 ? null : GameController.Instance.assetsDatabase.projectiles[spellFromFile.spellProjectile];
+                existingSpellWithEffects.castAmount = spellFromFile.castAmount;
                 existingSpellWithEffects.spellEffects = fromFileEffects;
+                existingSpellWithEffects.spellAudioShoot = spellFromFile.audioShootID == -1 ? null : GameController.Instance.assetsDatabase.audios[spellFromFile.spellSpriteID];
+                existingSpellWithEffects.chargeTime = spellFromFile.chargeTime;
+                existingSpellWithEffects.cooldown = spellFromFile.cooldown;
+                existingSpellWithEffects.requireEnemy = spellFromFile.requireEnemy;
                 break;
             }
         }
@@ -112,11 +121,19 @@ public class SpellsInventory : SingletonMono<SpellsInventory>
         {
             string path = directory + "/test.json";
             FileStream stream = new FileStream(path, FileMode.Create);
-
+            Spell takerSpell = takerSlot.containedSpell.spell;
+            Sprite takerSprite = takerSpell.spellSprite;
             mergedSpell = ScriptableObject.CreateInstance<Spell>();
-            Sprite takerSprite = takerSlot.slotImage.sprite;
-            mergedSpell.spellEffects = new List<SpellEffect>(newSpell);
+            mergedSpell.spellName = "TEST";
             mergedSpell.spellSprite = takerSprite;
+            mergedSpell.spellType = takerSpell.spellType;
+            mergedSpell.bulletPrefab = takerSpell.bulletPrefab;
+            mergedSpell.castAmount = takerSpell.castAmount;
+            mergedSpell.spellEffects = new List<SpellEffect>(newSpell);
+            mergedSpell.spellAudioShoot = takerSpell.spellAudioShoot;
+            mergedSpell.chargeTime = takerSpell.chargeTime;
+            mergedSpell.cooldown = takerSpell.cooldown;
+            mergedSpell.requireEnemy = takerSpell.requireEnemy;
 
             SpellData data = new SpellData(mergedSpell);
 

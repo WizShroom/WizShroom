@@ -7,26 +7,37 @@ using UnityEngine;
 public class SpellData
 {
     public string spellName;
-    public string spellSpritePath;
+    public int spellSpriteID;
     public string spellType;
-    public string bulletPath;
+    public int spellProjectile;
     public int castAmount;
-    public List<int> effects = new List<int>();
-
-    public string audioShootPath;
+    public List<int> spellEffects = new List<int>();
+    public int audioShootID;
+    public float chargeTime;
+    public string key;
+    public float cooldown;
+    public float cooldownRemaining;
+    public bool requireEnemy = false;
 
     public SpellData(Spell spell)
     {
         spellName = spell.spellName;
-        spellSpritePath = spell.spellSprite.name + ".png";
+        spellSpriteID = GameController.Instance.assetsDatabase.sprites.IndexOf(spell.spellSprite);
         spellType = spell.spellType.ToString();
+        spellProjectile = spell.bulletPrefab ? GameController.Instance.assetsDatabase.projectiles.IndexOf(spell.bulletPrefab) : -1;
+        castAmount = spell.castAmount;
         foreach (SpellEffect spellEffect in spell.spellEffects)
         {
             if (spellEffect != null)
             {
-                effects.Add(GameController.Instance.spellEffectDatabase.spellEffectsIDs[spellEffect]);
+                spellEffects.Add(GameController.Instance.assetsDatabase.spellEffects.IndexOf(spellEffect));
             }
         }
+
+        audioShootID = GameController.Instance.assetsDatabase.audios.IndexOf(spell.spellAudioShoot);
+        chargeTime = spell.chargeTime;
+        cooldownRemaining = spell.cooldownRemaining;
+        requireEnemy = spell.requireEnemy;
     }
 }
 
@@ -39,11 +50,8 @@ public class Spell : ScriptableObject
     public GameObject bulletPrefab;
     public int castAmount = 1;
     public List<SpellEffect> spellEffects;
-
     public AudioClip spellAudioShoot;
-
     public float chargeTime = 0;
-
     public string key;
     public float cooldown;
     public float cooldownRemaining;
