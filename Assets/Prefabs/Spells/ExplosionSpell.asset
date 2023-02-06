@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ExplosionSpell
   m_EditorClassIdentifier: 
   spellName: explosion
-  spellSprite: {fileID: 21300000, guid: 7d8b67803a4c17f41b32c747ef0523fc, type: 3}
+  spellSprite: {fileID: 21300000, guid: 6f39d1c45dd794e43bb2d4f179681102, type: 3}
   spellType: 1
   bulletPrefab: {fileID: 6404468398774599545, guid: b8149d5358170014f936e0c8478c083f, type: 3}
   castAmount: 1

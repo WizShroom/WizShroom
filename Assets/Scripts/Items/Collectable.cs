@@ -22,6 +22,9 @@ public class Collectable : MonoBehaviour
     public float floatStrength;
     public MobController target;
 
+    public GameObject collectableEffect;
+    GameObject spawnedEffect;
+
     public bool isQuestItem = false;
 
     private void Awake()
@@ -49,6 +52,10 @@ public class Collectable : MonoBehaviour
 
     private void Start()
     {
+        if (collectableEffect)
+        {
+            spawnedEffect = Instantiate(collectableEffect, transform);
+        }
         originalY = transform.position.y;
         GetComponent<SphereCollider>().radius = collectionRadious;
         target = GameController.Instance.GetGameObjectFromID("MushPlayer").GetComponent<MobController>();
@@ -81,21 +88,29 @@ public class Collectable : MonoBehaviour
         }
     }
 
-    public void Collect()
+    public bool Collect()
     {
         if (itemToCollect)
         {
+            if (Inventory.Instance.IsInventoryFull(itemToCollect, containedItemAmount))
+            {
+                return false;
+            }
             Inventory.Instance.AddItem(itemToCollect, containedItemAmount);
         }
         if (spellToCollect)
         {
             SpellsInventory.Instance.AddSpellToFreeSlot(spellToCollect);
         }
-        Destroy(gameObject);
+
+        return true;
     }
 
     public void OnInteracted()
     {
-        Collect();
+        if (Collect())
+        {
+            Destroy(gameObject);
+        }
     }
 }

@@ -13,4 +13,9 @@ MonoBehaviour:
   m_Name: GenerateSoundOnHitBasic
   m_EditorClassIdentifier: 
   spellEffectType: 8
+  compatibleEffects: []
+  incompatibleEffects: []
+  spellEffectLevel: 0
+  modifiesName: 1
+  nameModifier: loud
   soundToPlayOnHit: {fileID: 8300000, guid: 9ca0474ae38007747a8ba16f14ed3eba, type: 3}

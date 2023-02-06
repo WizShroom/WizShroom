@@ -58,7 +58,7 @@ public class SpellsInventory : SingletonMono<SpellsInventory>
         List<SpellEffect> takerEffects = takerSlot.containedSpell.spell.spellEffects;
         List<SpellEffect> giverEffects = giverSlot.containedSpell.spell.spellEffects;
 
-        List<SpellEffect> newSpell = new List<SpellEffect>(takerEffects);
+        List<SpellEffect> newSpellEffects = new List<SpellEffect>(takerEffects);
         Spell mergedSpell = null;
         ActionBarSlot takerActionBarSlot = takerSlot.connectedActionBar;
 
@@ -74,10 +74,37 @@ public class SpellsInventory : SingletonMono<SpellsInventory>
                 {
                     continue;
                 }
-                newSpell.Add(giverEffect);
+                newSpellEffects.Add(giverEffect);
                 break;
             }
         }
+
+        string spellNewName = "";
+        foreach (SpellEffect spellEffect in newSpellEffects)
+        {
+            if (!spellEffect.modifiesName)
+            {
+                continue;
+            }
+            spellNewName += spellEffect.nameModifier + " ";
+        }
+
+        switch (takerSlot.containedSpell.spell.spellType)
+        {
+            case SpellType.SELF:
+                break;
+            case SpellType.PROJECTILE:
+                spellNewName += "bullet";
+                break;
+            case SpellType.RANDOM:
+                break;
+            case SpellType.MELEE:
+                break;
+            case SpellType.WORLD:
+                break;
+        }
+
+        spellNewName = char.ToUpper(spellNewName[0]) + spellNewName.Substring(1);
 
         string directory = Application.persistentDataPath + "/UserCreatedSpells";
         if (!Directory.Exists(directory))
@@ -95,17 +122,17 @@ public class SpellsInventory : SingletonMono<SpellsInventory>
             {
                 fromFileEffects.Add(GameController.Instance.assetsDatabase.spellEffects[spellEffect]);
             }
-            bool equal = fromFileEffects.OrderBy(x => x.name).SequenceEqual(newSpell.OrderBy(x => x.name));
+            bool equal = fromFileEffects.OrderBy(x => x.name).SequenceEqual(newSpellEffects.OrderBy(x => x.name));
             if (equal)
             {
                 existingSpellWithEffects = ScriptableObject.CreateInstance<Spell>();
                 existingSpellWithEffects.spellName = spellFromFile.spellName;
-                existingSpellWithEffects.spellSprite = GameController.Instance.assetsDatabase.sprites[spellFromFile.spellSpriteID];
+                existingSpellWithEffects.spellSprite = spellFromFile.spellSpriteID == -1 ? null : GameController.Instance.assetsDatabase.sprites[spellFromFile.spellSpriteID];
                 existingSpellWithEffects.spellType = (SpellType)System.Enum.Parse(typeof(SpellType), spellFromFile.spellType);
-                existingSpellWithEffects.bulletPrefab = spellFromFile.spellProjectile == -1 ? null : GameController.Instance.assetsDatabase.projectiles[spellFromFile.spellProjectile];
+                existingSpellWithEffects.bulletPrefab = spellFromFile.spellProjectileID == -1 ? null : GameController.Instance.assetsDatabase.projectiles[spellFromFile.spellProjectileID];
                 existingSpellWithEffects.castAmount = spellFromFile.castAmount;
                 existingSpellWithEffects.spellEffects = fromFileEffects;
-                existingSpellWithEffects.spellAudioShoot = spellFromFile.audioShootID == -1 ? null : GameController.Instance.assetsDatabase.audios[spellFromFile.spellSpriteID];
+                existingSpellWithEffects.spellAudioShoot = spellFromFile.audioShootID == -1 ? null : GameController.Instance.assetsDatabase.audios[spellFromFile.audioShootID];
                 existingSpellWithEffects.chargeTime = spellFromFile.chargeTime;
                 existingSpellWithEffects.cooldown = spellFromFile.cooldown;
                 existingSpellWithEffects.requireEnemy = spellFromFile.requireEnemy;
@@ -119,17 +146,17 @@ public class SpellsInventory : SingletonMono<SpellsInventory>
         }
         else
         {
-            string path = directory + "/test.json";
+            string path = directory + "/" + spellNewName + ".json";
             FileStream stream = new FileStream(path, FileMode.Create);
             Spell takerSpell = takerSlot.containedSpell.spell;
             Sprite takerSprite = takerSpell.spellSprite;
             mergedSpell = ScriptableObject.CreateInstance<Spell>();
-            mergedSpell.spellName = "TEST";
+            mergedSpell.spellName = spellNewName;
             mergedSpell.spellSprite = takerSprite;
             mergedSpell.spellType = takerSpell.spellType;
             mergedSpell.bulletPrefab = takerSpell.bulletPrefab;
             mergedSpell.castAmount = takerSpell.castAmount;
-            mergedSpell.spellEffects = new List<SpellEffect>(newSpell);
+            mergedSpell.spellEffects = new List<SpellEffect>(newSpellEffects);
             mergedSpell.spellAudioShoot = takerSpell.spellAudioShoot;
             mergedSpell.chargeTime = takerSpell.chargeTime;
             mergedSpell.cooldown = takerSpell.cooldown;

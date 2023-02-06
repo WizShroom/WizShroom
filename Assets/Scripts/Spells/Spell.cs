@@ -9,7 +9,7 @@ public class SpellData
     public string spellName;
     public int spellSpriteID;
     public string spellType;
-    public int spellProjectile;
+    public int spellProjectileID;
     public int castAmount;
     public List<int> spellEffects = new List<int>();
     public int audioShootID;
@@ -24,7 +24,7 @@ public class SpellData
         spellName = spell.spellName;
         spellSpriteID = GameController.Instance.assetsDatabase.sprites.IndexOf(spell.spellSprite);
         spellType = spell.spellType.ToString();
-        spellProjectile = spell.bulletPrefab ? GameController.Instance.assetsDatabase.projectiles.IndexOf(spell.bulletPrefab) : -1;
+        spellProjectileID = spell.bulletPrefab ? GameController.Instance.assetsDatabase.projectiles.IndexOf(spell.bulletPrefab) : -1;
         castAmount = spell.castAmount;
         foreach (SpellEffect spellEffect in spell.spellEffects)
         {
@@ -36,7 +36,7 @@ public class SpellData
 
         audioShootID = GameController.Instance.assetsDatabase.audios.IndexOf(spell.spellAudioShoot);
         chargeTime = spell.chargeTime;
-        cooldownRemaining = spell.cooldownRemaining;
+        cooldown = spell.cooldown;
         requireEnemy = spell.requireEnemy;
     }
 }
@@ -56,6 +56,7 @@ public class Spell : ScriptableObject
     public float cooldown;
     public float cooldownRemaining;
     public bool requireEnemy = false;
+    public bool hitTargetFirst = true;
 
     public int spellLevel;
 

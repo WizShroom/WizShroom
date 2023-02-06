@@ -13,6 +13,11 @@ MonoBehaviour:
   m_Name: CreateBarrierEffect
   m_EditorClassIdentifier: 
   spellEffectType: 8
+  compatibleEffects: []
+  incompatibleEffects: []
+  spellEffectLevel: 0
+  modifiesName: 1
+  nameModifier: blocking
   barrierPrefab: {fileID: 919132149155446097, guid: 773cc9070110c9e48ada42745923616c, type: 3}
   distance: 1
   numObjects: 5
