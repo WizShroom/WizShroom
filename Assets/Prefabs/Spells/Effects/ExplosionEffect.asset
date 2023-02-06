@@ -13,5 +13,10 @@ MonoBehaviour:
   m_Name: ExplosionEffect
   m_EditorClassIdentifier: 
   spellEffectType: 8
+  compatibleEffects: []
+  incompatibleEffects: []
+  spellEffectLevel: 0
+  modifiesName: 1
+  nameModifier: explosive
   explosionRadious: 3
   explosionEffect: {fileID: 8021452849343901200, guid: 1ab248143209f684ba170a6401daa3c5, type: 3}

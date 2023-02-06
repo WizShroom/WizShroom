@@ -17,7 +17,7 @@ public class PlayerMovement : MonoBehaviour
     PlayerController playerController;
 
     [HideInInspector] public EnemyController engagedEnemy;
-    public GameObject enemyHighlight;
+    GameObject enemyHighlight;
 
     public Interactable toInteract;
 
@@ -46,6 +46,7 @@ public class PlayerMovement : MonoBehaviour
         agent.updateUpAxis = false;
         playerAttack = GetComponent<PlayerAttack>();
         playerController = GetComponent<PlayerController>();
+        enemyHighlight = UIHandler.Instance.mobHighlight;
     }
 
     private void Update()

@@ -52,7 +52,7 @@ public class ActionBarSlot : MonoBehaviour, IPointerUpHandler, IPointerDownHandl
     {
         if (equippedSpell.cooldownRemaining <= 0f)
         {
-            if (!equippedSpell.requireEnemy)
+            if (!equippedSpell.requireEnemy && !equippedSpell.hitTargetFirst)
             {
                 Vector3 groundPosition = MouseGroundPositionSingleton.Instance.returnGroundPosition;
                 CastSpell(caster, groundPosition);

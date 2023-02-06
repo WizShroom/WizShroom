@@ -137,4 +137,32 @@ public class Inventory : SingletonMono<Inventory>
         return returnSlot;
     }
 
+    public bool IsInventoryFull(Item itemToCheck = null, int itemAmount = 1)
+    {
+        if (itemToCheck.itemType == ItemType.CURRENCY)
+        {
+            return true;
+        }
+        foreach (InventorySlot inventorySlot in inventorySlots)
+        {
+            if (inventorySlot.containedItem.item == null)
+            {
+                return false;
+            }
+
+            if (inventorySlot.containedItem.item != itemToCheck || !inventorySlot.containedItem.item.canItemStack)
+            {
+                continue;
+            }
+
+            if (inventorySlot.containedItem.itemAmount + itemAmount <= itemToCheck.itemCap)
+            {
+                return false;
+            }
+
+        }
+
+        return true;
+    }
+
 }

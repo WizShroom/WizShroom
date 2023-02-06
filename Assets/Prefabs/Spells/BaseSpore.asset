@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BaseSpore
   m_EditorClassIdentifier: 
   spellName: Base spore
-  spellSprite: {fileID: 21300000, guid: 9326bc8b277285748a97823d4b5c72fc, type: 3}
+  spellSprite: {fileID: 21300000, guid: 62ce01ddca719d34ea9648c586a7cc94, type: 3}
   spellType: 1
   bulletPrefab: {fileID: 6404468398774599545, guid: b8149d5358170014f936e0c8478c083f, type: 3}
   castAmount: 1
@@ -25,6 +25,5 @@ MonoBehaviour:
   key: 
   cooldown: 0
   cooldownRemaining: 0
-  UIImage: {fileID: 21300000, guid: 9326bc8b277285748a97823d4b5c72fc, type: 3}
   requireEnemy: 0
   spellLevel: 0

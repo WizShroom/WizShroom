@@ -13,3 +13,8 @@ MonoBehaviour:
   m_Name: FireDebuffEffect
   m_EditorClassIdentifier: 
   spellEffectType: 8
+  compatibleEffects: []
+  incompatibleEffects: []
+  spellEffectLevel: 0
+  modifiesName: 1
+  nameModifier: flaming

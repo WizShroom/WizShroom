@@ -14,6 +14,9 @@ public class SpellEffect : ScriptableObject
 
     public int spellEffectLevel;
 
+    public bool modifiesName = false;
+    public string nameModifier;
+
     public virtual void OnCreationEffect(BulletController bulletController) { }
 
     public virtual void OnShotEffect(BulletController bulletController) { }

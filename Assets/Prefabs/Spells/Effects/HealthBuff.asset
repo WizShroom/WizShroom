@@ -13,4 +13,8 @@ MonoBehaviour:
   m_Name: HealthBuff
   m_EditorClassIdentifier: 
   spellEffectType: 1
+  compatibleEffects: []
+  incompatibleEffects: []
   spellEffectLevel: 0
+  modifiesName: 1
+  nameModifier: healing

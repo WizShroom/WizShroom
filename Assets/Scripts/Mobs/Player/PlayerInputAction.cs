@@ -11,7 +11,7 @@ public class PlayerInputAction : MonoBehaviour
     PlayerMovement playerMovement;
     PlayerController playerController;
 
-    public GameObject mouseGroundHighlight;
+    GameObject mouseGroundHighlight;
     Animator mouseGroundHighlightAnimator;
 
     bool paused;
@@ -30,6 +30,7 @@ public class PlayerInputAction : MonoBehaviour
     {
         playerMovement = GetComponent<PlayerMovement>();
         playerController = GetComponent<PlayerController>();
+        mouseGroundHighlight = UIHandler.Instance.groundHighlight;
         mouseGroundHighlightAnimator = mouseGroundHighlight.GetComponent<Animator>();
     }
 

@@ -10,6 +10,9 @@ public class UIHandler : SingletonMono<UIHandler>
 {
     public List<UITypeController> uiTypeControllers = new List<UITypeController>();
 
+    public GameObject mobHighlight;
+    public GameObject groundHighlight;
+
     public void ToggleUIType(UIType uiType)
     {
         foreach (UITypeController uiTypeController in uiTypeControllers)

@@ -17,5 +17,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 668fd2ed790800f40a09018dd51348f7, type: 2}
   incompatibleEffects: []
   spellEffectLevel: 0
+  modifiesName: 1
+  nameModifier: hard hitting
   knockBackStrength: 1
   id: KnockBack
