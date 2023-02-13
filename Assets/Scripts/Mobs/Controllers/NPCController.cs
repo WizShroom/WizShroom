@@ -39,7 +39,7 @@ public class NPCController : MobController
         if (signal == signalToTrigger)
         {
             ourRenderer.enabled = true;
-            dialogueController.StartDialogue(startingDialogue);
+            dialogueController.StartDialogue();
         }
     }
 

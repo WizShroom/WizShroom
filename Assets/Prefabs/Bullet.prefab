@@ -5002,10 +5002,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20f554e9202f9f84fbac096e6d6fcc98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletDamage: 5
-  bulletSpeed: 10
+  bulletDamage: 1
+  bulletSpeed: 30
   destroyTime: 10
-  destroyDistance: 10
+  destroyDistance: 30
   knockBackMultiplier: 1
   explosiveMultiplier: 1
   explosionFalloff: 1
