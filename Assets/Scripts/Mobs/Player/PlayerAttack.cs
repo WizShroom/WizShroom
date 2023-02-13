@@ -12,7 +12,6 @@ public class PlayerAttack : MonoBehaviour
     public Spell normalAttackSpell;
 
     public float timeBetweenShots = 1f;
-    public float elapsedShotTime;
 
     PlayerController controller;
 
@@ -21,24 +20,53 @@ public class PlayerAttack : MonoBehaviour
         controller = GetComponent<PlayerController>();
     }
 
+    int comboCount = 0;
+    public float downtime = 1f;
+    private float elapsedShotTime = 0f;
+    public float elapsedDowntime = 0f;
+
+    public void ResetAttack()
+    {
+        comboCount = 0;
+        elapsedDowntime = 0;
+        elapsedShotTime = 0;
+    }
+
     public void Attack(Transform pivotPoint, Transform shootPoint, EnemyController engagedEnemy)
     {
         if (!CanAttack(pivotPoint, shootPoint, engagedEnemy))
         {
             return;
         }
-        normalAttackSpell.Cast(controller, engagedEnemy);
+
+        if (comboCount < 3)
+        {
+            normalAttackSpell.Cast(controller, engagedEnemy);
+            comboCount++;
+            elapsedShotTime = 0f;
+        }
     }
 
     public bool CanAttack(Transform pivotPoint, Transform shootPoint, EnemyController engagedEnemy)
     {
-
         elapsedShotTime += Time.deltaTime;
+
+        if (elapsedDowntime >= downtime)
+        {
+            comboCount = 0;
+            elapsedDowntime = 0f;
+        }
+
+        if (comboCount >= 3)
+        {
+            elapsedDowntime += Time.deltaTime;
+            return false;
+        }
+
         if (elapsedShotTime < timeBetweenShots)
         {
             return false;
         }
-        elapsedShotTime = 0;
 
         if (Vector3.Distance(engagedEnemy.transform.position, shootPoint.position) > attackRange)
         {

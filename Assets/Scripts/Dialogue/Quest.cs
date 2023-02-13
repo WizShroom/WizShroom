@@ -10,6 +10,9 @@ public class Quest : ScriptableObject
     public string questDescription;
     public bool completedQuest;
     public bool failedQuest;
+
+    public List<QuestRequirement> questRequirements;
+
     public List<QuestSegment> questSegments = new List<QuestSegment>();
     public Dialogue questOnGoing;
     public Dialogue questCompleted;
@@ -41,4 +44,12 @@ public struct QuestKill
     [SerializeField] public string monsterID;
     [SerializeField] public int currentKills;
     [SerializeField] public int killAmount;
+}
+
+[System.Serializable]
+public struct QuestRequirement
+{
+    public List<Quest> requiredCompletedQuests;
+    public List<Stat> requiredMinimumStats;
+    public List<Item> requiredPossessedItems;
 }

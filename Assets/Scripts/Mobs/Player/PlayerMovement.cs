@@ -183,6 +183,7 @@ public class PlayerMovement : MonoBehaviour
     public void DisengageEnemy()
     {
         engagedEnemy = null;
+        playerAttack.ResetAttack();
     }
 
     public void AttackEnemy()

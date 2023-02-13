@@ -15,6 +15,10 @@ MonoBehaviour:
   questDescription: TEST QUEST
   completedQuest: 0
   failedQuest: 0
+  questRequirements:
+  - requiredCompletedQuests: []
+    requiredMinimumStats: []
+    requiredPossessedItems: []
   questSegments:
   - completedSegment: 0
     segmentDescription: TEST SEGMENT
