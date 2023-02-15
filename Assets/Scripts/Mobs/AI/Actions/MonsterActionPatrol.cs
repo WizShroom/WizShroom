@@ -12,7 +12,7 @@ public class MonsterActionPatrol : MonsterAction
         {
             controller.navMeshAgent.stoppingDistance = 0;
 
-            if (controller.navMeshAgent.remainingDistance <= controller.navMeshAgent.stoppingDistance && !controller.navMeshAgent.pathPending)
+            if (controller.navMeshAgent.remainingDistance <= controller.navMeshAgent.stoppingDistance + 1 && !controller.navMeshAgent.pathPending)
             {
                 Vector3 newDestination = Random.insideUnitSphere * 5 + controller.homeBase;
                 newDestination.y = 0;
@@ -35,7 +35,7 @@ public class MonsterActionPatrol : MonsterAction
 
         controller.navMeshAgent.SetDestination(controller.patrolPoints[controller.wayPointListIndex].transform.position);
 
-        if (controller.navMeshAgent.remainingDistance <= controller.navMeshAgent.stoppingDistance && !controller.navMeshAgent.pathPending)
+        if (controller.navMeshAgent.remainingDistance <= controller.navMeshAgent.stoppingDistance + 1 && !controller.navMeshAgent.pathPending)
         {
             controller.wayPointListIndex = (controller.wayPointListIndex + 1) % controller.patrolPoints.Count;
         }
