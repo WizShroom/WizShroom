@@ -16,9 +16,14 @@ MonoBehaviour:
   completedQuest: 0
   failedQuest: 0
   questRequirements:
-  - requiredCompletedQuests: []
-    requiredMinimumStats: []
-    requiredPossessedItems: []
+  - requiredCompletedQuests:
+    - {fileID: 0}
+    requiredMinimumStats:
+    - statName: 
+      statValue: 0
+      statType: 0
+    requiredPossessedItems:
+    - {fileID: 0}
   questSegments:
   - completedSegment: 0
     segmentDescription: TEST SEGMENT

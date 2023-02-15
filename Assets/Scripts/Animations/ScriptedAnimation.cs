@@ -11,35 +11,41 @@ public class ScriptedAnimation : ScriptableObject
 
     public virtual IEnumerator AnimateAll()
     {
+        List<Task> animationsRoutines = new List<Task>();
         foreach (Animation animation in animations)
         {
             List<AnimationActor> animationActors = animation.animationActors;
 
             foreach (AnimationActor animationActor in animationActors)
             {
-                if (animationActor.animateOnlyThis)
-                {
-                    yield return GameController.Instance.StartCoroutine(AnimateActor(animationActor));
-                }
-                else
-                {
-                    GameController.Instance.StartCoroutine(AnimateActor(animationActor));
-                }
+                Task animationTask = new Task(AnimateActor(animationActor));
+                animationsRoutines.Add(animationTask);
             }
 
             List<AnimationEffect> animationEffects = animation.animationEffects;
             foreach (AnimationEffect animationEffect in animationEffects)
             {
-                if (animationEffect.animateOnlyThis)
-                {
-                    yield return GameController.Instance.StartCoroutine(AnimateEffect(animationEffect));
-                }
-                else
-                {
-                    GameController.Instance.StartCoroutine(AnimateEffect(animationEffect));
-                }
+                Task animationTask = new Task(AnimateEffect(animationEffect));
+                animationsRoutines.Add(animationTask);
             }
         }
+
+        bool finishAnimation = false;
+        while (!finishAnimation)
+        {
+            foreach (Task task in animationsRoutines)
+            {
+                if (task.Running)
+                {
+                    break;
+                }
+
+                finishAnimation = true;
+            }
+            yield return null;
+        }
+
+        yield return null;
     }
 
     public virtual IEnumerator AnimateActor(AnimationActor actor)

@@ -17,7 +17,7 @@ MonoBehaviour:
   dialogueSegments:
   - dialogueText: Hey! You've returned! But you still don't have the flower, come
       back once you manage to find it!
-    dialogueDisplayTime: 1
+    dialogueDisplayTime: 2
     isMushTalking: 0
     talkerSprite: {fileID: -352181154, guid: bec2eadc449eb2b4d81174c272d96e4b, type: 3}
     mushSprite: {fileID: 0}
