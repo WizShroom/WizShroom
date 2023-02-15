@@ -14,6 +14,7 @@ public class DialogueController : MonoBehaviour
     Image talkerSprite;
     Button positiveResponseButton;
     Button negativeResponseButton;
+    bool choosing = false;
 
     public Dialogue currentDialogue;
     public Dialogue nextDialogue;
@@ -22,6 +23,7 @@ public class DialogueController : MonoBehaviour
 
     bool talking = false;
     bool canSkipDialogue = false;
+    bool isPositiveChoice = false;
 
     private void Start()
     {
@@ -41,7 +43,7 @@ public class DialogueController : MonoBehaviour
 
     private void Update()
     {
-        if (talking && !canSkipDialogue && (Input.GetMouseButtonUp(0) || Input.GetKeyUp(KeyCode.Space)))
+        if (talking && !canSkipDialogue && (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space)))
         {
             canSkipDialogue = true;
             return;
@@ -62,7 +64,7 @@ public class DialogueController : MonoBehaviour
 
     public void StartDialogue()
     {
-        if (nextDialogue != remainOnCurrentDialogue)
+        if (nextDialogue != remainOnCurrentDialogue && nextDialogue != null)
         {
             currentDialogue = nextDialogue;
             nextDialogue = remainOnCurrentDialogue;
@@ -77,12 +79,38 @@ public class DialogueController : MonoBehaviour
 
         talking = true;
 
+        bool initiateNextDialogue = false;
+        bool hasChoice = false;
+        bool toDisable = false;
+        Dialogue dialogueContinuation = null;
+
         yield return null;
         UIHandler.Instance.EnableUIByType(UIType.Dialogue);
         UIHandler.Instance.DisableUIByType(UIType.InGame);
 
+        if (dialogueToDisplay.checkQuestRequirement && dialogueToDisplay.questToCheck)
+        {
+            if (dialogueToDisplay.questToCheck.completedQuest)
+            {
+                dialogueToDisplay = dialogueToDisplay.questToCheck.questCompleted;
+            }
+            else if (dialogueToDisplay.questToCheck.completedQuest)
+            {
+                dialogueToDisplay = dialogueToDisplay.questToCheck.questOnGoing;
+            }
+            else if (dialogueToDisplay.questToCheck.failedQuest)
+            {
+                dialogueToDisplay = dialogueToDisplay.questToCheck.questFailed;
+            }
+        }
+
         foreach (DialogueSegment dialogueSegment in dialogueToDisplay.dialogueSegments)
         {
+            if (dialogueSegment.disableControllerAfter)
+            {
+                toDisable = true;
+            }
+            dialogueContinuation = dialogueSegment.newDialogue;
             string dialogueTextToDisplay = dialogueSegment.dialogueText;
             dialogueText.text = "";
             if (dialogueSegment.isMushTalking)
@@ -96,6 +124,14 @@ public class DialogueController : MonoBehaviour
                 mushSprite.enabled = false;
                 talkerSprite.enabled = true;
                 talkerSprite.sprite = dialogueSegment.talkerSprite;
+            }
+
+            choosing = false;
+            hasChoice = dialogueSegment.choiceAndQuest.hasChoiceToMake;
+            if (hasChoice)
+            {
+                dialogueTextToDisplay = dialogueSegment.choiceAndQuest.dialogueChoice.dialogueChoiceText;
+                choosing = true;
             }
 
             for (int i = 0; i < dialogueTextToDisplay.Length; i++)
@@ -129,7 +165,106 @@ public class DialogueController : MonoBehaviour
             }
 
             yield return null;
+
+            if (choosing)
+            {
+                positiveResponseButton.gameObject.SetActive(true);
+                negativeResponseButton.gameObject.SetActive(true);
+                positiveResponseButton.onClick.RemoveAllListeners();
+                negativeResponseButton.onClick.RemoveAllListeners();
+                positiveResponseButton.onClick.AddListener(() => OnChoiceMade(true));
+                negativeResponseButton.onClick.AddListener(() => OnChoiceMade(false));
+            }
+
+            while (choosing)
+            {
+                yield return null;
+            }
+
+            if (dialogueSegment.dialogueAnimationControls.animationToPlay != null && !dialogueSegment.dialogueAnimationControls.animationBeforeDialogue)
+            {
+                if (dialogueSegment.dialogueAnimationControls.waitForAnimation)
+                {
+                    UIHandler.Instance.DisableUIByType(UIType.Dialogue);
+                    yield return StartCoroutine(dialogueSegment.dialogueAnimationControls.animationToPlay.AnimateAll());
+                    UIHandler.Instance.EnableUIByType(UIType.Dialogue);
+                }
+                else
+                {
+                    StartCoroutine(dialogueSegment.dialogueAnimationControls.animationToPlay.AnimateAll());
+                }
+            }
+
+            if (dialogueSegment.sendSignalAfterPart)
+            {
+                GameSignalHandler.Instance.SendSignal(gameObject, dialogueSegment.signalToSend);
+            }
+
+            if (hasChoice)
+            {
+                if (isPositiveChoice)
+                {
+                    dialogueContinuation = dialogueSegment.choiceAndQuest.dialogueChoice.positiveDialogue;
+                    if (dialogueSegment.choiceAndQuest.canChooseQuest && dialogueSegment.choiceAndQuest.questRequirePositiveOutcome)
+                    {
+                        PlayerController playerController = GameController.Instance.GetGameObjectFromID("MushPlayer").GetComponent<PlayerController>();
+                        playerController.currentQuests.Add(dialogueSegment.choiceAndQuest.questToGive);
+                    }
+                    if (dialogueSegment.choiceAndQuest.dialogueChoice.positiveEnableController)
+                    {
+                        disabled = false;
+                    }
+                    if (dialogueSegment.choiceAndQuest.dialogueChoice.positiveDisableController)
+                    {
+                        disabled = true;
+                    }
+                }
+                else
+                {
+                    dialogueContinuation = dialogueSegment.choiceAndQuest.dialogueChoice.negativeDialogue;
+                    if (dialogueSegment.choiceAndQuest.canChooseQuest && !dialogueSegment.choiceAndQuest.questRequirePositiveOutcome)
+                    {
+                        PlayerController playerController = GameController.Instance.GetGameObjectFromID("MushPlayer").GetComponent<PlayerController>();
+                        playerController.currentQuests.Add(dialogueSegment.choiceAndQuest.questToGive);
+                    }
+                    if (dialogueSegment.choiceAndQuest.dialogueChoice.negativeEnableController)
+                    {
+                        disabled = false;
+                    }
+                    if (dialogueSegment.choiceAndQuest.dialogueChoice.negativeDisableController)
+                    {
+                        disabled = true;
+                    }
+                }
+
+                if (!dialogueSegment.choiceAndQuest.canChooseQuest)
+                {
+                    PlayerController playerController = GameController.Instance.GetGameObjectFromID("MushPlayer").GetComponent<PlayerController>();
+                    playerController.currentQuests.Add(dialogueSegment.choiceAndQuest.questToGive);
+                }
+            }
+
+            TransitionToDialogue(dialogueContinuation);
+            if (dialogueSegment.startNewDirectly)
+            {
+                initiateNextDialogue = true;
+            }
+
         }
+
+        if (initiateNextDialogue)
+        {
+            StartDialogue();
+        }
+        else
+        {
+            GameEventHandler.Instance.SendEvent(gameObject, EVENT.RESUMED);
+            UIHandler.Instance.DisableUIByType(UIType.Dialogue);
+            UIHandler.Instance.EnableUIByType(UIType.InGame);
+            disabled = toDisable;
+        }
+
+        talking = false;
 
         yield return null;
     }
@@ -183,6 +318,14 @@ public class DialogueController : MonoBehaviour
                 hintImage.SetActive(false);
             }
         }
+    }
+
+    public void OnChoiceMade(bool isPositiveResponse)
+    {
+        isPositiveChoice = isPositiveResponse;
+        positiveResponseButton.gameObject.SetActive(false);
+        negativeResponseButton.gameObject.SetActive(false);
+        choosing = false;
     }
 
 }
