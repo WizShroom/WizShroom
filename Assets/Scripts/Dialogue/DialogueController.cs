@@ -110,6 +110,22 @@ public class DialogueController : MonoBehaviour
             {
                 toDisable = true;
             }
+
+            if (dialogueSegment.dialogueAnimationControls.animationToPlay != null && dialogueSegment.dialogueAnimationControls.animationBeforeDialogue)
+            {
+                if (dialogueSegment.dialogueAnimationControls.waitForAnimation)
+                {
+                    UIHandler.Instance.DisableUIByType(UIType.Dialogue);
+                    yield return StartCoroutine(dialogueSegment.dialogueAnimationControls.animationToPlay.AnimateAll());
+                    UIHandler.Instance.EnableUIByType(UIType.Dialogue);
+                }
+                else
+                {
+                    StartCoroutine(dialogueSegment.dialogueAnimationControls.animationToPlay.AnimateAll());
+                }
+            }
+
+
             dialogueContinuation = dialogueSegment.newDialogue;
             string dialogueTextToDisplay = dialogueSegment.dialogueText;
             dialogueText.text = "";
